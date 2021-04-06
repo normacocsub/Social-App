@@ -1,0 +1,17 @@
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Logica.deps.json
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Logica.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\ref\Logica.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Logica.pdb
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Datos.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Entity.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Entity.pdb
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\bin\Debug\net5.0\Datos.pdb
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.csprojAssemblyReference.cache
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.AssemblyInfoInputs.cache
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.AssemblyInfo.cs
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.csproj.CoreCompileInputs.cache
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.csproj.CopyComplete
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\ref\Logica.dll
+C:\Users\norma\Desktop\Programacion\Movil\socialApp\ApiSocialApp\Logica\obj\Debug\net5.0\Logica.pdb

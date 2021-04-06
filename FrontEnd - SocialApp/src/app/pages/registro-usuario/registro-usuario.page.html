@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>registroUsuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Correo</ion-label>
+      <ion-input [(ngModel)]="usuario.correo" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Nombres</ion-label>
+      <ion-input [(ngModel)]="usuario.nombres" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Apellidos</ion-label>
+      <ion-input [(ngModel)]="usuario.apellidos" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sexo</ion-label>
+      
+        <ion-select [(ngModel)]="usuario.sexo" value="Seleccionar" okText="Ok" cancelText="Cancelar">
+          <ion-select-option value="Seleccionar">Seleccionar</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button (click)="registrar()" expand="block" >
+    Registrar
+  </ion-button>
+
+</ion-content>
