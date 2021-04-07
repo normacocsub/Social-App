@@ -25,6 +25,7 @@
     "@ionic-native/core": "^5.31.1",
     "@ionic-native/file": "^5.31.1",
     "@ionic-native/file-transfer": "^5.31.1",
+    "@ionic-native/network": "^5.32.0",
     "@ionic-native/photo-library": "^5.31.1",
     "@ionic-native/sqlite": "^5.31.1",
     "@ionic/angular": "^5.5.2",
@@ -54,6 +55,7 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-network-information": "^2.0.2",
     "cordova-plugin-photo-library": "^2.3.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -91,7 +93,8 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "android",
