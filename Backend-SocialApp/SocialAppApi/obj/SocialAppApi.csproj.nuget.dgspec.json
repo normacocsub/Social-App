@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\SocialAppApi\\SocialAppApi.csproj": {}
+    "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj": {}
   },
   "projects": {
-    "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj": {
+    "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj",
+        "projectUniqueName": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj",
         "projectName": "Datos",
-        "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj",
+        "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj",
         "packagesPath": "C:\\Users\\norma\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\obj\\",
+        "outputPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -32,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj": {
-                "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj"
+              "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj"
               }
             }
           }
@@ -76,14 +76,14 @@
         }
       }
     },
-    "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj": {
+    "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj",
+        "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj",
         "packagesPath": "C:\\Users\\norma\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\obj\\",
+        "outputPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -140,14 +140,14 @@
         }
       }
     },
-    "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\Logica.csproj": {
+    "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\Logica.csproj",
+        "projectUniqueName": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj",
         "projectName": "Logica",
-        "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\Logica.csproj",
+        "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj",
         "packagesPath": "C:\\Users\\norma\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\obj\\",
+        "outputPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -168,11 +168,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj": {
-                "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj"
+              "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj": {
+                "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj"
               },
-              "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj": {
-                "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj"
+              "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj"
               }
             }
           }
@@ -205,14 +205,14 @@
         }
       }
     },
-    "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\SocialAppApi\\SocialAppApi.csproj": {
+    "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\SocialAppApi\\SocialAppApi.csproj",
+        "projectUniqueName": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj",
         "projectName": "SocialAppApi",
-        "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\SocialAppApi\\SocialAppApi.csproj",
+        "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj",
         "packagesPath": "C:\\Users\\norma\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\SocialAppApi\\obj\\",
+        "outputPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -233,11 +233,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj": {
-                "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Entity\\Entity.csproj"
+              "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj"
               },
-              "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\Logica.csproj": {
-                "projectPath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Logica\\Logica.csproj"
+              "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj": {
+                "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj"
               }
             }
           }

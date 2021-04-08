@@ -31,12 +31,11 @@ export class HomePage implements OnInit {
       if(!this.conectionStatus){
         this.presentToast("No hay conexión a internet ");
       }
-      else{
-        this.presentToast("Prueba completada");
-      }
+
     })
     this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
       this.publicaciones = resulta;
+      console.log(this.publicaciones);
     });
 
 
@@ -52,7 +51,7 @@ export class HomePage implements OnInit {
   }
 
   async crearPublicacion(){
-    const modal = await this.modalController.create({
+    /*const modal = await this.modalController.create({
       component: ModalPublicacionPage
     });
     await modal.present();
@@ -64,6 +63,7 @@ export class HomePage implements OnInit {
     this.publicacionService.insertPublicaciones(data).subscribe(result =>{
       
     });
+    */
   }
 
   async crearPublicacionWithImagen(){
@@ -83,6 +83,7 @@ export class HomePage implements OnInit {
     this.publicacionService.crearPublicacion(this.publicacion).subscribe(result => {
       console.log(result);
     });
+    
     /*
     this.publicacionService.insertPublicaciones(data).subscribe(result =>{
       console.log(result);

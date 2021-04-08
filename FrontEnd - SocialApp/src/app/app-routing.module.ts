@@ -44,6 +44,10 @@ const routes: Routes = [
     path: 'registro-usuario',
     loadChildren: () => import('./pages/registro-usuario/registro-usuario.module').then( m => m.RegistroUsuarioPageModule)
   },
+  {
+    path: 'editar-comentario',
+    loadChildren: () => import('./pages/editar-comentario/editar-comentario.module').then( m => m.EditarComentarioPageModule)
+  },
 
 
 

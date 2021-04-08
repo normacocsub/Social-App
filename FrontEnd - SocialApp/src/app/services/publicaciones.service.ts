@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { Platform } from '@ionic/angular';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Usuario } from '../models/usuario';
 
 
 
@@ -15,7 +16,7 @@ export class PublicacionesService {
   publicaciones: Publicacion[] = [];
   comentarios: Comentar[] = [];
   private storag: SQLiteObject;
-  ruta: string ="https://socialapiapp.azurewebsites.net/"
+  ruta: string ="https://localhost:5001/"
   constructor(private platform: Platform,
               private storage: Storage,
                private sqlite: SQLite,
@@ -38,6 +39,33 @@ export class PublicacionesService {
 
   ConsultaPublicaciones(){
     return this.http.get<Publicacion[]>(this.ruta+"api/Publicacion");
+  }
+
+  editarPublicacion(publicacion: Publicacion){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put("https://localhost:5001/api/Publicacion", publicacion, httpOptions);
+  }
+
+  agregarComentario(publicacion: Publicacion){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put("https://localhost:5001/api/Publicacion/Comentarios", publicacion, httpOptions);
+  }
+
+
+  eliminarPublicacion(publicacion: Publicacion){
+    return this.http.delete("https://localhost:5001/api/Publicacion/"+ publicacion.idPublicacion);
+  }
+
+  editarComentario(comentario: Comentar){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    console.log(comentario.contenidoComentario);
+    return this.http.put(this.ruta + "api/publicacion/EditarComentario", comentario, httpOptions);
   }
 
 
@@ -72,7 +100,8 @@ export class PublicacionesService {
             nombre: r.rows.item(i).nombre,
             contenidoPublicacion: r.rows.item(i).publicacion,
             imagen: r.rows.item(i).urlImg,
-            comentarios: comment
+            comentarios: comment,
+            usuario: new Usuario()
           }
           this.publicaciones.unshift(publicacion);
         }

@@ -35,12 +35,190 @@ namespace Logica
         {
             try
             {
+                var publicaciones = _context.Publicacions.Include(p => p.Comentarios).ToList();
+                foreach (var item in publicaciones)
+                {
+                    item.Usuario = _context.Usuarios.Find(item.IdUsuario);
+                    foreach (var item2 in item.Comentarios)
+                    {
+                        item2.Usuario = _context.Usuarios.Find(item2.IdUsuario);
+                    }
+                }
                 return new ConsultarPublicacionesResponse(_context.Publicacions.Include(p => p.Comentarios).ToList());
             }
             catch(Exception e)
             {
                 return new ConsultarPublicacionesResponse($"Error Aplication: {e.Message}");
             }
+        }
+
+        public EditarPublicacionesReponse EditarPublicaciones(Publicacion publicacion)
+        {
+            try
+            {
+                var publicaciones = _context.Publicacions.Include(c => c.Comentarios).ToList();
+                var response = publicaciones.Find( p => p.IdPublicacion == publicacion.IdPublicacion);
+                if(response != null)
+                {
+                    response.ContenidoPublicacion = publicacion.ContenidoPublicacion;
+                    _context.Publicacions.Update(response);
+                    _context.SaveChanges();
+                    return new EditarPublicacionesReponse(response);
+                }
+                else
+                {
+                    return new EditarPublicacionesReponse("No existe la publicacion ", "No existe");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EditarPublicacionesReponse($"Error en la aplicacion: {e.Message}", "Aplication");
+            }
+        }
+
+
+
+
+        public EditarPublicacionesReponse AgregarComentarios(Publicacion publicacion)
+        {
+            try
+            {
+                var publicaciones = _context.Publicacions.Include(c => c.Comentarios).ToList();
+                var response = publicaciones.Find( p => p.IdPublicacion == publicacion.IdPublicacion);
+                if(response != null)
+                {
+                    response.Comentarios = publicacion.Comentarios;
+                    _context.Publicacions.Update(response);
+                    _context.SaveChanges();
+                    return new EditarPublicacionesReponse(response);
+                }
+                else
+                {
+                    return new EditarPublicacionesReponse("No existe la publicacion ", "No existe");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EditarPublicacionesReponse($"Error en la aplicacion: {e.Message}", "Aplication");
+            }
+        }
+
+
+        public EliminarPublicacionesResponse EliminarPublicacion(string publicacion)
+        {
+            try
+            {
+                var response = _context.Publicacions.Find(publicacion);
+                if(response != null)
+                {
+                    _context.Publicacions.Remove(response);
+                    _context.SaveChanges();
+                    return new EliminarPublicacionesResponse(response);
+                }
+                else
+                {
+                    return new EliminarPublicacionesResponse("Error: No existe la publicacion", "No existe");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EliminarPublicacionesResponse($"Error en la aplicacion {e.Message}", "Aplication");
+            }
+        }
+
+        public EditarComentarioResponse EditarComentario(Comentario comentario)
+        {
+            try
+            {
+                var comentarios = _context.Comentarios.ToList();
+                var response = comentarios.Find(c => c.IdComentario == comentario.IdComentario);
+                if(response != null)
+                {
+                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
+                    response.ContenidoComentario = comentario.ContenidoComentario;
+
+                    if(response.Usuario.Correo != comentario.Usuario.Correo)
+                    {
+                        return new EditarComentarioResponse("El usuario no puede editar este comentario", "!Editar");
+                    }
+                    else
+                    {
+                        _context.Comentarios.Update(response);
+                        _context.SaveChanges();
+                        return new EditarComentarioResponse(response);
+                    }
+                }
+                else
+                {
+                    return new EditarComentarioResponse("No se encuentra el comentario", "No Existe");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EditarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
+            }
+        }
+
+        public class EditarComentarioResponse
+        {
+            public EditarComentarioResponse(Comentario comentario)
+            {
+                Error = false;
+                Comentario = comentario;
+            }
+
+            public EditarComentarioResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+
+            public bool Error { get; set; }
+            public string Estado { get; set; }
+            public string Mensaje { get; set; }
+            public Comentario Comentario { get; set; }
+        }
+        public class EliminarPublicacionesResponse
+        {
+            public EliminarPublicacionesResponse(Publicacion publicacion)
+            {
+                Error = false;
+                Publicacion = publicacion;
+            }
+
+            public EliminarPublicacionesResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Mensaje { get; set; }
+            public string Estado { get; set; }
+            public Publicacion Publicacion { get; set; }
+        }
+
+
+        public class EditarPublicacionesReponse
+        {
+            public EditarPublicacionesReponse(Publicacion publicacion)
+            {
+                Error = false;
+                Publicacion = publicacion;
+
+            }
+
+            public EditarPublicacionesReponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public string Estado { get; set; }
+            public bool Error { get; set; }
+            public string Mensaje { get; set; }
+            public Publicacion Publicacion { get; set; }
         }
 
         public class ConsultarPublicacionesResponse

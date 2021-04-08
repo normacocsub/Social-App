@@ -9,6 +9,7 @@ namespace SocialAppApi.Models
         public string Nombre { get; set; }
         public string ContenidoPublicacion { get; set; }
         public string Imagen { get; set; } 
+        public Usuario Usuario { get; set; }
         public List<Comentario> Comentarios { get; set; }
     }
 
@@ -21,6 +22,7 @@ namespace SocialAppApi.Models
             Nombre = publicacion.Nombre;
             ContenidoPublicacion = publicacion.ContenidoPublicacion;
             Imagen = publicacion.Imagen;
+            Usuario = publicacion.Usuario;
             Comentarios = publicacion.Comentarios;
         }
     }

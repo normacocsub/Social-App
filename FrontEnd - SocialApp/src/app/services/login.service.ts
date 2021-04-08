@@ -16,7 +16,7 @@ import { BehaviorSubject, of } from 'rxjs';
 
 export class LoginService {
 
-  ruta: string ="https://socialapiapp.azurewebsites.net/"
+  ruta: string ="https://localhost:5001/"
   sqlObject: SQLiteObject;
   private currentUserSubject: BehaviorSubject<Usuario>;
   authSubject  =   new  BehaviorSubject(false);
@@ -62,8 +62,21 @@ export class LoginService {
     )
   }
 
+  async cargarUsuario(){
+    const usuario = await this.storage.get('Login');
+    if(usuario){
+      this.currentUserSubject = new BehaviorSubject<Usuario>(usuario);
+    }
+    return;
+  }
+
   isLoggedIn() {
     return this.authSubject.asObservable();
+  }
+
+  async getUser(){
+    await this.cargarUsuario();
+    return this.currentUserSubject.asObservable();
   }
 
 

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoginService } from 'src/app/services/login.service';
+import { Usuario } from 'src/app/models/usuario';
 
 declare var window: any;
 
@@ -17,12 +18,18 @@ export class ModalPublicacionPage implements OnInit {
   @Input() image: boolean = false;
   imagen: string = '';
   tempImg: string[] = [];
+  usuario: Usuario = new Usuario();
   constructor(private modalController: ModalController,
               private camera: Camera,
               private service: LoginService
               ) { }
 
   ngOnInit() {
+    this.service.getUser().then(result => {
+      result.subscribe(value => {
+        this.usuario = value;
+      })
+    });
   }
 
   
@@ -33,7 +40,7 @@ export class ModalPublicacionPage implements OnInit {
   publicarModal(){
     console.log(this.publicacion);
     this.modalController.dismiss({
-      nombre:'Fernando Vega',
+      usuario: this.usuario,
       contenidoPublicacion: this.publicacion,
       imagen: this.imagen
     });

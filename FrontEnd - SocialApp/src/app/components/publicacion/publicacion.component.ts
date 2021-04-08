@@ -1,11 +1,16 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Publicacion } from 'src/app/interfaces/interfaces';
+import { Comentar, Publicacion } from 'src/app/interfaces/interfaces';
 
 import { ActionSheetController, IonInput, ModalController, ToastController } from '@ionic/angular';
 import { ModalEditarPublicacionPage } from 'src/app/pages/modal-editar-publicacion/modal-editar-publicacion.page';
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { AlertController } from '@ionic/angular';
 import { VerPublicacionPage } from 'src/app/pages/ver-publicacion/ver-publicacion.page';
+import { Usuario } from 'src/app/models/usuario';
+import { LoginService } from 'src/app/services/login.service';
+import { ThisReceiver } from '@angular/compiler';
+import { EditarComentarioPage } from 'src/app/pages/editar-comentario/editar-comentario.page';
+
 
 @Component({
   selector: 'app-publicacion',
@@ -16,15 +21,24 @@ export class PublicacionComponent implements OnInit {
   @Input() publicacion: Publicacion;
   @Input() comentarios: boolean = false;
   @ViewChild(IonInput) input: IonInput;
+  publicacionEditar: Publicacion;
   comentario: string = '';
+  usuario: Usuario = new Usuario();
+  comentarioEditar: Comentar;
   
   constructor(private actionSheetController: ActionSheetController,
               private modalController: ModalController,
               private PublicacionService: PublicacionesService,
               public toastController: ToastController,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              private service: LoginService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.service.getUser().then(result => {
+    result.subscribe(value => {
+      this.usuario = value;
+    })
+  });}
 
 
   ngAfterViewInit(){
@@ -36,21 +50,26 @@ export class PublicacionComponent implements OnInit {
       if(this.publicacion.comentarios.length == 0){
         this.input.value = "No hay comentarios";
       }else{
-        this.input.value = this.publicacion.comentarios[0].idComentario;
+        this.input.value = this.publicacion.comentarios[0].contenidoComentario;
       }
       
     }
   }
 
   comentar(){
+    
     var comentario = {
-      idComentario: (this.publicacion.comentarios.length + 1)+'',
+      idComentario: '',
       contenidoComentario: this.comentario,
-      publicacionId: this.publicacion.idPublicacion
+      publicacionId: this.publicacion.idPublicacion,
+      usuario: this.usuario,
+      idUsuario: this.usuario.correo
     }
     this.publicacion.comentarios.unshift(comentario);
-    this.PublicacionService.publicarComentario(this.publicacion).subscribe(result => {
+
+    this.PublicacionService.agregarComentario(this.publicacion).subscribe(result => {
       this.input.value = "";
+      console.log(this.publicacion);
     });
   }
 
@@ -82,11 +101,15 @@ export class PublicacionComponent implements OnInit {
 
     const {data} = await modal.onDidDismiss();
 
-    this.PublicacionService.updatePublicacion(data).subscribe(result => {
+    this.publicacionEditar = data;
+
+
+    this.PublicacionService.editarPublicacion(this.publicacionEditar).subscribe(result => {
       if(result != null){
-        this.presentToast("Se ha editado Correctamente");
+        console.log("Editado ");
       }
-    });
+    })
+
     
   }
 
@@ -106,7 +129,10 @@ export class PublicacionComponent implements OnInit {
         }, {
           text: 'Eliminar',
           handler: () => {
-            this.PublicacionService.deletePublicacion(this.publicacion);
+            //
+            this.PublicacionService.eliminarPublicacion(this.publicacion).subscribe(result => {
+              console.log(result);
+            })
           }
         }
       ]
@@ -124,43 +150,82 @@ export class PublicacionComponent implements OnInit {
   }
 
 
+
   async lanzarMenu(event){
+
+    //Buttons
+    var Buttons = [{
+      text: 'Compartir',
+      icon: 'share',
+      cssClass: 'action-dark',
+      handler: () => {
+        
+      }
+    },    
+    {
+      text: 'Editar',
+      icon: 'create-outline',
+      cssClass: 'action-dark',
+      handler: () => {
+        this.editarPublicacion();
+      }
+    },
+    {
+      text: 'Eliminar',
+      icon: 'trash-outline',
+      cssClass: 'action-dark',
+      handler: () => {
+        this.presentAlertConfirm();
+      }
+    }
+    ,  {
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      cssClass: 'action-dark',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }];
+
+    var usuarioValidar = new Usuario();
+    (await this.service.getUser()).subscribe(resultado => {
+      usuarioValidar = resultado;
+    });
+
+    if(usuarioValidar.correo != this.publicacion.usuario.correo){
+      Buttons.splice(1, 1);
+      Buttons.splice(1, 1);
+    }
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'my-custom-class',
-      buttons: [ {
-        text: 'Compartir',
-        icon: 'share',
-        cssClass: 'action-dark',
-        handler: () => {
-          
-        }
-      },
-      {
-        text: 'Editar',
-        icon: 'create-outline',
-        cssClass: 'action-dark',
-        handler: () => {
-          this.editarPublicacion();
-        }
-      },
-      {
-        text: 'Eliminar',
-        icon: 'trash-outline',
-        cssClass: 'action-dark',
-        handler: () => {
-          this.presentAlertConfirm();
-        }
-      }
-      ,  {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      buttons: Buttons
     });
     await actionSheet.present();
+  }
+
+  async editarComentario(comentario: Comentar){
+
+    const modal = await this.modalController.create({
+      component: EditarComentarioPage,
+      componentProps: {
+        comentario: comentario
+      }
+    });
+
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+
+    this.comentarioEditar = data;
+
+
+    this.PublicacionService.editarComentario(data).subscribe(result => {
+      console.log(result);
+    })
+  }
+
+  eliminarComentario(comentario: Comentar){
+
   }
 }

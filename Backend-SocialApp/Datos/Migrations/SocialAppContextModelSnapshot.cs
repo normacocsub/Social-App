@@ -27,14 +27,19 @@ namespace Datos.Migrations
                     b.Property<string>("ContenidoComentario")
                         .HasColumnType("varchar(500)");
 
+                    b.Property<string>("IdUsuario")
+                        .HasColumnType("varchar(40)");
+
                     b.Property<string>("PublicacionId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdComentario");
 
+                    b.HasIndex("IdUsuario");
+
                     b.HasIndex("PublicacionId");
 
-                    b.ToTable("Comentario");
+                    b.ToTable("Comentarios");
                 });
 
             modelBuilder.Entity("Entity.Publicacion", b =>
@@ -45,6 +50,9 @@ namespace Datos.Migrations
                     b.Property<string>("ContenidoPublicacion")
                         .HasColumnType("varchar(500)");
 
+                    b.Property<string>("IdUsuario")
+                        .HasColumnType("varchar(40)");
+
                     b.Property<string>("Imagen")
                         .HasColumnType("nvarchar(max)");
 
@@ -52,6 +60,8 @@ namespace Datos.Migrations
                         .HasColumnType("varchar(25)");
 
                     b.HasKey("IdPublicacion");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Publicacions");
                 });
@@ -86,9 +96,20 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Entity.Comentario", b =>
                 {
+                    b.HasOne("Entity.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario");
+
                     b.HasOne("Entity.Publicacion", null)
                         .WithMany("Comentarios")
                         .HasForeignKey("PublicacionId");
+                });
+
+            modelBuilder.Entity("Entity.Publicacion", b =>
+                {
+                    b.HasOne("Entity.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario");
                 });
 
             modelBuilder.Entity("Entity.Publicacion", b =>

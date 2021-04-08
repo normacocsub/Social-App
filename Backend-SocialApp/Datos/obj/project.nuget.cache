@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KgbXovyR+FurKTKoC5FATqmR3RoLbmLTdOkzmNs7v5+tTtBCksboamrTbvrUTX+QcChKEsHN0Qc0wf1xFWO6BA==",
+  "dgSpecHash": "KSOKZlmcif69v65XeR3uDWxxGpYtV4xq26cdwZSROw06LTpQAvdWNNF+UC9haYzSSgG+lwrYwJiYMfQb+YvdHg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\norma\\Desktop\\Programacion\\Movil\\socialApp\\ApiSocialApp\\Datos\\Datos.csproj",
+  "projectFilePath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Datos\\Datos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\norma\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\norma\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
