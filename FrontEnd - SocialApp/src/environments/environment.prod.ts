@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  ruta: 'https://socialapiapp.azurewebsites.net/',
 };

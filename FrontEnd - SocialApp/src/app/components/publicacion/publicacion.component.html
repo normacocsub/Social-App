@@ -41,7 +41,9 @@
           ></ion-icon>
 
           <ion-button  (click)="verPublicacion()" class="buttonIconTwo">
-            <ion-label class="labelComentario">{{publicacion.comentarios[0].usuario.nombres}} {{publicacion.comentarios[0].usuario.apellidos}}:</ion-label>
+            <div *ngIf="publicacion.comentarios.length > 0">
+              <ion-label class="labelComentario">{{publicacion.comentarios[0].usuario?.nombres}} {{publicacion.comentarios[0].usuario?.apellidos}}:</ion-label>
+            </div>
             <ion-input type="text" class="inpuN" [disabled]="true"></ion-input>
           </ion-button>
         </ion-buttons>

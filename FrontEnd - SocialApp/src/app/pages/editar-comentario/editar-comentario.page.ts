@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
-import { Comentar } from 'src/app/interfaces/interfaces';
+import { Comentario } from 'src/app/models/comentario';
+
 
 @Component({
   selector: 'app-editar-comentario',
@@ -9,7 +10,7 @@ import { Comentar } from 'src/app/interfaces/interfaces';
 })
 export class EditarComentarioPage implements OnInit {
 
-  @Input() comentario: Comentar;
+  @Input() comentario: Comentario;
   @ViewChild(IonInput) input: IonInput;
   constructor(private modalController: ModalController) { }
 

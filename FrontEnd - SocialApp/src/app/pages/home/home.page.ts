@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Publicacion } from 'src/app/interfaces/interfaces';
+import { Publicacion } from 'src/app/models/publicacion';
 import { LoginService } from 'src/app/services/login.service';
 import { NetworkService } from 'src/app/services/network.service';
 import { ModalPublicacionPage } from '../../pages/modal-publicacion/modal-publicacion.page';
@@ -38,7 +38,13 @@ export class HomePage implements OnInit {
       console.log(this.publicaciones);
     });
 
+    this.actualizarListaSignal();
+  }
 
+  private actualizarListaSignal(){
+    this.publicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
+      this.publicaciones.push(publicacion);
+    });
   }
 
 

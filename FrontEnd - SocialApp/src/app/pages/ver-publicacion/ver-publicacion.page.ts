@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Publicacion } from 'src/app/interfaces/interfaces';
+import { Publicacion } from 'src/app/models/publicacion';
+
 
 @Component({
   selector: 'app-ver-publicacion',
@@ -8,7 +9,7 @@ import { Publicacion } from 'src/app/interfaces/interfaces';
 })
 export class VerPublicacionPage implements OnInit {
 
-  @Input() publicacion: Publicacion;
+  @Input() publicacion: Publicacion = new Publicacion();
   constructor() { }
 
   ngOnInit() {

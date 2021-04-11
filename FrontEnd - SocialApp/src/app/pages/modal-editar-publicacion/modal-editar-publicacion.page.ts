@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonTextarea, ModalController } from '@ionic/angular';
-import { Publicacion } from 'src/app/interfaces/interfaces';
+import { Publicacion } from 'src/app/models/publicacion';
+
 
 @Component({
   selector: 'app-modal-editar-publicacion',
@@ -9,7 +10,7 @@ import { Publicacion } from 'src/app/interfaces/interfaces';
 })
 export class ModalEditarPublicacionPage implements OnInit {
 
-  @Input() publica: Publicacion;
+  @Input() publica: Publicacion = new Publicacion();
 
   @ViewChild(IonTextarea) textArea: IonTextarea;
 

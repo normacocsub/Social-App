@@ -145,7 +145,20 @@ namespace Logica
                     {
                         _context.Comentarios.Update(response);
                         _context.SaveChanges();
-                        return new EditarComentarioResponse(response);
+                        
+
+                        var publicaciones = _context.Publicacions.Include(p => p.Comentarios).ToList();
+                        foreach (var item in publicaciones)
+                        {
+                            item.Usuario = _context.Usuarios.Find(item.IdUsuario);
+                            foreach (var item2 in item.Comentarios)
+                            {
+                                item2.Usuario = _context.Usuarios.Find(item2.IdUsuario);
+                            }
+                        }
+
+                        var responsePublicacion = publicaciones.Find(c => c.IdPublicacion == comentario.PublicacionId);
+                        return new EditarComentarioResponse(responsePublicacion);
                     }
                 }
                 else
@@ -161,10 +174,10 @@ namespace Logica
 
         public class EditarComentarioResponse
         {
-            public EditarComentarioResponse(Comentario comentario)
+            public EditarComentarioResponse(Publicacion publicacion)
             {
                 Error = false;
-                Comentario = comentario;
+                Publicacion = publicacion;
             }
 
             public EditarComentarioResponse(string mensaje, string estado)
@@ -177,7 +190,7 @@ namespace Logica
             public bool Error { get; set; }
             public string Estado { get; set; }
             public string Mensaje { get; set; }
-            public Comentario Comentario { get; set; }
+            public Publicacion Publicacion { get; set; }
         }
         public class EliminarPublicacionesResponse
         {

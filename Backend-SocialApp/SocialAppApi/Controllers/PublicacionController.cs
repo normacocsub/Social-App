@@ -1,9 +1,13 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Datos;
 using Entity;
 using Logica;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+
+using SocialAppApi.Hubs;
 using SocialAppApi.Models;
 
 namespace SocialAppApi.Controllers
@@ -14,13 +18,15 @@ namespace SocialAppApi.Controllers
     {
         private readonly PublicacionService _service;
 
-        public PublicacionController(SocialAppContext context)
+        private readonly IHubContext<SignalHub> _hubContext;
+        public PublicacionController(SocialAppContext context, IHubContext<SignalHub> hubContext)
         {
             _service = new PublicacionService(context);
+            _hubContext = hubContext;
         }
 
         [HttpPost]
-        public ActionResult<PublicacionViewModel> GuardarPublicacion(PublicacionInputModel publicacionInput)
+        public async Task<ActionResult<PublicacionViewModel>> GuardarPublicacion(PublicacionInputModel publicacionInput)
         {
             Publicacion publicacion = MapearPublicacion(publicacionInput);
             publicacion.Nombre = publicacion.Usuario.Nombres + " " + publicacion.Usuario.Apellidos;
@@ -33,7 +39,9 @@ namespace SocialAppApi.Controllers
                 detalleProblemas.Status = StatusCodes.Status500InternalServerError;
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
         }
 
         [HttpGet]
@@ -52,7 +60,7 @@ namespace SocialAppApi.Controllers
 
 
         [HttpPut]
-        public ActionResult<PublicacionViewModel> EditarPublicacion(PublicacionInputModel publicacionInput)
+        public async Task<ActionResult<PublicacionViewModel>> EditarPublicacion(PublicacionInputModel publicacionInput)
         {
             Publicacion publicacion = MapearPublicacion(publicacionInput);
             publicacion.IdPublicacion = publicacionInput.IdPublicacion;
@@ -71,11 +79,13 @@ namespace SocialAppApi.Controllers
                 }
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
         }
 
         [HttpDelete("{publicacion}")]
-        public ActionResult<PublicacionViewModel> EliminarPublicacion(string publicacion)
+        public async Task<ActionResult<PublicacionViewModel>> EliminarPublicacion(string publicacion)
         {
             var response = _service.EliminarPublicacion(publicacion);
             if(response.Error)
@@ -92,11 +102,13 @@ namespace SocialAppApi.Controllers
                 }
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
         }
 
         [HttpPut("Comentarios")]
-        public ActionResult<PublicacionViewModel> AgregarComentario(PublicacionInputModel publicacionInput)
+        public async Task<ActionResult<PublicacionViewModel>> AgregarComentario(PublicacionInputModel publicacionInput)
         {
             Publicacion publicacion = MapearPublicacion(publicacionInput);
             publicacion.IdPublicacion = publicacionInput.IdPublicacion;
@@ -117,12 +129,14 @@ namespace SocialAppApi.Controllers
                 }
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
         }
 
 
         [HttpPut("EditarComentario")]
-        public ActionResult<ComentarioViewModel> EditarComentario(ComentarioInputModel comentarioInput)
+        public async Task<ActionResult<ComentarioViewModel>> EditarComentario(ComentarioInputModel comentarioInput)
         {
             Comentario comentario = MapearComentario(comentarioInput);
             var response = _service.EditarComentario(comentario);
@@ -144,7 +158,9 @@ namespace SocialAppApi.Controllers
                 }
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Comentario);
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
         }
 
 

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SocialAppApi.Hubs;
 
 namespace SocialAppApi
 {
@@ -31,7 +32,18 @@ namespace SocialAppApi
 
             services.AddControllers();
 
+            
             //contextos base de datos
+            services.AddCors(options =>
+            {
+                    options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:8100")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .SetIsOriginAllowed((host) => true));
+            });
+
+            services.AddSignalR().AddAzureSignalR();
             string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<SocialAppContext>(Context => Context.UseSqlServer(connectionString));
 
@@ -80,6 +92,7 @@ namespace SocialAppApi
 
             app.UseHttpsRedirection();
 
+
             app.UseRouting();
             #region global cors policy activate Authentication/Authorization
             app.UseCors(x => x
@@ -94,9 +107,13 @@ namespace SocialAppApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalHub>("/signalHub");
+
             });
+
+           
         }
 
-        
+
     }
 }
