@@ -7,6 +7,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { Platform } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { BehaviorSubject, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const ruta = environment.ruta;
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,7 @@ import { BehaviorSubject, of } from 'rxjs';
 
 export class LoginService {
 
-  ruta: string ="https://localhost:5001/"
+  ruta: string = "";
   sqlObject: SQLiteObject;
   private currentUserSubject: BehaviorSubject<Usuario>;
   authSubject  =   new  BehaviorSubject(false);
@@ -26,6 +29,7 @@ export class LoginService {
               private sqlite: SQLite,
               private http: HttpClient,
               private fileTransfer: FileTransfer) {
+                this.ruta = ruta;
                 this.storage.get("Login").then(val =>{
                   if(val != null){
                     this.authSubject.next(true);

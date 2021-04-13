@@ -38,14 +38,14 @@ export class HomePage implements OnInit {
       console.log(this.publicaciones);
     });
 
-    this.actualizarListaSignal();
+    //this.actualizarListaSignal();
   }
 
-  private actualizarListaSignal(){
-    this.publicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
-      this.publicaciones.push(publicacion);
-    });
-  }
+  // private actualizarListaSignal(){
+  //   this.publicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
+  //     this.publicaciones.push(publicacion);
+  //   });
+  // }
 
 
   async presentToast(mensaje: string) {

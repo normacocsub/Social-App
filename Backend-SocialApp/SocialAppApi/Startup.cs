@@ -43,7 +43,7 @@ namespace SocialAppApi
                             .SetIsOriginAllowed((host) => true));
             });
 
-            services.AddSignalR().AddAzureSignalR();
+            services.AddSignalR();
             string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<SocialAppContext>(Context => Context.UseSqlServer(connectionString));
 

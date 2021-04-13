@@ -31,9 +31,11 @@ export class PublicacionesService {
     private http: HttpClient
   ) {
     this.ruta = ruta;
+    /*
     this.openDataBase();
     this.buildConnection();
     this.startConnection();
+    */
   }
 
   private buildConnection = () => {
@@ -41,7 +43,7 @@ export class PublicacionesService {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(this.ruta + 'signalHub', {
         skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets,
+        transport: signalR.HttpTransportType.WebSockets
         
       })
       .build();
