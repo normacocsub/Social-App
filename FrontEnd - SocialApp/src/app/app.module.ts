@@ -13,7 +13,6 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Network } from '@ionic-native/network/ngx';
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

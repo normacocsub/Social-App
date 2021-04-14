@@ -14,5 +14,6 @@ export class VerPublicacionPage implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }

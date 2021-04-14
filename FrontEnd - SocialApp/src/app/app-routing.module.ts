@@ -40,7 +40,8 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'registro-usuario',
     loadChildren: () => import('./pages/registro-usuario/registro-usuario.module').then( m => m.RegistroUsuarioPageModule)
   },
@@ -48,6 +49,26 @@ const routes: Routes = [
     path: 'editar-comentario',
     loadChildren: () => import('./pages/editar-comentario/editar-comentario.module').then( m => m.EditarComentarioPageModule)
   },
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'modal-privacidad',
+    loadChildren: () => import('./pages/modal-privacidad/modal-privacidad.module').then( m => m.ModalPrivacidadPageModule)
+  },  {
+    path: 'modal-security',
+    loadChildren: () => import('./pages/modal-security/modal-security.module').then( m => m.ModalSecurityPageModule)
+  },
+  {
+    path: 'modal-help',
+    loadChildren: () => import('./pages/modal-help/modal-help.module').then( m => m.ModalHelpPageModule)
+  },
+  {
+    path: 'modal-info-app',
+    loadChildren: () => import('./pages/modal-info-app/modal-info-app.module').then( m => m.ModalInfoAppPageModule)
+  },
+
 
 
 

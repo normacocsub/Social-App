@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ModalPage } from '../modal/modal.page';
+import { ModalHelpPage } from '../modal-help/modal-help.page';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
-  constructor() { }
+  constructor(public modalController: ModalController) { }
 
   ngOnInit() {
   }
-async modoOscuro(){
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
+  async openModalHelp() {
+    const modal = await this.modalController.create({
+      component: ModalHelpPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
 
-toggleDarkTheme(prefersDark.matches);
-
-// Listen for changes to the prefers-color-scheme media query
-prefersDark.addListener((mediaQuery) => toggleDarkTheme(mediaQuery.matches));
-
-// Add or remove the "dark" class based on if the media query matches
-function toggleDarkTheme(shouldAdd) {
-  document.body.classList.toggle('dark', shouldAdd);
-}
-}
 }

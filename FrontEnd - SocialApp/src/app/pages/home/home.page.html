@@ -3,8 +3,8 @@
     <ion-title>
      Line-U
     </ion-title>
-    
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -13,19 +13,19 @@
     <ion-card-content>
       
       <div>
-        <ion-button  (click)="crearPublicacion()">
+        <ion-button  (click)="crearPublicacion()" class="monospace">
           Deseas Crear una publicacion? 
         </ion-button>
       </div>
 
       <div>
         <ion-buttons slot="start">
-          <ion-button>
+          <ion-button class="monospace">
             <ion-icon slot="start" name="add"></ion-icon>
-            Publicacion
+             <b>Publicacion</b>
           </ion-button>
-          <ion-button (click)="crearPublicacionWithImagen()">
-            Foto/Video
+          <ion-button (click)="crearPublicacionWithImagen()" class="monospace">
+            <b>Foto/Video</b>
           </ion-button>
 
         </ion-buttons>

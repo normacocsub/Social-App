@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PerfilPageRoutingModule } from './perfil-routing.module';
 
 import { PerfilPage } from './perfil.page';
+import { ModalPage } from '../modal/modal.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PerfilPage } from './perfil.page';
     IonicModule,
     PerfilPageRoutingModule
   ],
-  declarations: [PerfilPage]
+  declarations: [PerfilPage, ModalPage],
+  entryComponents: [ModalPage]
 })
 export class PerfilPageModule {}

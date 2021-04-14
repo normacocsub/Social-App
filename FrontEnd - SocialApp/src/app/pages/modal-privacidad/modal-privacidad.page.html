@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Privacidad</ion-title>
+    <ion-buttons slot="end" class="close">
+      <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="chatbubble-ellipses-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <div class="alinear">
+          <p class="monospace">Comentarios</p>
+        </div>
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option>Todos</ion-item-option>
+        <ion-item-option>Amigos</ion-item-option>
+        <ion-item-option>Ninguno</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="at-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <div class="alinear">
+          <p class="monospace">Menciones</p>
+        </div>
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option>Todos</ion-item-option>
+        <ion-item-option>Amigos</ion-item-option>
+        <ion-item-option>Ninguno</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-icon name="pricetag-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <div class="alinear">
+          <p class="monospace">Etiquetas</p>
+        </div>
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+        <ion-item-options side="start">
+          <ion-item-option>Todos</ion-item-option>
+          <ion-item-option>Amigos</ion-item-option>
+          <ion-item-option>Ninguno</ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
