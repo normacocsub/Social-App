@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entity;
 
@@ -11,6 +12,8 @@ namespace SocialAppApi.Models
         public string Imagen { get; set; } 
         public Usuario Usuario { get; set; }
         public List<Comentario> Comentarios { get; set; }
+        public DateTime Fecha { get; set; }
+        public List<Reaccion> Reacciones { get; set; }
     }
 
     public class PublicacionViewModel : PublicacionInputModel 
@@ -24,6 +27,8 @@ namespace SocialAppApi.Models
             Imagen = publicacion.Imagen;
             Usuario = publicacion.Usuario;
             Comentarios = publicacion.Comentarios;
+            Fecha = publicacion.Fecha;
+            Reacciones = publicacion.Reacciones;
         }
     }
 }

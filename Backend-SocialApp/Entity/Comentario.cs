@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,5 +14,6 @@ namespace Entity
         [NotMapped]
         public Usuario Usuario { get; set; }
         public string IdUsuario { get; set; }
+        public DateTime Fecha { get; set; }
     }
 }

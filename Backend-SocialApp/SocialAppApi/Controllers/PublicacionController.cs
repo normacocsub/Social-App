@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Datos;
@@ -31,6 +32,7 @@ namespace SocialAppApi.Controllers
             Publicacion publicacion = MapearPublicacion(publicacionInput);
             publicacion.Nombre = publicacion.Usuario.Nombres + " " + publicacion.Usuario.Apellidos;
             publicacion.IdUsuario = publicacion.Usuario.Correo;
+            publicacion.Fecha = DateTime.Now;
             var response = _service.GuardarPublicacion(publicacion);
             if(response.Error)
             {
@@ -55,7 +57,7 @@ namespace SocialAppApi.Controllers
                 detalleProblemas.Status = StatusCodes.Status500InternalServerError;
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicaciones.Select(a => new PublicacionViewModel(a)));
+            return Ok(response.Publicaciones.Select(a => new PublicacionViewModel(a)).OrderByDescending(p => p.Fecha));
         }
 
 
@@ -108,13 +110,12 @@ namespace SocialAppApi.Controllers
         }
 
         [HttpPut("Comentarios")]
-        public async Task<ActionResult<PublicacionViewModel>> AgregarComentario(PublicacionInputModel publicacionInput)
+        public async Task<ActionResult<ComentarioViewModel>> AgregarComentario(ComentarioInputModel comentarioInput)
         {
-            Publicacion publicacion = MapearPublicacion(publicacionInput);
-            publicacion.IdPublicacion = publicacionInput.IdPublicacion;
-            publicacion.AgregarIdComentarios();
+            Comentario comentario = MapearComentario(comentarioInput);
+            comentario.Fecha = DateTime.Now;
+            var response = _service.AgregarComentarios(comentario);
             
-            var response = _service.AgregarComentarios(publicacion);
             if(response.Error)
             {
                 ModelState.AddModelError("Error al Actualizar la publicacion ", response.Mensaje);
@@ -163,6 +164,49 @@ namespace SocialAppApi.Controllers
             return Ok(publicacionview);
         }
 
+        [HttpPut("Reaccion")]
+        public async Task<ActionResult<ReaccionViewModel>> ActualizarReaccion(ReaccionInputModel reaccionInput)
+        {
+            Reaccion reaccion = MapearReaccion(reaccionInput);
+            var resultado = _service.EditarReaccion(reaccion);
+
+            if(resultado.Error)
+            {
+                ModelState.AddModelError("Error al Editar la reaccion ", resultado.Mensaje);
+                var detalleProblemas = new ValidationProblemDetails(ModelState);
+
+                if(resultado.Estado == "TwoReacciones")
+                {
+                    detalleProblemas.Status = StatusCodes.Status304NotModified;
+                }
+
+                if(resultado.Estado == "NoExiste")
+                {
+                    detalleProblemas.Status = StatusCodes.Status404NotFound;
+                }
+
+                if(resultado.Estado == "Aplication")
+                {
+                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
+                }
+                return BadRequest(detalleProblemas);
+            }
+            var publicacionview = new PublicacionViewModel(resultado.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);    
+        }
+
+        private Reaccion MapearReaccion(ReaccionInputModel reaccionInput)
+        {
+            var reaccion = new Reaccion
+            {
+                Like = reaccionInput.Like,
+                Love = reaccionInput.Love,
+                IdUsuario = reaccionInput.IdUsuario,
+                IdPublicacion = reaccionInput.IdPublicacion,
+            };
+            return reaccion;
+        }
 
         private Comentario MapearComentario(ComentarioInputModel comentarioInput)
         {
@@ -172,7 +216,7 @@ namespace SocialAppApi.Controllers
                 ContenidoComentario = comentarioInput.ContenidoComentario,
                 PublicacionId = comentarioInput.PublicacionId,
                 Usuario = comentarioInput.Usuario,
-                IdUsuario = comentarioInput.IdUsuario
+                IdUsuario = comentarioInput.IdUsuario,
             };
             return comentario;
         }
@@ -185,6 +229,8 @@ namespace SocialAppApi.Controllers
                 Imagen = publicacionInput.Imagen,
                 Comentarios = publicacionInput.Comentarios,
                 Usuario = publicacionInput.Usuario,
+                Reacciones = publicacionInput.Reacciones,
+                
             };
             return publicacion;
         }

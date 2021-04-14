@@ -27,6 +27,9 @@ namespace Datos.Migrations
                     b.Property<string>("ContenidoComentario")
                         .HasColumnType("varchar(500)");
 
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IdUsuario")
                         .HasColumnType("varchar(40)");
 
@@ -50,6 +53,9 @@ namespace Datos.Migrations
                     b.Property<string>("ContenidoPublicacion")
                         .HasColumnType("varchar(500)");
 
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IdUsuario")
                         .HasColumnType("varchar(40)");
 
@@ -66,6 +72,32 @@ namespace Datos.Migrations
                     b.ToTable("Publicacions");
                 });
 
+            modelBuilder.Entity("Entity.Reaccion", b =>
+                {
+                    b.Property<string>("Codigo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdUsuario")
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<bool>("Like")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Love")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicacionIdPublicacion")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Codigo");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.HasIndex("PublicacionIdPublicacion");
+
+                    b.ToTable("Reaccion");
+                });
+
             modelBuilder.Entity("Entity.Usuario", b =>
                 {
                     b.Property<string>("Correo")
@@ -74,8 +106,8 @@ namespace Datos.Migrations
                     b.Property<string>("Apellidos")
                         .HasColumnType("varchar(25)");
 
-                    b.Property<byte[]>("ImagePerfil")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ImagePerfil")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KeyPasswordDesEncriptar")
                         .HasColumnType("varchar(16)");
@@ -112,9 +144,22 @@ namespace Datos.Migrations
                         .HasForeignKey("IdUsuario");
                 });
 
+            modelBuilder.Entity("Entity.Reaccion", b =>
+                {
+                    b.HasOne("Entity.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario");
+
+                    b.HasOne("Entity.Publicacion", null)
+                        .WithMany("Reacciones")
+                        .HasForeignKey("PublicacionIdPublicacion");
+                });
+
             modelBuilder.Entity("Entity.Publicacion", b =>
                 {
                     b.Navigation("Comentarios");
+
+                    b.Navigation("Reacciones");
                 });
 #pragma warning restore 612, 618
         }

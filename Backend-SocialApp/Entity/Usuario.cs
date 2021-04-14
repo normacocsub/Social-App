@@ -21,7 +21,7 @@ namespace Entity
 
         [Column(TypeName = "varchar(16)")]
         public string KeyPasswordDesEncriptar { get; set; }
-        public byte[] ImagePerfil { get; set; }
+        public string ImagePerfil { get; set; }
         
     }
 }
