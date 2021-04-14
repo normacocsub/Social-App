@@ -25,6 +25,30 @@
     padding-inline-start: 17px;
 }
 
-.labelComentario{
+#labelComentario{
     font-size: 10px;
+}
+.card{
+    border-radius: 20px;
+}
+.inputcomentario{
+    margin-right: 50PX;
+    font-family: monospace;
+}
+.iteminputcomentario{
+    margin-left: -40px; 
+    margin-right: -50px;
+}
+.divcomentario{
+    display: flex; margin-left: 50px;
+}
+.itemicono{
+    margin-left: 40px;
+}
+
+.like {
+    color: rgb(38, 38, 248);
+}
+.heart{
+    color: red;
 }

@@ -15,6 +15,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { EditarComentarioPage } from 'src/app/pages/editar-comentario/editar-comentario.page';
 import { Publicacion } from 'src/app/models/publicacion';
 import { Comentario } from 'src/app/models/comentario';
+import { Button } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-publicacion',
@@ -27,8 +28,11 @@ export class PublicacionComponent implements OnInit {
   @ViewChild(IonInput) input: IonInput;
   publicacionEditar: Publicacion;
   comentario: string = '';
+  heart: boolean = false;
+  like: boolean = false;
   usuario: Usuario = new Usuario();
   comentarioEditar: Comentario;
+  
 
   constructor(
     private actionSheetController: ActionSheetController,
@@ -48,6 +52,16 @@ export class PublicacionComponent implements OnInit {
     this.actualizarListaSignal();
   }
 
+  menkokora(){
+    this.heart = !this.heart;
+    console.log(this.heart);
+  }
+
+  laik(){
+    this.like = !this.like;
+    console.log(this.like);
+  }
+  
   private actualizarListaSignal(){
     this.PublicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
         publicacion = publicacion;
@@ -66,6 +80,7 @@ export class PublicacionComponent implements OnInit {
     }
   }
 
+  
   comentar() {
     var comentario = {
       idComentario: '',
@@ -182,7 +197,7 @@ export class PublicacionComponent implements OnInit {
       {
         text: 'Eliminar',
         icon: 'trash-outline',
-        cssClass: 'action-dark',
+        cssClass: 'monospace',
         handler: () => {
           this.presentAlertConfirm();
         },
@@ -191,13 +206,13 @@ export class PublicacionComponent implements OnInit {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
-        cssClass: 'action-dark',
+        cssClass: 'monospace',
         handler: () => {
           console.log('Cancel clicked');
         },
       },
     ];
-
+    
     var usuarioValidar = new Usuario();
     (await this.service.getUser()).subscribe((resultado) => {
       usuarioValidar = resultado;
@@ -213,6 +228,7 @@ export class PublicacionComponent implements OnInit {
     });
     await actionSheet.present();
   }
+  
 
   async editarComentario(comentario: Comentario) {
     const modal = await this.modalController.create({
@@ -234,4 +250,5 @@ export class PublicacionComponent implements OnInit {
   }
 
   eliminarComentario(comentario: Comentario) {}
+  
 }

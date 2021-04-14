@@ -10,17 +10,17 @@
 
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">E-Mail</ion-label>
+        <ion-label position="floating" class="monospace">E-Mail</ion-label>
         <ion-input [(ngModel)]="usuario.correo"  type="text"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label position="floating">Password</ion-label>
+        <ion-label position="floating" class="monospace">Password</ion-label>
         <ion-input [(ngModel)]="usuario.password" type="text"></ion-input>
       </ion-item>
 
       <ion-item button color="primary" (click)="login()">
-        <ion-label >Login</ion-label>
+        <ion-label class="monospace">Login</ion-label>
       </ion-item>
 
 
@@ -32,12 +32,12 @@
   
   <ion-card>
     <ion-item button [routerLink]="['/registro-usuario']">
-      <ion-label>Registrar</ion-label>
+      <ion-label class="monospace">Registrar</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>{{loginService.usuario.correo}}</ion-label>
-      <ion-label>{{loginService.authSubject.value}}</ion-label>
+      <ion-label class="monospace">{{loginService.usuario.correo}}</ion-label>
+      <ion-label class="monospace">{{loginService.authSubject.value}}</ion-label>
     </ion-item>
   </ion-card>
   

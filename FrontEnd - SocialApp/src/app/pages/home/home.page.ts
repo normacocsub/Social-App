@@ -41,6 +41,8 @@ export class HomePage implements OnInit {
     //this.actualizarListaSignal();
   }
 
+  
+
   // private actualizarListaSignal(){
   //   this.publicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
   //     this.publicaciones.push(publicacion);

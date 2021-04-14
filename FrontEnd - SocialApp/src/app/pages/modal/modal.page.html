@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configuraciones</ion-title>
+    <ion-buttons slot="end" class="close">
+      <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <div *ngIf="opcion==true" class="alinear">
+        <ion-icon name="moon-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <p class="monospace"> Tema oscuro</p>
+      </div>
+      <div *ngIf="opcion==false" class="alinear">
+        <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <p class="monospace"> Tema claro</p>
+      </div>
+      <div *ngIf="opcionInicial==Nan" class="alinear">
+        <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <p class="monospace"> Tema claro</p>
+      </div>
+      <ion-toggle slot="end" (ionChange)="onToggleColorTheme($event)"></ion-toggle>
+    </ion-item>
+    <ion-item (click)="openModalSeguridad()">
+      <div class="alinear">
+        <ion-icon name="shield-checkmark-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+        <p class="monospace">Seguridad</p>
+      </div>
+    </ion-item>
+    <ion-item (click)="openModalPrivacidad()">
+      <ion-icon name="lock-closed-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
+      <div class="alinear">
+        <p class="monospace">Privacidad</p>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
