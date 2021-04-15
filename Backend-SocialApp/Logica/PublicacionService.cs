@@ -90,8 +90,9 @@ namespace Logica
         {
             try
             {
-                var publicaciones = _context.Publicacions.Include(c => c.Comentarios).ToList();
-                var response = publicaciones.Find( p => p.IdPublicacion == comentario.PublicacionId);
+                var publicaciones = _context.Publicacions.Include(c => c.Comentarios)
+                .ToList();
+                var response = publicaciones.Find( p => p.IdPublicacion == comentario.IdPublicacion);
                 if(response != null)
                 {
                     response.Comentarios.Add(comentario);
@@ -102,10 +103,14 @@ namespace Logica
                         if(item.IdComentario == "")
                         {
                             item.IdComentario = Seguridad.RandomString(16);
+                            
                         }
+                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
                     }
+                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
                     _context.Publicacions.Update(response);
                     _context.SaveChanges();
+                    response.Comentarios = response.Comentarios.OrderByDescending(c => c.Fecha).ToList();
                     return new EditarPublicacionesReponse(response);
                 }
                 else
@@ -163,17 +168,15 @@ namespace Logica
                         _context.SaveChanges();
                         
 
-                        var publicaciones = _context.Publicacions.Include(p => p.Comentarios).ToList();
-                        foreach (var item in publicaciones)
+                        var publicaciones = ConsultarPublicaciones();
+
+                        if(publicaciones.Error)
                         {
-                            item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                            foreach (var item2 in item.Comentarios)
-                            {
-                                item2.Usuario = _context.Usuarios.Find(item2.IdUsuario);
-                            }
+                            return new EditarComentarioResponse($"Error en la aplicacion {publicaciones.Mensaje}", "Aplication");
                         }
 
-                        var responsePublicacion = publicaciones.Find(c => c.IdPublicacion == comentario.PublicacionId);
+                        var responsePublicacion = publicaciones.Publicaciones.Find(c => c.IdPublicacion == comentario.IdPublicacion);
+                        responsePublicacion.Comentarios = responsePublicacion.Comentarios.OrderByDescending(c => c.Fecha).ToList();
                         return new EditarComentarioResponse(responsePublicacion);
                     }
                 }
@@ -185,6 +188,45 @@ namespace Logica
             catch(Exception e)
             {
                 return new EditarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
+            }
+        }
+
+        public EliminarComentarioResponse EliminarComentario(string codigo, string publicacion)
+        {
+            try
+            {
+                var publicaciones = ConsultarPublicaciones();
+                if(publicaciones.Error == false)
+                {
+                    var respuesta = publicaciones.Publicaciones.Find(p => p.IdPublicacion == publicacion);
+                    if(respuesta != null)
+                    {
+                        var respuestaComentario = respuesta.Comentarios.Find(c => c.IdComentario == codigo);
+                        if(respuestaComentario != null)
+                        {
+                            respuesta.Comentarios.Remove(respuestaComentario);
+                            _context.Publicacions.Update(respuesta);
+                            _context.SaveChanges();
+                            return new EliminarComentarioResponse(respuesta);
+                        }
+                        else
+                        {
+                            return new EliminarComentarioResponse("No existe el comentario", "NoExiste");
+                        }
+                    }
+                    else
+                    {
+                        return new EliminarComentarioResponse("No existe la publicacion", "NoExiste");
+                    }
+                }
+                else
+                {
+                    return new EliminarComentarioResponse("Error al consultar las publicaciones", "Aplication");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EliminarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
             }
         }
 
@@ -221,6 +263,93 @@ namespace Logica
             {
                 return new EditarReaccionResponse($"Error en la aplicacion {e.Message}", "Aplication");
             }
+        }
+
+        public EliminarReaccionResponse EliminarReaccion(string codigo, string IdPublicacion)
+        {
+            try
+            {
+                var response = ConsultarPublicaciones();
+                var reaccion = _context.Reacciones.Find(codigo);
+                if(reaccion != null)
+                {
+                    if(response.Error == false)
+                    {
+                        var respuesta = response.Publicaciones.Find(p => p.IdPublicacion == IdPublicacion);
+                        if(respuesta != null)
+                        {
+                            var respuestaReaccion = respuesta.Reacciones.Find(r => r.Codigo == reaccion.Codigo);
+                            if(respuestaReaccion != null)
+                            {
+                                respuesta.Reacciones.Remove(respuestaReaccion);
+                                _context.Publicacions.Update(respuesta);
+                                _context.SaveChanges();
+                                return new EliminarReaccionResponse(respuesta);
+                            }
+                            else
+                            {
+                                return new EliminarReaccionResponse("La reaccion no existe", "NoExiste");
+                            }
+                        }
+                        else
+                        {
+                            return new EliminarReaccionResponse("No existe la publicacion", "NoExiste");
+                        }
+                    }
+                    else
+                    {
+                        return new EliminarReaccionResponse($"Error en la aplicacion {response.Mensaje}", "Aplication");
+                    }
+                }
+                else
+                {
+                    return new EliminarReaccionResponse("No existe la reaccion", "NoExiste");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EliminarReaccionResponse($"Error en la aplicacion {e.Message}", "Aplication");
+            }
+        }
+
+        public class EliminarComentarioResponse
+        {
+            public EliminarComentarioResponse(Publicacion publicacion)
+            {
+                Error = false;
+                Publicacion = publicacion;
+            }
+
+            public EliminarComentarioResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Estado { get; set; }
+            public string Mensaje { get; set; }
+            public Publicacion Publicacion { get; set; }
+        }
+
+        public class EliminarReaccionResponse
+        {
+            public EliminarReaccionResponse(Publicacion publicacion)
+            {
+                Error = false;
+                Publicacion = publicacion;
+            }
+
+            public EliminarReaccionResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Estado { get; set; }
+            public string Mensaje { get; set; }
+            public Publicacion Publicacion { get; set; }
         }
 
 

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-     Home
+     Mater Social
     </ion-title>
   </ion-toolbar>
 
@@ -13,25 +13,19 @@
     <ion-card-content>
       
       <div>
-        <ion-button  (click)="crearPublicacion()" class="monospace">
+        <ion-button  (click)="crearPublicacionWithImagen()" class="monospace">
           Deseas Crear una publicacion? 
         </ion-button>
       </div>
 
-      <div>
-        <ion-buttons slot="start">
-          <ion-button class="monospace">
-            <ion-icon slot="start" name="add"></ion-icon>
-             <b>Publicacion</b>
-          </ion-button>
-          <ion-button (click)="crearPublicacionWithImagen()" class="monospace">
-            <b>Foto/Video</b>
-          </ion-button>
-
-        </ion-buttons>
-      </div>
+      
     </ion-card-content>
     
   </ion-card>
+
+  <ion-refresher  slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <app-publicaciones  [publicaciones]="publicaciones"></app-publicaciones>
 </ion-content>

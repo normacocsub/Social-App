@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datos.Migrations
 {
     [DbContext(typeof(SocialAppContext))]
-    [Migration("20210414164722_ReactionCreate")]
-    partial class ReactionCreate
+    [Migration("20210415153440_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,17 +32,20 @@ namespace Datos.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IdPublicacion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdUsuario")
                         .HasColumnType("varchar(40)");
 
-                    b.Property<string>("PublicacionId")
+                    b.Property<string>("PublicacionIdPublicacion")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdComentario");
 
                     b.HasIndex("IdUsuario");
 
-                    b.HasIndex("PublicacionId");
+                    b.HasIndex("PublicacionIdPublicacion");
 
                     b.ToTable("Comentarios");
                 });
@@ -80,7 +83,7 @@ namespace Datos.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuario")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<bool>("Like")
                         .HasColumnType("bit");
@@ -92,6 +95,8 @@ namespace Datos.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Codigo");
+
+                    b.HasIndex("IdUsuario");
 
                     b.HasIndex("PublicacionIdPublicacion");
 
@@ -134,7 +139,7 @@ namespace Datos.Migrations
 
                     b.HasOne("Entity.Publicacion", null)
                         .WithMany("Comentarios")
-                        .HasForeignKey("PublicacionId");
+                        .HasForeignKey("PublicacionIdPublicacion");
                 });
 
             modelBuilder.Entity("Entity.Publicacion", b =>
@@ -146,6 +151,10 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Entity.Reaccion", b =>
                 {
+                    b.HasOne("Entity.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("IdUsuario");
+
                     b.HasOne("Entity.Publicacion", null)
                         .WithMany("Reacciones")
                         .HasForeignKey("PublicacionIdPublicacion");

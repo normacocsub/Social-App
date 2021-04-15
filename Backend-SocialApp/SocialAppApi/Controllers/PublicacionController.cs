@@ -196,6 +196,58 @@ namespace SocialAppApi.Controllers
             return Ok(publicacionview);    
         }
 
+        [HttpDelete("Reaccion/{codigo}/{idPublicacion}")]
+        public async Task<ActionResult<PublicacionViewModel>> EliminarReaccion(string codigo, string idPublicacion)
+        {
+            var response = _service.EliminarReaccion(codigo, idPublicacion);
+            if(response.Error)
+            {
+                ModelState.AddModelError("Error al Eliminar la reaccion ", response.Mensaje);
+                var detalleProblemas = new ValidationProblemDetails(ModelState);
+
+                if(response.Estado == "NoExiste")
+                {
+                    detalleProblemas.Status = StatusCodes.Status404NotFound;
+                }
+                if(response.Estado == "Aplication")
+                {
+                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
+                }
+
+                return BadRequest(detalleProblemas);
+            }
+            
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
+        }
+
+        [HttpDelete("Comentario/{codigo}/{publicacion}")]
+        public async Task<ActionResult<PublicacionViewModel>> EliminarComentario(string codigo, string publicacion)
+        {
+            var response = _service.EliminarComentario(codigo, publicacion);
+            if(response.Error)
+            {
+                ModelState.AddModelError("Error al Eliminar el comentario ", response.Mensaje);
+                var detalleProblemas = new ValidationProblemDetails(ModelState);
+
+                if(response.Estado == "NoExiste")
+                {
+                    detalleProblemas.Status = StatusCodes.Status404NotFound;
+                }
+                if(response.Estado == "Aplication")
+                {
+                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
+                }
+
+                return BadRequest(detalleProblemas);
+            }
+            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
+            return Ok(publicacionview);
+
+        }
+
         private Reaccion MapearReaccion(ReaccionInputModel reaccionInput)
         {
             var reaccion = new Reaccion
@@ -214,7 +266,7 @@ namespace SocialAppApi.Controllers
             {
                 IdComentario = comentarioInput.IdComentario,
                 ContenidoComentario = comentarioInput.ContenidoComentario,
-                PublicacionId = comentarioInput.PublicacionId,
+                IdPublicacion = comentarioInput.PublicacionId,
                 Usuario = comentarioInput.Usuario,
                 IdUsuario = comentarioInput.IdUsuario,
             };

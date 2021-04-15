@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ruta: 'https://socialapiapp.azurewebsites.net/',
+  ruta: 'https://localhost:5001/',
 };
 
 /*

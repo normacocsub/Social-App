@@ -14,6 +14,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
     FileTransfer,
     Network,
     FingerprintAIO,
+    AppVersion
   ],
   bootstrap: [AppComponent],
 })

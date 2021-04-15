@@ -1,4 +1,5 @@
 import { Comentario } from "./comentario";
+import { Reaccion } from "./reaccion";
 import { Usuario } from "./usuario";
 
 export class Publicacion {
@@ -8,8 +9,14 @@ export class Publicacion {
     imagen: string;
     comentarios: Comentario[];
     usuario: Usuario;
+    fecha: Date;
+    reacciones: Reaccion[];
 
     constructor(){
         this.usuario = new Usuario();
+        this.reacciones = [];
+        this.comentarios = [];
     }
+
+    
 }

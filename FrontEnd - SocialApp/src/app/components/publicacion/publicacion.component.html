@@ -20,7 +20,7 @@
       </div>
     </ion-card-title>
   
-    <ion-card-subtitle class="ion-padding monospace">Hace 1 min</ion-card-subtitle>
+    <ion-card-subtitle class="ion-padding monospace">{{publicacion.fecha | date: 'fullDate' }} </ion-card-subtitle>
   
     <ion-card-content (click)="verPublicacion()">
       <p class="monospace">{{ publicacion.contenidoPublicacion }}</p>
@@ -54,7 +54,7 @@
   
             <ion-button  (click)="verPublicacion()" class="buttonIconTwo">
               <div *ngIf="publicacion.comentarios.length > 0">
-                <ion-label class="labelComentario monospace">{{publicacion.comentarios[0].usuario?.nombres}} {{publicacion.comentarios[0].usuario?.apellidos}}:</ion-label>
+                <ion-label #nombreUsuario class="labelComentario monospace">{{usuarioString}}</ion-label>
               </div>
               <ion-input type="text" class="inpuN" [disabled]="true"></ion-input>
             </ion-button>

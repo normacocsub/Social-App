@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datos.Migrations
 {
     [DbContext(typeof(SocialAppContext))]
-    [Migration("20210414173443_ReactionNewCreate")]
-    partial class ReactionNewCreate
+    [Migration("20210415163731_SecondCreate")]
+    partial class SecondCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,17 +32,20 @@ namespace Datos.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IdPublicacion")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdUsuario")
                         .HasColumnType("varchar(40)");
 
-                    b.Property<string>("PublicacionId")
+                    b.Property<string>("PublicacionIdPublicacion")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdComentario");
 
                     b.HasIndex("IdUsuario");
 
-                    b.HasIndex("PublicacionId");
+                    b.HasIndex("PublicacionIdPublicacion");
 
                     b.ToTable("Comentarios");
                 });
@@ -97,7 +100,7 @@ namespace Datos.Migrations
 
                     b.HasIndex("PublicacionIdPublicacion");
 
-                    b.ToTable("Reaccion");
+                    b.ToTable("Reacciones");
                 });
 
             modelBuilder.Entity("Entity.Usuario", b =>
@@ -136,7 +139,7 @@ namespace Datos.Migrations
 
                     b.HasOne("Entity.Publicacion", null)
                         .WithMany("Comentarios")
-                        .HasForeignKey("PublicacionId");
+                        .HasForeignKey("PublicacionIdPublicacion");
                 });
 
             modelBuilder.Entity("Entity.Publicacion", b =>

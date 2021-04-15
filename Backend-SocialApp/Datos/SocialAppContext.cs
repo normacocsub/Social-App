@@ -14,6 +14,7 @@ namespace Datos
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Publicacion> Publicacions { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
+        public DbSet<Reaccion> Reacciones { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

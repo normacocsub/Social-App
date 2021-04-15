@@ -10,7 +10,7 @@ namespace Entity
         public string IdComentario { get; set; }
         [Column(TypeName = "varchar(500)")]
         public string ContenidoComentario { get; set; }
-        public string PublicacionId { get; set; }
+        public string IdPublicacion{ get; set; }
         [NotMapped]
         public Usuario Usuario { get; set; }
         public string IdUsuario { get; set; }

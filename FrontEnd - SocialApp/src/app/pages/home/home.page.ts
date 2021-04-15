@@ -16,7 +16,7 @@ import { ToastController } from '@ionic/angular';
 export class HomePage implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacion: Publicacion;
-  conectionStatus: boolean = false;
+  conectionStatus: boolean = true;
   constructor(private modalController: ModalController,
               public publicacionService: PublicacionesService,
               private service: LoginService,
@@ -27,21 +27,33 @@ export class HomePage implements OnInit {
 
     this.networkService.getNetworkStatus().subscribe(result => {
       this.conectionStatus = result;
+      console.log(result);
+      
 
-      if(this.conectionStatus == false){
-        this.presentToast("No hay conexión a internet ");
-      }
-
-    })
-    this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
-      this.publicaciones = resulta;
-      console.log(this.publicaciones);
     });
+
+    /* if(this.conectionStatus == false){
+      this.presentToast("No hay conexión a internet ");
+    } */
+    
+    this.getPublicaciones();
 
     //this.actualizarListaSignal();
   }
 
-  
+  getPublicaciones(){
+    this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
+      this.publicaciones = resulta;
+      console.log(resulta);
+    });
+  }
+
+  doRefresh(event){
+    setTimeout(() =>{
+      this.getPublicaciones();
+      event.target.complete();
+    }, 1500);
+  }
 
   // private actualizarListaSignal(){
   //   this.publicacionService.signalRecived.subscribe((publicacion: Publicacion) => {
@@ -92,6 +104,7 @@ export class HomePage implements OnInit {
       console.log(result);
     });
     
+    this.getPublicaciones();
     /*
     this.publicacionService.insertPublicaciones(data).subscribe(result =>{
       console.log(result);

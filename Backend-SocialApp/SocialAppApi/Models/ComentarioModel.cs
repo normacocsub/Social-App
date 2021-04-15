@@ -21,7 +21,7 @@ namespace SocialAppApi.Models
         {
             IdComentario = comentario.IdComentario;
             ContenidoComentario = comentario.ContenidoComentario;
-            PublicacionId = comentario.PublicacionId;
+            PublicacionId = comentario.IdPublicacion;
             Usuario = comentario.Usuario;
             IdUsuario = comentario.IdUsuario;
             Fecha = comentario.Fecha;

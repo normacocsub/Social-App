@@ -9,6 +9,7 @@ import { Usuario } from '../models/usuario';
 import * as signalR from '@aspnet/signalr';
 import { Comentario } from '../models/comentario';
 import { environment } from 'src/environments/environment';
+import { Reaccion } from '../models/reaccion';
 
 const ruta = environment.ruta;
 
@@ -78,6 +79,7 @@ export class PublicacionesService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
     publicacion.comentarios = [];
+    publicacion.reacciones = [];
     return this.http.post(
       this.ruta + 'api/Publicacion',
       publicacion,
@@ -100,13 +102,13 @@ export class PublicacionesService {
     );
   }
 
-  agregarComentario(publicacion: Publicacion) {
+  agregarComentario(comentario: Comentario) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    return this.http.put(
+    return this.http.put<Publicacion>(
       this.ruta + 'api/Publicacion/Comentarios',
-      publicacion,
+      comentario,
       httpOptions
     );
   }
@@ -121,12 +123,30 @@ export class PublicacionesService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    console.log(comentario.contenidoComentario);
+    
     return this.http.put<Publicacion>(
       this.ruta + 'api/publicacion/EditarComentario',
       comentario,
       httpOptions
     );
+  }
+
+  editarReaccion(reaccion: Reaccion){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+
+    return this.http.put<Publicacion>(this.ruta + 'api/publicacion/Reaccion', reaccion, httpOptions)
+  }
+
+  eliminarReaccion(reaccion: string, idPublicacion: string){
+    return this.http.delete<Publicacion>(this.ruta +"api/publicacion/Reaccion/"+reaccion
+    +"/"+idPublicacion);
+  }
+
+  eliminarComentario(comentario: string, publicacion: string){
+    return this.http.delete<Publicacion>(this.ruta+"api/publicacion/Comentario/"+comentario
+    +"/"+publicacion);
   }
 
   //Publicacion Local
@@ -139,6 +159,7 @@ export class PublicacionesService {
     return;
   }
 
+  /*
   getPublicaciones(sql: SQLiteObject) {
     this.publicaciones = [];
     sql.executeSql('SELECT * FROM Publicaciones', []).then((r) => {
@@ -158,12 +179,14 @@ export class PublicacionesService {
             imagen: r.rows.item(i).urlImg,
             comentarios: comment,
             usuario: new Usuario(),
+            reacciones:   []
           };
           this.publicaciones.unshift(publicacion);
         }
       }
     });
   }
+  
 
   //conect to sql Lite
 
@@ -245,4 +268,5 @@ export class PublicacionesService {
         .catch((e) => console.log(e));
     });
   }
+  */
 }

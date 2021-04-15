@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Publicacion } from 'src/app/models/publicacion';
+import { ModalController } from '@ionic/angular';
 
 
 @Component({
@@ -10,10 +11,17 @@ import { Publicacion } from 'src/app/models/publicacion';
 export class VerPublicacionPage implements OnInit {
 
   @Input() publicacion: Publicacion = new Publicacion();
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
   }
   
+  cancelarModal(){
+    this.modalController.dismiss({
+      publicacion: this.publicacion.idPublicacion
+    });
+  }
+
+
 
 }

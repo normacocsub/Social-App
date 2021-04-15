@@ -9,6 +9,8 @@ export class PublicacionesComponent implements OnInit {
   @Input() publicaciones;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
 }
