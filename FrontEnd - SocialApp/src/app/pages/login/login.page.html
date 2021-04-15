@@ -1,26 +1,32 @@
 
 <ion-content>
+  <br>
+  <br>
+  <br>
+  <br>
+  <ion-card style="border-radius: 10px;">
 
-  <ion-card>
-    <ion-card-content>
-      Awesome content
-    </ion-card-content>
   </ion-card>
-  <ion-card>
-
+  <ion-card style="border-radius: 20px;">
+    
     <ion-card-content>
+      <ion-card-content>
+        <p class="login"><b>Inicio de sesión</b></p>
+        <br>
+        <img src="../../../assets/icon/login.svg" style="width: 70px; margin-left: 120px;" alt="">
+      </ion-card-content>
       <ion-item>
-        <ion-label position="floating" class="monospace">E-Mail</ion-label>
-        <ion-input [(ngModel)]="usuario.correo"  type="text"></ion-input>
+        <ion-label position="floating" class="monospace"> <p class="monospace">E-mail</p></ion-label>
+        <ion-input [(ngModel)]="usuario.correo"  type="email"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label position="floating" class="monospace">Password</ion-label>
-        <ion-input [(ngModel)]="usuario.password" type="text"></ion-input>
+        <ion-label position="floating" class="monospace"> <p class="monospace">Contraseña</p></ion-label>
+        <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
       </ion-item>
 
       <ion-item button color="primary" (click)="login()">
-        <ion-label class="monospace">Login</ion-label>
+        <ion-label class="monospace"> <p class="login">Iniciar sesión</p></ion-label>
       </ion-item>
 
 
@@ -29,15 +35,18 @@
     
     
   </ion-card>
-  
-  <ion-card>
+  <br>
+  <ion-item (click)="dactilar()">
+    <ion-icon name="finger-print-outline" class="dactilar"></ion-icon>
+  </ion-item>
+  <br>
+  <ion-card style="border-radius: 20px;">
     <ion-item button [routerLink]="['/registro-usuario']">
-      <ion-label class="monospace">Registrar</ion-label>
+      <ion-label> <p class="registrar">Registrarse</p></ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label class="monospace">{{loginService.usuario.correo}}</ion-label>
-      <ion-label class="monospace">{{loginService.authSubject.value}}</ion-label>
+      <ion-label class="monospace" *ngIf="!loginService.authSubject.value"><p class="registrar">Has olvidado tu contraseña?</p></ion-label>
     </ion-item>
   </ion-card>
   

@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
     this.networkService.getNetworkStatus().subscribe(result => {
       this.conectionStatus = result;
 
-      if(!this.conectionStatus){
+      if(this.conectionStatus == false){
         this.presentToast("No hay conexión a internet ");
       }
 

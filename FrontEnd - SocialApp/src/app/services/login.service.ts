@@ -44,9 +44,15 @@ export class LoginService {
   post(usuario: Usuario){
     return this.http.post(this.ruta+"api/Usuario", usuario);
   }
+  
+  async logout() {
+    await this.storage.remove('Login');
+    this.authSubject.next(false);
+  }
 
 
   loguearse(user: string, password: string){
+    
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };

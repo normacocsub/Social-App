@@ -68,6 +68,10 @@ const routes: Routes = [
     path: 'modal-info-app',
     loadChildren: () => import('./pages/modal-info-app/modal-info-app.module').then( m => m.ModalInfoAppPageModule)
   },
+  {
+    path: 'modal-contactar',
+    loadChildren: () => import('./pages/modal-contactar/modal-contactar.module').then( m => m.ModalContactarPageModule)
+  },
 
 
 

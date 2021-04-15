@@ -1,6 +1,7 @@
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ModalInfoAppPage } from '../modal-info-app/modal-info-app.page';
+import { ModalContactarPage } from '../modal-contactar/modal-contactar.page';
 @Component({
   selector: 'app-modal-help',
   templateUrl: './modal-help.page.html',
@@ -11,6 +12,13 @@ export class ModalHelpPage implements OnInit {
   constructor(public modalController: ModalController) { }
 
   ngOnInit() {
+  }
+  async contactar() {
+    const modal = await this.modalController.create({
+      component: ModalContactarPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
   closeModal(){
     this.modalController.dismiss();
@@ -26,7 +34,4 @@ export class ModalHelpPage implements OnInit {
     console.log('Hola');
   }
 
-  contactar(){
-    console.log('Hola');
-  }
 }
