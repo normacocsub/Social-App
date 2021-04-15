@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  ruta: 'https://localhost:5001/',
+  ruta: 'https://matersocialapi.azurewebsites.net/',
 };
