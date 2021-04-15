@@ -15,5 +15,8 @@ export class ModalContactarPage implements OnInit {
   closeModal(){
     this.modalController.dismiss();
   }
+  hola(){
+    
+  }
 
 }
