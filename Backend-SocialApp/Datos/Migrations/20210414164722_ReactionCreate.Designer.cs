@@ -4,14 +4,16 @@ using Datos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Datos.Migrations
 {
     [DbContext(typeof(SocialAppContext))]
-    partial class SocialAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210414164722_ReactionCreate")]
+    partial class ReactionCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +80,7 @@ namespace Datos.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdUsuario")
-                        .HasColumnType("varchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Like")
                         .HasColumnType("bit");
@@ -90,8 +92,6 @@ namespace Datos.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Codigo");
-
-                    b.HasIndex("IdUsuario");
 
                     b.HasIndex("PublicacionIdPublicacion");
 
@@ -146,10 +146,6 @@ namespace Datos.Migrations
 
             modelBuilder.Entity("Entity.Reaccion", b =>
                 {
-                    b.HasOne("Entity.Usuario", null)
-                        .WithMany()
-                        .HasForeignKey("IdUsuario");
-
                     b.HasOne("Entity.Publicacion", null)
                         .WithMany("Reacciones")
                         .HasForeignKey("PublicacionIdPublicacion");

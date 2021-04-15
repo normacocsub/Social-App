@@ -35,7 +35,9 @@ namespace Logica
         {
             try
             {
-                var publicaciones = _context.Publicacions.Include(p => p.Comentarios).ToList();
+                var publicaciones = _context.Publicacions.Include(p => p.Comentarios.OrderByDescending(c => c.Fecha))
+                .Include(p => p.Reacciones)
+                .ToList().OrderByDescending(p => p.Fecha);
                 foreach (var item in publicaciones)
                 {
                     item.Usuario = _context.Usuarios.Find(item.IdUsuario);
@@ -43,8 +45,13 @@ namespace Logica
                     {
                         item2.Usuario = _context.Usuarios.Find(item2.IdUsuario);
                     }
+                    foreach (var item3 in item.Reacciones)
+                    {
+                        item3.Usuario = _context.Usuarios.Find(item3.IdUsuario);
+                    }
                 }
-                return new ConsultarPublicacionesResponse(_context.Publicacions.Include(p => p.Comentarios).ToList());
+                return new ConsultarPublicacionesResponse(_context.Publicacions.Include(p => p.Comentarios
+                .OrderByDescending(c => c.Fecha)).ToList());
             }
             catch(Exception e)
             {
@@ -79,15 +86,24 @@ namespace Logica
 
 
 
-        public EditarPublicacionesReponse AgregarComentarios(Publicacion publicacion)
+        public EditarPublicacionesReponse AgregarComentarios(Comentario comentario)
         {
             try
             {
                 var publicaciones = _context.Publicacions.Include(c => c.Comentarios).ToList();
-                var response = publicaciones.Find( p => p.IdPublicacion == publicacion.IdPublicacion);
+                var response = publicaciones.Find( p => p.IdPublicacion == comentario.PublicacionId);
                 if(response != null)
                 {
-                    response.Comentarios = publicacion.Comentarios;
+                    response.Comentarios.Add(comentario);
+                   
+                    foreach (var item in response.Comentarios)
+                    {
+
+                        if(item.IdComentario == "")
+                        {
+                            item.IdComentario = Seguridad.RandomString(16);
+                        }
+                    }
                     _context.Publicacions.Update(response);
                     _context.SaveChanges();
                     return new EditarPublicacionesReponse(response);
@@ -170,6 +186,62 @@ namespace Logica
             {
                 return new EditarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
             }
+        }
+
+        public EditarReaccionResponse EditarReaccion(Reaccion reaccion)
+        {
+            try
+            {
+                var publicaciones = _context.Publicacions.Include(p => p.Comentarios)
+                .Include(p => p.Reacciones)
+                .ToList();
+                var response = publicaciones.Find(p => p.IdPublicacion == reaccion.IdPublicacion);
+                if(response != null)
+                {
+                    if(reaccion.Like && reaccion.Love)
+                    {
+                        return new EditarReaccionResponse("No se puede usar las dos reacciones a la vez", "TwoReacciones");
+                    }
+                    if(reaccion.Like == false && reaccion.Love == false)
+                    {
+                        return new EditarReaccionResponse("No se encuentra ninguna reaccion", "TwoReacciones");
+                    }
+
+                    response.agregarReaccion(reaccion);
+                    _context.Publicacions.Update(response);
+                    _context.SaveChanges();
+                    return new EditarReaccionResponse(response);
+                }
+                else
+                {
+                    return new EditarReaccionResponse("No se encontro la publicacion", "NoExiste");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EditarReaccionResponse($"Error en la aplicacion {e.Message}", "Aplication");
+            }
+        }
+
+
+        public class EditarReaccionResponse
+        {
+            public EditarReaccionResponse(Publicacion publicacion)
+            {
+                Error = false;
+                Publicacion = publicacion;
+            }
+
+            public EditarReaccionResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Mensaje { get; set; }
+            public string Estado { get; set; }
+            public Publicacion Publicacion { get; set; }
         }
 
         public class EditarComentarioResponse

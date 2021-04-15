@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,22 +18,36 @@ namespace Entity
         [NotMapped]
         public Usuario Usuario { get; set; }
         public string IdUsuario { get; set; }
+        public DateTime Fecha { get; set; }
+        [NotMapped]
+        public Reaccion Reaccion { get; set; }
+        public List<Reaccion> Reacciones { get; set; }
 
         public Publicacion()
         {
             this.Comentarios = new List<Comentario>();
+            this.Reacciones = new List<Reaccion>();
         }
 
-        public void AgregarIdComentarios()
+        public void agregarReaccion(Reaccion reaccion)
         {
-            foreach (var item in Comentarios)
+            Reaccion = reaccion;
+
+            var response = Reacciones.Find(r =>  r.IdUsuario == Reaccion.IdUsuario);
+            if(response != null)
             {
-                if(item.IdComentario == "")
-                {
-                    item.IdComentario = Seguridad.RandomString(16);
-                }
-                item.IdUsuario = item.Usuario.Correo;
+                Reacciones.Remove(response);
+                response.Like = Reaccion.Like;
+                response.Love = Reaccion.Love;
+                Reacciones.Add(response);
+            }
+            else
+            {
+                Reaccion.CrearCodigo();
+                Reacciones.Add(Reaccion);
             }
         }
+
+
     }
 }

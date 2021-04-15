@@ -22,6 +22,9 @@ namespace Datos
 
             modelBuilder.Entity<Comentario>().HasOne<Usuario>().WithMany()
             .HasForeignKey(c => c.IdUsuario);
+
+            modelBuilder.Entity<Reaccion>().HasOne<Usuario>().WithMany()
+            .HasForeignKey(r => r.IdUsuario);
         }
     }
 }

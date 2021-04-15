@@ -4,14 +4,16 @@ using Datos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Datos.Migrations
 {
     [DbContext(typeof(SocialAppContext))]
-    partial class SocialAppContextModelSnapshot : ModelSnapshot
+    [Migration("20210413133509_NewCreate")]
+    partial class NewCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,32 +74,6 @@ namespace Datos.Migrations
                     b.ToTable("Publicacions");
                 });
 
-            modelBuilder.Entity("Entity.Reaccion", b =>
-                {
-                    b.Property<string>("Codigo")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IdUsuario")
-                        .HasColumnType("varchar(40)");
-
-                    b.Property<bool>("Like")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Love")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PublicacionIdPublicacion")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Codigo");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.HasIndex("PublicacionIdPublicacion");
-
-                    b.ToTable("Reaccion");
-                });
-
             modelBuilder.Entity("Entity.Usuario", b =>
                 {
                     b.Property<string>("Correo")
@@ -144,22 +120,9 @@ namespace Datos.Migrations
                         .HasForeignKey("IdUsuario");
                 });
 
-            modelBuilder.Entity("Entity.Reaccion", b =>
-                {
-                    b.HasOne("Entity.Usuario", null)
-                        .WithMany()
-                        .HasForeignKey("IdUsuario");
-
-                    b.HasOne("Entity.Publicacion", null)
-                        .WithMany("Reacciones")
-                        .HasForeignKey("PublicacionIdPublicacion");
-                });
-
             modelBuilder.Entity("Entity.Publicacion", b =>
                 {
                     b.Navigation("Comentarios");
-
-                    b.Navigation("Reacciones");
                 });
 #pragma warning restore 612, 618
         }

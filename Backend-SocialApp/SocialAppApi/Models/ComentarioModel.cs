@@ -1,3 +1,4 @@
+using System;
 using Entity;
 
 namespace SocialAppApi.Models
@@ -9,6 +10,7 @@ namespace SocialAppApi.Models
         public string PublicacionId { get; set; }
         public Usuario Usuario { get; set; }
         public string IdUsuario { get; set; }
+        public DateTime Fecha { get; set; }
     }
 
     public class ComentarioViewModel : ComentarioInputModel
@@ -22,6 +24,7 @@ namespace SocialAppApi.Models
             PublicacionId = comentario.PublicacionId;
             Usuario = comentario.Usuario;
             IdUsuario = comentario.IdUsuario;
+            Fecha = comentario.Fecha;
         }
     }
 }
