@@ -230,6 +230,20 @@ namespace Logica
             }
         }
 
+       
+         public ConsultarReaccionesResponse ConsultarReacciones()
+        {
+            try
+            {
+                List<Reaccion> reacciones = _context.Reacciones.ToList();
+                return new ConsultarReaccionesResponse(reacciones);
+            }
+            catch (Exception e)
+            {
+                return new ConsultarReaccionesResponse($"Error en la aplicacion:  {e.Message}");
+            }
+        }
+
         public EditarReaccionResponse EditarReaccion(Reaccion reaccion)
         {
             try
@@ -471,4 +485,21 @@ namespace Logica
             public Publicacion Publicacion { get; set; }
         }
     }
+    public class ConsultarReaccionResponse
+        {
+            public ConsultarReaccionResponse(List<Reaccion> Reacciones)
+            {
+                Error = false;
+                Publicaciones = publicacions;
+            }
+
+            public ConsultarReaccionResponse(string mensaje)
+            {
+                Error = true;
+                Mensaje = mensaje;
+            }
+            public bool Error { get; set; }
+            public string Mensaje { get; set; }
+            public List<Reaccion> Reacciones { get; set; }
+        }
 }

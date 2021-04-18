@@ -21,6 +21,9 @@ export class PerfilPage implements OnInit {
     });
     return await modal.present();
   }
+  hola(){
+    
+  }
   async openModalHelp() {
     const modal = await this.modalController.create({
       component: ModalHelpPage,

@@ -60,6 +60,24 @@ namespace SocialAppApi.Controllers
             return Ok(response.Publicaciones.Select(a => new PublicacionViewModel(a)).OrderByDescending(p => p.Fecha));
         }
 
+    [HttpGet]
+    public ActionResult<EmpleadoViewModel> GetReaccions()
+    {
+        var response = _service.ConsultarReacciones();
+        if (response.Error)
+        {
+            ModelState
+            .AddModelError("Error al consultar reacciones", response.Mensaje);
+            var detallesproblemas = new ValidationProblemDetails(ModelState);
+            detallesproblemas.Status = StatusCodes.Status500InternalServerError;
+            return BadRequest(detallesproblemas);
+        }
+        else
+        {
+            return Ok(response.Reacciones.Select(p => new ReaccionViewModel(p)));
+        }
+    }
+
 
         [HttpPut]
         public async Task<ActionResult<PublicacionViewModel>> EditarPublicacion(PublicacionInputModel publicacionInput)

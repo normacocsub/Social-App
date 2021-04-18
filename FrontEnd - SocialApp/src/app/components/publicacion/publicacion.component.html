@@ -29,6 +29,11 @@
     <div *ngIf="publicacion.imagen != ''">
       <img (click)="verPublicacion()" [src]="publicacion.imagen">
     </div>
+    <ion-item (click)="openModalReacciones()">
+      <ion-label>
+        Tú
+      </ion-label>
+    </ion-item>
     <ion-item>
       <div style="margin-right: 30px; display: flex;">
         <ion-item>

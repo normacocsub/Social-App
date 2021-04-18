@@ -18,6 +18,7 @@ import { Publicacion } from 'src/app/models/publicacion';
 import { Comentario } from 'src/app/models/comentario';
 import { Button } from 'selenium-webdriver';
 import { Reaccion } from 'src/app/models/reaccion';
+import { ModalReaccionesPage } from '../../pages/modal-reacciones/modal-reacciones.page';
 
 @Component({
   selector: 'app-publicacion',
@@ -36,6 +37,7 @@ export class PublicacionComponent implements OnInit {
   like: boolean = false;
   usuario: Usuario = new Usuario();
   comentarioEditar: Comentario;
+  reacciones: any = []; 
   
 
   constructor(
@@ -74,6 +76,16 @@ export class PublicacionComponent implements OnInit {
     }
     //this.actualizarListaSignal();
   }
+
+  async openModalReacciones(){
+    const modal = await this.modalController.create({
+      component: ModalReaccionesPage,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
+  }
+
+  
 
   calcularDias(){
     var fechaHoy = new Date(Date.now());

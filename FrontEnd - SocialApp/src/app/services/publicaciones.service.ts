@@ -139,6 +139,10 @@ export class PublicacionesService {
     return this.http.put<Publicacion>(this.ruta + 'api/publicacion/Reaccion', reaccion, httpOptions)
   }
 
+  consultarReacciones(){
+    return this.http.get<Reaccion[]>(this.ruta + 'api/publicacion/');
+  }
+
   eliminarReaccion(reaccion: string, idPublicacion: string){
     return this.http.delete<Publicacion>(this.ruta +"api/publicacion/Reaccion/"+reaccion
     +"/"+idPublicacion);

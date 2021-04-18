@@ -72,6 +72,10 @@ const routes: Routes = [
     path: 'modal-contactar',
     loadChildren: () => import('./pages/modal-contactar/modal-contactar.module').then( m => m.ModalContactarPageModule)
   },
+  {
+    path: 'modal-reacciones',
+    loadChildren: () => import('./pages/modal-reacciones/modal-reacciones.module').then( m => m.ModalReaccionesPageModule)
+  },
 
 
 

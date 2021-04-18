@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reacciones</ion-title>
+    <ion-buttons slot="end" class="close">
+      <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<ion-list>
+  <ion-item *ngFor="let item of personasReaccion">
+    {{item.nombre}}
+  </ion-item>
+</ion-list>
+
+</ion-content>

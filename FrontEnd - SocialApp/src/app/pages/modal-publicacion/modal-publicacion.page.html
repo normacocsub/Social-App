@@ -1,44 +1,41 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="monospace">Crear Publicacion</ion-title>
+    <ion-buttons slot="end" class="close">
+      <ion-icon (click)="cancelarModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item >
-    <ion-label position="floating" class="monospace">¿Que deseas publicar?</ion-label>
+    <ion-label position="floating" > <p class="monospace">¿Que deseas publicar?</p></ion-label>
     <ion-textarea (ionChange)="getText($event)" style="border: 5px;"></ion-textarea>
     
+    <div>
+      <div style="margin-left: 45px;">
+        <ion-buttons slot="start">
+          <ion-button (click)="Gallery()" color="primary" class="monospace">
+            Seleccionar Foto /
+          </ion-button>
+          <ion-button (click)="SeleccionarFoto()" color="success" class="monospace" >
+            / Tomar foto
+          </ion-button> 
+        </ion-buttons>
+      </div>
+    
+    </div>
     <div *ngIf="image">
       
       <div *ngIf="imagen != ''">
         <img [src]="imagen">
       </div>
 
-      <ion-button (click)="SeleccionarFoto()" expand="block" class="monospace">
-        Tomar Foto
-      </ion-button>
-
-      <ion-button (click)="Gallery()" expand="block" class="monospace">
-        Seleccionar Foto
+      <ion-button (click)="publicarModal()" expand="block" class="monospace">
+        Publicar
       </ion-button>
     </div>
 
-    <div>
-      
-      <ion-buttons slot="start">
-        <ion-button (click)="publicarModal()" color="success" class="monospace" >
-          <ion-icon name="checkmark-outline"></ion-icon>
-          Publicar 
-        </ion-button>
-  
-        <ion-button (click)="cancelarModal()" color="danger" class="monospace" >
-          <ion-icon name="close-outline"></ion-icon>
-          Cancelar
-        </ion-button> 
-      </ion-buttons>
-    
-    </div>
 
 
     <div>
