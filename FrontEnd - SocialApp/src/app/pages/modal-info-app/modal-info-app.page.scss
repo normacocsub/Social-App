@@ -1,0 +1,59 @@
+.close{
+    width: 30px;
+}
+.nameapp{
+    position: fixed; color: white;  
+    margin-left: 160px; 
+    margin-top: 220px;
+    font-family: monospace;
+    font-size: 20px;
+}
+.versionapp{
+    position: fixed; color: white;  
+    margin-left: 140px; 
+    margin-top: 245px;
+    font-family: monospace;
+    font-size: 20px;
+}
+.divapp{
+    position: fixed; color: white;  
+    margin-left: 10px; 
+    margin-right: 10px; 
+    margin-top: 350px;
+    font-family: monospace;
+    font-size: 20px;
+}
+.creador1app{
+    margin-left: 125px;
+}
+.creador2app{
+    margin-left: 135px;
+}
+.creador3app{
+    margin-left: 120px;
+}
+.fechapp{
+    margin-left: 135px;
+    text-decoration: underline;
+    color: red;
+}
+.back{
+    margin-left: 160px;
+    text-decoration: underline;
+    color: red;
+}
+.front{
+    margin-left: 154px;
+    text-decoration: underline;
+    color: red;
+}
+.alinear{
+    display: flex; 
+    align-items: center;
+}
+.rigth{
+    margin-right: 10px;
+}
+#rigth{
+    margin-left: 20px;
+}

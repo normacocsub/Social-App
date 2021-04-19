@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="monospace">Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <img class="perfil" src="../../../assets/descarga.jpg" alt="">
+  <ion-fab-button class="btnPerfil"><ion-icon name="camera-outline"></ion-icon></ion-fab-button>
+
+  <ion-item>
+    <ion-icon name="person-outline" class="animate__animated animate__swing"></ion-icon>
+    <p class="items">Nombre: </p>
+  </ion-item>
+  <ion-item (click)="openModal()">
+      <ion-icon name="settings-outline" class="animate__animated animate__swing"></ion-icon>
+    <p class="items">Configuración </p>
+  </ion-item>
+  <ion-item (click)="openModalHelp()">
+      <ion-icon name="help-buoy-outline" class="animate__animated animate__swing"></ion-icon>
+      <p class="items">Ayuda</p>
+  </ion-item>
+  <ion-item (click)="logout()">
+    <ion-icon name="exit-outline" class="animate__animated animate__swing"></ion-icon>
+    <p class="items">Cerrar sesión</p>
+  </ion-item>
+  
+</ion-content>

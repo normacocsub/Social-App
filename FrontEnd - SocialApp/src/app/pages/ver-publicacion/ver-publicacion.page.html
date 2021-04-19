@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelarModal()">
+        Cerrar
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="monospace">Ver publicacion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <app-publicacion [comentarios]="true" [publicacion]="publicacion"></app-publicacion>
+</ion-content>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="monospace">Editar Comentario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-icon slot="start" name="add"></ion-icon>
+    <ion-input type="text" placeholder="Awesome Input" (ionChange)="getText($event)"></ion-input>
+
+    
+  </ion-item>
+  <ion-buttons>
+    <ion-button color="danger" (click)="cancelarModal()" class="monospace">
+      Cancelar
+    </ion-button>
+
+    <ion-button color="primary" (click)="editarModal()" class="monospace">
+      Editar
+    </ion-button>
+    
+  </ion-buttons>
+    
+
+</ion-content>

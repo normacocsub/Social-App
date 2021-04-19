@@ -1,0 +1,57 @@
+.social-more{
+    font-size: 25px !important;
+    position: absolute;
+    right: -10px;
+    top: -6px;
+}
+
+.iconon{
+    font-size: 25px !important;
+    position: absolute;
+    right: 20;
+}
+
+.inpuN{
+    border-radius: 15px;
+    border-color: black; 
+}
+.buttonIcon{
+    padding-left: 40px;
+}
+
+.buttonIconTwo{
+
+    padding-right: 100px;
+    padding-inline-start: 17px;
+}
+
+#labelComentario{
+    font-size: 10px;
+}
+.card{
+    border-radius: 20px;
+}
+.inputcomentario{
+    margin-right: 50PX;
+    font-family: monospace;
+}
+.iteminputcomentario{
+    margin-left: -40px; 
+    margin-right: -50px;
+}
+.divcomentario{
+    display: flex; margin-left: 50px;
+}
+.itemicono{
+    margin-left: 40px;
+}
+
+.like {
+    color: rgb(38, 38, 248);
+}
+.heart{
+    color: red;
+}
+.close{
+    width: 30px;
+}

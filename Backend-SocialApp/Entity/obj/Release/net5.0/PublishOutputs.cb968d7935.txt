@@ -1,0 +1,3 @@
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\publish\Entity.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\publish\Entity.deps.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\publish\Entity.pdb

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-title class="monospace">Info de la aplicación</ion-title>
+    <ion-buttons slot="end" class="close">
+      <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="../../../assets/b.jpg" style="position: fixed;" alt="socialapp">
+  <ion-label class="nameapp">{{nombre}}</ion-label>
+  <ion-label class="versionapp">Versión {{version}}</ion-label>
+  <div class="divapp">
+    <ion-label class="back"> <b>Backend</b></ion-label>
+    <br>
+    <ion-label class="creador1app">Fernando Vega</ion-label>
+    <br>
+    <ion-label class="front"> <b>Frontend</b></ion-label>
+    <br>
+    <ion-label class="creador2app">Shadia Días</ion-label>
+    <br>
+    <ion-label class="creador3app">Diego Santiago</ion-label>
+    <br>
+    <ion-label class="fechapp"> <b>© 2021-2021</b></ion-label>
+  </div>
+  
+  <img src="../../../assets/icon/favicon.png" style="position: fixed; margin-left: 175px; margin-top: 280px;" alt="">
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+     Mater Social
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card>
+    <ion-card-content>
+      
+      <div>
+        <ion-button  (click)="crearPublicacionWithImagen()" class="monospace">
+          Deseas Crear una publicacion? 
+        </ion-button>
+      </div>
+
+      
+    </ion-card-content>
+    
+  </ion-card>
+
+  <ion-refresher  slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <app-publicaciones  [publicaciones]="publicaciones"></app-publicaciones>
+</ion-content>
