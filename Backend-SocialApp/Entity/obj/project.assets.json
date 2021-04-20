@@ -117,11 +117,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\norma\\Desktop\\Social-App-main\\Backend-SocialApp\\Entity\\Entity.csproj",
+      "projectUniqueName": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj",
       "projectName": "Entity",
-      "projectPath": "c:\\Users\\norma\\Desktop\\Social-App-main\\Backend-SocialApp\\Entity\\Entity.csproj",
+      "projectPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj",
       "packagesPath": "C:\\Users\\norma\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\norma\\Desktop\\Social-App-main\\Backend-SocialApp\\Entity\\obj\\",
+      "outputPath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

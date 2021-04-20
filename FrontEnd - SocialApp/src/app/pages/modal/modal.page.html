@@ -18,11 +18,17 @@
         <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
         <p class="monospace"> Tema claro</p>
       </div>
+
       <div *ngIf="opcionInicial==Nan" class="alinear">
         <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
         <p class="monospace"> Tema claro</p>
       </div>
       <ion-toggle slot="end" (ionChange)="onToggleColorTheme($event)"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-icon class="animate__animated animate__swing" id="rigth" name="finger-print-outline"></ion-icon>
+      <ion-label>Huella</ion-label>
+      <ion-toggle  #toggleHuella slot="end" (ionChange)="onToggleHuella($event)"></ion-toggle>
     </ion-item>
     <ion-item (click)="openModalSeguridad()">
       <div class="alinear">

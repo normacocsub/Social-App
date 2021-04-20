@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { LoginService } from 'src/app/services/login.service';
-import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
 
 @Component({
   selector: 'app-login',
@@ -15,19 +15,21 @@ export class LoginPage implements OnInit {
   usuario: Usuario = new Usuario();
   opcion2: boolean;
   prueba: any;
-  constructor( private router: Router, public loginService: LoginService,
-     public alertController: AlertController,
-     private faio: FingerprintAIO) {
-    this.loginService.isLoggedIn().subscribe(result => {
-      if(result){
+  constructor(
+    private router: Router,
+    public loginService: LoginService,
+    public alertController: AlertController,
+    private spinnerDialog: SpinnerDialog,
+  ) {
+    this.loginService.isLoggedIn().subscribe((result) => {
+      if (result) {
         this.router.navigateByUrl('/tabs');
       }
     });
   }
 
-  ngOnInit() {
-  }
-  
+  ngOnInit() {}
+
   // async mensage(){
   //   this.toast.show(`Bienvenido`, '3000', 'center').subscribe(
   //     toast => {
@@ -36,21 +38,7 @@ export class LoginPage implements OnInit {
   //   );
   // }
 
-
-  huellaVerifi()
-  {
-    this.faio.registerBiometricSecret({
-      description: "Some biometric description", // optional | Default: null
-     secret: "my-super-secret", // mandatory
-     invalidateOnEnrollment: true, // optional | Default: false
-     disableBackup: true, // (Android Only) | optional | always `true` on Android
-      
-  })
-  .then((result: any) => {this.prueba = result})
-  .catch((error: any) => console.log(error));
-  }
-
-  async error(){
+  async error() {
     const alert = await this.alertController.create({
       header: 'Advertencia',
       subHeader: '',
@@ -61,7 +49,7 @@ export class LoginPage implements OnInit {
     let result = await alert.onDidDismiss();
     console.log(result);
   }
-  async mensaje(){
+  async mensaje() {
     const alert = await this.alertController.create({
       header: '',
       subHeader: '',
@@ -71,30 +59,22 @@ export class LoginPage implements OnInit {
     let result = await alert.onDidDismiss();
     console.log(result);
   }
-  async dactilar(){
-    this.huellaVerifi();
-    /*
-    const alert = await this.alertController.create({
-      header: 'Atención',
-      subHeader: '',
-      message: 'Ingrese su huella para ingresar a SocialApp',
-      buttons: ['OK']
-    });
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result);*/
-  }
 
   login() {
+    this.spinnerDialog.show(null, "Cargando");
     this.loginService
       .loguearse(this.usuario.correo, this.usuario.password)
-      .subscribe((result) => {
-        if (result != null) {
-          this.mensaje();
-          this.router.navigate(['/tabs']);
-        }
-      },error => this.error());
-
-      console.log(this.loginService.authSubject);
+      .subscribe(
+        (result) => {
+          if (result != null) {
+            this.spinnerDialog.hide();
+            this.mensaje();
+            this.router.navigate(['/tabs']);
+          }
+        },
+        (error) => this.error()
+      );
+    this.spinnerDialog.hide();
+    console.log(this.loginService.authSubject);
   }
 }

@@ -4,6 +4,7 @@ export class Usuario {
     nombres: string;
     apellidos: string;
     sexo: string;
+    imagePerfil: string;
 
     constructor(){
         this.correo = '';
@@ -11,5 +12,6 @@ export class Usuario {
         this.nombres = '';
         this.apellidos = '';
         this.sexo = '';
+        this.imagePerfil = '';
     }
 }

@@ -9,6 +9,7 @@ namespace SocialAppApi.Models
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string Sexo { get; set; }
+        public string ImagePerfil { get; set; }
     }
 
     public class UsuarioViewModel : UsuarioInputModel
@@ -22,6 +23,7 @@ namespace SocialAppApi.Models
             Nombres = usuario.Nombres;
             Apellidos = usuario.Apellidos;
             Sexo = usuario.Sexo;
+            ImagePerfil = usuario.ImagePerfil;
         }
     }
 }

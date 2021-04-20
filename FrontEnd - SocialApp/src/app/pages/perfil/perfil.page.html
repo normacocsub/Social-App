@@ -6,12 +6,21 @@
 
 <ion-content>
   <br>
-  <img class="perfil" src="../../../assets/descarga.jpg" alt="">
-  <ion-fab-button class="btnPerfil"><ion-icon name="camera-outline"></ion-icon></ion-fab-button>
+  <div *ngIf="usuario.imagePerfil == '';else imagen">
+    <img class="perfil" src="assets/descarga.jpg" alt=""> 
+  </div>
+
+  <ng-template #imagen>
+    <img class="perfil2" [src]="usuario.imagePerfil" width="300" height="300" alt=""> 
+  </ng-template>
+
+
+   
+  <ion-fab-button (click)="cambiarFotoPerfil()" class="btnPerfil"><ion-icon name="camera-outline"></ion-icon></ion-fab-button>
 
   <ion-item>
     <ion-icon name="person-outline" class="animate__animated animate__swing"></ion-icon>
-    <p class="items">Nombre: </p>
+    <p class="items">Nombre: {{usuario.nombres}} {{usuario.apellidos}}</p>
   </ion-item>
   <ion-item (click)="openModal()">
       <ion-icon name="settings-outline" class="animate__animated animate__swing"></ion-icon>

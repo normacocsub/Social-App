@@ -64,6 +64,29 @@ export class LoginService {
       tap(
         async(result: Usuario) => {
           if(result){
+            console.log(result.imagePerfil);
+            await this.storage.set('Login', result);
+            this.authSubject.next(true);
+          }
+        }
+      )
+    )
+  }
+
+  buscarUsuario(correo: string){
+    return this.http.get<Usuario>(this.ruta+"api/Usuario/usuario/"+correo);
+  }
+
+  editarImagen(usuario: Usuario){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    
+    return this.http.put<Usuario>(this.ruta + "api/Usuario/Imagen",usuario, httpOptions)
+    .pipe(
+      tap(
+        async(result: Usuario) => {
+          if(result){
             await this.storage.set('Login', result);
             this.authSubject.next(true);
           }
@@ -75,6 +98,7 @@ export class LoginService {
   async cargarUsuario(){
     const usuario = await this.storage.get('Login');
     if(usuario){
+      console.log(usuario);
       this.currentUserSubject = new BehaviorSubject<Usuario>(usuario);
     }
     return;

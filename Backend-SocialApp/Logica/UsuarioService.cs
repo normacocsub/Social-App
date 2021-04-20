@@ -57,6 +57,88 @@ namespace Logica
             }
         }
 
+        public EditarUsuarioResponse EditarImagenUsuario(Usuario usuario)
+        {
+            try
+            {
+                var result = _context.Usuarios.Find(usuario.Correo);
+                if(result != null)
+                {
+                    result.ImagePerfil = usuario.ImagePerfil;
+                    _context.Usuarios.Update(result);
+                    _context.SaveChanges();
+                    return new EditarUsuarioResponse(result);
+                }
+                else
+                {
+                    return new EditarUsuarioResponse("No existe el usuario", "NoExiste");
+                }
+            }
+            catch(Exception e)
+            {
+                return new EditarUsuarioResponse($"Error {e.Message}", "Aplication");
+            }
+        }
+
+        public buscarUsuarioResponse BuscarUsuario(string correo)
+        {
+            try
+            {
+                var response = _context.Usuarios.Find(correo);
+                if(response != null)
+                {
+                    return new buscarUsuarioResponse(response);
+                }
+                else
+                {
+                    return new buscarUsuarioResponse("No existe el usuario", "NoExiste");
+                }
+            }
+            catch(Exception e)
+            {
+                return new buscarUsuarioResponse($"Error {e.Message}", "Aplication");
+            }
+        }
+
+        public class buscarUsuarioResponse
+        {
+            public buscarUsuarioResponse(Usuario usuario)
+            {
+                Error = false;
+                Usuario = usuario;
+            }
+
+            public buscarUsuarioResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Estado { get; set; }
+            public string Mensaje { get; set; }
+            public Usuario Usuario { get; set; }
+        }
+
+        public class EditarUsuarioResponse
+        {
+            public EditarUsuarioResponse(Usuario usuario)
+            {
+                Error = false;
+                Usuario = usuario;
+            }
+            public EditarUsuarioResponse(string mensaje, string estado)
+            {
+                Error = true;
+                Mensaje = mensaje;
+                Estado = estado;
+            }
+            public bool Error { get; set; }
+            public string Estado { get; set; }
+            public string Mensaje { get; set; }
+            public Usuario Usuario { get; set; }
+        }
+
 
         public class ValidarUsuarioResponse
         {

@@ -1,3 +1,24 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <div *ngIf="huellaStatus == false || huellaVerificar== true; else huella">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+
+  <ng-template #huella>
+    <ion-content>
+      <ion-card class="center">
+        <ion-card-content>
+          <!-- cualquier imagen aqui-->
+          {{huellaVerificar}}
+          <ion-button (click)="huellaVerifi()" expand="block" >
+            <ion-icon  name="finger-print-outline"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-content>
+    
+  </ng-template>
+  
+
+  
 </ion-app>

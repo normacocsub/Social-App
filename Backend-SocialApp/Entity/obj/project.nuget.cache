@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "30zIGD50kAAATbsYnIqKU8EkMQY6haxBtF4N41JuVD7spKPI5Y4qJOMOKLADOCb8Y+BrbEs7gRjIuolQPU808A==",
+  "dgSpecHash": "DhtuaMEgyXbT8wzLyb+P7RHY1V61/DFEJV4mUQWKVuWI61vdPjh/78cfdo+ggF3z1PAq6JQ6yG5uRrcwNQeP3w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\norma\\Desktop\\Social-App-main\\Backend-SocialApp\\Entity\\Entity.csproj",
+  "projectFilePath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Entity\\Entity.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\norma\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
   ],
