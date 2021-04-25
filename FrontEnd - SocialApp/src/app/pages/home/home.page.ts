@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
 
     this.networkService.getNetworkStatus().subscribe(result => {
       this.conectionStatus = result;
-      console.log(result);
+      
       
 
     });
@@ -44,7 +44,7 @@ export class HomePage implements OnInit {
   getPublicaciones(){
     this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
       this.publicaciones = resulta;
-      console.log(resulta);
+      
     });
   }
 
@@ -98,16 +98,16 @@ export class HomePage implements OnInit {
     const {data} = await modal.onDidDismiss();
 
     this.publicacion = data;
-    console.log(this.publicacion);
+    
 
     this.publicacionService.crearPublicacion(this.publicacion).subscribe(result => {
-      console.log(result);
+     
     });
     
     this.getPublicaciones();
     /*
     this.publicacionService.insertPublicaciones(data).subscribe(result =>{
-      console.log(result);
+      
     });
     */
   }

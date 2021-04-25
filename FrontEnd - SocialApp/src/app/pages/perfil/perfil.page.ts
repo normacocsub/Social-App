@@ -29,7 +29,6 @@ export class PerfilPage implements OnInit {
         this.loginService.buscarUsuario(result.correo).subscribe(resultado =>{
           if(resultado != null){
             this.usuario = resultado;
-            console.log(result);
             if(result.imagePerfil = ''){
               this.imagen = 'assets/descarga.jpg';
             }

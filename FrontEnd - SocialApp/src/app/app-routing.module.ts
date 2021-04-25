@@ -76,6 +76,10 @@ const routes: Routes = [
     path: 'modal-reacciones',
     loadChildren: () => import('./pages/modal-reacciones/modal-reacciones.module').then( m => m.ModalReaccionesPageModule)
   },
+  {
+    path: 'modal-registro-info',
+    loadChildren: () => import('./pages/modal-registro-info/modal-registro-info.module').then( m => m.ModalRegistroInfoPageModule)
+  },
 
 
 

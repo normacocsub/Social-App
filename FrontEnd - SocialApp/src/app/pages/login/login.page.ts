@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
+    
   }
   async mensaje() {
     const alert = await this.alertController.create({
@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
+    
   }
 
   login() {
@@ -75,6 +75,6 @@ export class LoginPage implements OnInit {
         (error) => this.error()
       );
     this.spinnerDialog.hide();
-    console.log(this.loginService.authSubject);
+   
   }
 }

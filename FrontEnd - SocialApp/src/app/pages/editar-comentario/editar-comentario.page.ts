@@ -15,7 +15,7 @@ export class EditarComentarioPage implements OnInit {
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
-    console.log(this.comentario.idComentario);
+   
   }
 
   ngAfterViewInit(){ 

@@ -31,7 +31,7 @@ export class ModalHelpPage implements OnInit {
     return await modal.present();
   }
   terminos(){
-    console.log('Hola');
+    
   }
 
 }

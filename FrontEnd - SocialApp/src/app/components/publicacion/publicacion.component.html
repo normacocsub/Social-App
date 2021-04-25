@@ -3,8 +3,16 @@
   <ion-card class="card">
     <br>
     <ion-card-title>
-      <ion-chip color="primary">
-        <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-chip color="primary" outline="true">
+        <div  *ngIf="publicacion.usuario.imagePerfil;else imagen">
+          <ion-avatar>
+            <img [src]="publicacion.usuario.imagePerfil" height="40" width="40"/>
+          </ion-avatar>
+        </div>
+
+        <ng-template #imagen>
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ng-template>
       </ion-chip>
   
       <ion-label class="monospace"> {{ publicacion.nombre }} </ion-label>
@@ -51,11 +59,23 @@
       <ion-footer>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-icon
+            <div *ngIf="publicacion.comentarios.length > 0; else imagenNew">
+              <div *ngIf="publicacion.comentarios[0].usuario.imagePerfil; else imagenNew">
+                <ion-chip  color="primary" slot="start" mode="ios" outline="true">
+                  <ion-avatar>
+                    <img [src]="publicacion.comentarios[0].usuario.imagePerfil" />
+                  </ion-avatar>
+                </ion-chip>
+              </div>
+            </div>
+      
+            <ng-template #imagenNew>
+              <ion-icon
               slot="start"
               class="iconon"
               name="person-circle-outline"
             ></ion-icon>
+            </ng-template>
   
             <ion-button  (click)="verPublicacion()" class="buttonIconTwo">
               <div *ngIf="publicacion.comentarios.length > 0">

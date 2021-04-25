@@ -38,7 +38,7 @@ export class ModalPublicacionPage implements OnInit {
   }
 
   publicarModal(){
-    console.log(this.publicacion);
+    
     this.modalController.dismiss({
       usuario: this.usuario,
       contenidoPublicacion: this.publicacion,

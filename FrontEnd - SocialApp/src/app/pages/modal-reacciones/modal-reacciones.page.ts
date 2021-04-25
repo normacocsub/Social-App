@@ -29,7 +29,7 @@ export class ModalReaccionesPage implements OnInit {
   /* consultarReaccion(){
     this.publicacionService.ConsultaPublicaciones().subscribe(result => {
       this.publicacionReaccion = result;
-      console.log(this.publicacionReaccion);
+     
     });
 
     for(this.i; this.i<this.publicacionReaccion.length;this.i++){

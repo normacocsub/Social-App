@@ -51,13 +51,13 @@ export class PublicacionComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.calcularDias())
+
     this.service.getUser().then((result) => {
       result.subscribe((value) => {
         if(value != null)
         {
           this.usuario = value;
-          console.log(this.publicacion.reacciones);
+          
           if(this.publicacion.reacciones.length > 0)
           {
             var result = this.publicacion.reacciones.find(p => p.idUsuario == value.correo);
@@ -182,7 +182,7 @@ export class PublicacionComponent implements OnInit {
     this.PublicacionService.agregarComentario(comentario).subscribe(
       (result) => {
         this.input.value = '';
-        console.log(result);
+        
         this.publicacion = result;
       }
     );
@@ -235,7 +235,7 @@ export class PublicacionComponent implements OnInit {
     this.PublicacionService.editarPublicacion(this.publicacionEditar).subscribe(
       (result) => {
         if (result != null) {
-          console.log('Editado ');
+          
         }
       }
     );
@@ -262,7 +262,7 @@ export class PublicacionComponent implements OnInit {
             this.PublicacionService.eliminarPublicacion(
               this.publicacion
             ).subscribe((result) => {
-              console.log(result);
+              
             });
           },
         },
