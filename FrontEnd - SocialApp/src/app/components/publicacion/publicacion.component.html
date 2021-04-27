@@ -15,9 +15,9 @@
                 <ion-icon name="person-circle-outline"></ion-icon>
               </ng-template>
               <ion-label style="margin-left: 20px; font-size: 20px;"> {{ publicacion.nombre }}</ion-label>
+              <ion-card-subtitle class="ionfecha">{{publicacion.fecha | date: 'fullDate' }} </ion-card-subtitle>
             </div>
-          
-  
+
           <div class="social-more">
             <ion-button (click)="lanzarMenu($event)" fill="clear">
               <ion-icon
@@ -28,13 +28,10 @@
             </ion-button>
           </div>
         </div>
-        <br>
     </ion-card-title>
   
-    <ion-card-subtitle class="ion-padding ">{{publicacion.fecha | date: 'fullDate' }} </ion-card-subtitle>
-  
     <ion-card-content (click)="verPublicacion()">
-      <p>{{ publicacion.contenidoPublicacion }}</p>
+      <p class="ionpub">{{ publicacion.contenidoPublicacion }}</p>
     </ion-card-content>
   
     <div *ngIf="publicacion.imagen != ''">
