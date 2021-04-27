@@ -3,35 +3,37 @@
   <ion-card class="card">
     <br>
     <ion-card-title>
-      <ion-chip color="primary" outline="true">
-        <div  *ngIf="publicacion.usuario.imagePerfil;else imagen">
-          <ion-avatar>
-            <img [src]="publicacion.usuario.imagePerfil" height="40" width="40"/>
-          </ion-avatar>
+        <div style="margin-left: 10px;">
+          <ion-chip color="primary" outline="true" style="height: auto;">
+            <div  *ngIf="publicacion.usuario.imagePerfil;else imagen">
+              <ion-avatar>
+                <img [src]="publicacion.usuario.imagePerfil"/>
+              </ion-avatar>
+            </div>
+    
+            <ng-template #imagen>
+              <ion-icon name="person-circle-outline"></ion-icon>
+            </ng-template>
+            <ion-label style="margin-left: 20px; font-size: 20px;"> {{ publicacion.nombre }}</ion-label>
+          </ion-chip>
+  
+          <div class="social-more">
+            <ion-button (click)="lanzarMenu($event)" fill="clear">
+              <ion-icon
+                class="colorTresPuntitos"
+                slot="icon-only"
+                name="ellipsis-vertical-outline"
+              ></ion-icon> 
+            </ion-button>
+          </div>
         </div>
-
-        <ng-template #imagen>
-          <ion-icon name="person-circle-outline"></ion-icon>
-        </ng-template>
-      </ion-chip>
-  
-      <ion-label class="monospace"> {{ publicacion.nombre }} </ion-label>
-  
-      <div class="social-more">
-        <ion-button (click)="lanzarMenu($event)" fill="clear">
-          <ion-icon
-            class="colorTresPuntitos"
-            slot="icon-only"
-            name="ellipsis-vertical-outline"
-          ></ion-icon> 
-        </ion-button>
-      </div>
+        <br>
     </ion-card-title>
   
-    <ion-card-subtitle class="ion-padding monospace">{{publicacion.fecha | date: 'fullDate' }} </ion-card-subtitle>
+    <ion-card-subtitle class="ion-padding ">{{publicacion.fecha | date: 'fullDate' }} </ion-card-subtitle>
   
     <ion-card-content (click)="verPublicacion()">
-      <p class="monospace">{{ publicacion.contenidoPublicacion }}</p>
+      <p>{{ publicacion.contenidoPublicacion }}</p>
     </ion-card-content>
   
     <div *ngIf="publicacion.imagen != ''">
@@ -58,7 +60,7 @@
     <div *ngIf="comentarios == false">
       <ion-footer>
         <ion-toolbar>
-          <ion-buttons slot="start">
+          <ion-buttons>
             <div *ngIf="publicacion.comentarios.length > 0; else imagenNew">
               <div *ngIf="publicacion.comentarios[0].usuario.imagePerfil; else imagenNew">
                 <ion-chip  color="primary" slot="start" mode="ios" outline="true">
@@ -68,22 +70,17 @@
                 </ion-chip>
               </div>
             </div>
-      
+            
             <ng-template #imagenNew>
-              <ion-icon
-              slot="start"
-              class="iconon"
-              name="person-circle-outline"
-            ></ion-icon>
+              <ion-icon style="height: 30px; margin-left: 10px;" name="person-circle-outline"></ion-icon>
             </ng-template>
   
-            <ion-button  (click)="verPublicacion()" class="buttonIconTwo">
+            <ion-button  (click)="verPublicacion()">
               <div *ngIf="publicacion.comentarios.length > 0">
-                <ion-label #nombreUsuario class="labelComentario monospace">{{usuarioString}}</ion-label>
+                <ion-label #nombreUsuario class="labelComentario ">{{usuarioString}}</ion-label>
               </div>
-              <ion-input type="text" class="inpuN" [disabled]="true"></ion-input>
+              <ion-input type="text"  [disabled]="true"></ion-input>
             </ion-button>
-            <ion-icon name="chatbubble-outline" style="width: 60px;"></ion-icon>
           </ion-buttons>
         </ion-toolbar>
       </ion-footer>
@@ -93,26 +90,26 @@
   <div *ngIf="comentarios == true">
     <div class="divcomentario">
       <ion-item color="light" class="iteminputcomentario">
-        <ion-label> <p class="monospace">Comentar:</p></ion-label>
+        <ion-label> <p >Comentar:</p></ion-label>
         <ion-input class="inputcomentario" (ionChange)="getTextComentario($event)" type="text"></ion-input>
       </ion-item>
       <ion-item (click)="comentar()" class="itemicono">
         <ion-icon name="send-outline"></ion-icon>
-      </ion-item>
+      </ion-item> 
     </div>
   
-    <ion-list>
+    <ion-list >
         <ion-item-sliding *ngFor="let comentario of publicacion.comentarios">
           <ion-item>
-            <ion-label id="labelComentario"> <p class="monospace">{{comentario.usuario.nombres}} {{comentario.usuario.apellidos}}:</p> </ion-label>
-            <ion-label > <p class="monospace">{{comentario.contenidoComentario}}</p></ion-label>
+            <ion-label id="labelComentario"> <p >{{comentario.usuario.nombres}} {{comentario.usuario.apellidos}}:</p> </ion-label>
+            <ion-label > <p >{{comentario.contenidoComentario}}</p></ion-label>
             <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
           </ion-item>
           
           <div *ngIf="usuario.correo == comentario.usuario.correo">
             <ion-item-options side="start">
-              <ion-item-option (click)="editarComentario(comentario)" > <p class="monospace">Editar</p></ion-item-option>
-              <ion-item-option color="primary" (click)="eliminarComentario(comentario)"> <p class="monospace">Eliminar</p></ion-item-option>
+              <ion-item-option (click)="editarComentario(comentario)" > <p >Editar</p></ion-item-option>
+              <ion-item-option color="primary" (click)="eliminarComentario(comentario)"> <p >Eliminar</p></ion-item-option>
             </ion-item-options>
           </div>
           

@@ -12,16 +12,16 @@
     <ion-item>
       <div *ngIf="opcion==true" class="alinear">
         <ion-icon name="moon-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
-        <p class="monospace"> Tema oscuro</p>
+        <p > Tema oscuro</p>
       </div>
       <div *ngIf="opcion==false" class="alinear">
         <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
-        <p class="monospace"> Tema claro</p>
+        <p > Tema claro</p>
       </div>
 
       <div *ngIf="opcionInicial==Nan" class="alinear">
         <ion-icon name="sunny-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
-        <p class="monospace"> Tema claro</p>
+        <p > Tema claro</p>
       </div>
       <ion-toggle #togleTheme slot="end" (ionChange)="onToggleColorTheme($event)"></ion-toggle>
     </ion-item>
@@ -33,13 +33,13 @@
     <ion-item (click)="openModalSeguridad()">
       <div class="alinear">
         <ion-icon name="shield-checkmark-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
-        <p class="monospace">Seguridad</p>
+        <p >Seguridad</p>
       </div>
     </ion-item>
     <ion-item (click)="openModalPrivacidad()">
       <ion-icon name="lock-closed-outline" class="animate__animated animate__swing" id="rigth"></ion-icon>
       <div class="alinear">
-        <p class="monospace">Privacidad</p>
+        <p >Privacidad</p>
       </div>
     </ion-item>
   </ion-list>

@@ -63,7 +63,6 @@ export class PerfilPage implements OnInit {
   cambiarFotoPerfil(){
     this.Gallery();
     this.imagen = this.usuario.imagePerfil;
-    
   }
 
   async logout() {

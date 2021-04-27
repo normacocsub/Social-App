@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title><p class="monospace">Registro de usuario</p></ion-title>
+    <ion-title><p >Registro de usuario</p></ion-title>
   </ion-toolbar>
 </ion-header>
 <br><br><br><br><br> 
@@ -14,40 +14,46 @@
       <img src="../../../assets/icon/register.svg" style="width: 70px; margin-left: 150px;" alt="">
       <ion-list>
         <ion-item>
-          <ion-label> <p class="monospace">Correo</p> </ion-label>
+          <ion-label> <p >Correo</p> </ion-label>
           <ion-input [(ngModel)]="usuario.correo" type="email"></ion-input>
         </ion-item>
     
         <ion-item>
-          <ion-label><p class="monospace">Password</p></ion-label>
+          <ion-label><p >Password</p></ion-label>
           <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
         </ion-item>
     
         <ion-item>
-          <ion-label><p class="monospace">Nombres</p></ion-label>
+          <ion-label><p >Nombres</p></ion-label>
           <ion-input [(ngModel)]="usuario.nombres" type="text"></ion-input>
         </ion-item>
     
         <ion-item>
-          <ion-label><p class="monospace">Apellidos</p></ion-label>
+          <ion-label><p >Apellidos</p></ion-label>
           <ion-input [(ngModel)]="usuario.apellidos" type="text"></ion-input>
         </ion-item>
     
         <ion-item>
-          <ion-label><p class="monospace">Sexo</p></ion-label>
+          <ion-label><p >Sexo</p></ion-label>
           
             <ion-select [(ngModel)]="usuario.sexo" value="Seleccionar" okText="Ok" cancelText="Cancelar">
-              <ion-select-option value="Seleccionar" class="monospace"> <p class="monospace">Seleccionar</p></ion-select-option>
-              <ion-select-option value="Femenino" class="monospace"> <p class="monospace">Femenino</p> </ion-select-option>
-              <ion-select-option value="Masculino" class="monospace"> <p class="monospace">Masculino</p> </ion-select-option>
+              <ion-select-option value="Seleccionar" > <p >Seleccionar</p></ion-select-option>
+              <ion-select-option value="Femenino" > <p >Femenino</p> </ion-select-option>
+              <ion-select-option value="Masculino" > <p >Masculino</p> </ion-select-option>
             </ion-select>
+        </ion-item>
+        <ion-item (click)="agregarFotoPerfil()">
+          <div *ngIf="avisarSeleccionImg">
+            <ion-icon name="checkmark-circle-outline" style="margin-right: 10px; color: green;"></ion-icon>
+          </div>
+          <ion-label color="primary"><p style="text-align: center; font-size: 15px;">Seleccione una foto</p></ion-label>
         </ion-item>
     
       </ion-list>
     
     </div>
-    <ion-button (click)="registrar()" expand="block" class="monospace" >
-      <p class="monospace">Registrar</p>
+    <ion-button (click)="registrar()" expand="block"  >
+      <p >Registrar</p>
     </ion-button>
     <br>
   </ion-card>

@@ -16,17 +16,17 @@
         <img src="../../../assets/icon/login.svg" style="width: 70px; margin-left: 120px;" alt="">
       </ion-card-content>
       <ion-item>
-        <ion-label position="floating" class="monospace"> <p class="monospace">E-mail</p></ion-label>
+        <ion-label position="floating" > <p >E-mail</p></ion-label>
         <ion-input [(ngModel)]="usuario.correo"  type="email"></ion-input>
       </ion-item>
     
       <ion-item>
-        <ion-label position="floating" class="monospace"> <p class="monospace">Contraseña</p></ion-label>
+        <ion-label position="floating" > <p >Contraseña</p></ion-label>
         <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
       </ion-item>
 
       <ion-item button color="primary" (click)="login()">
-        <ion-label class="monospace"> <p class="login">Iniciar sesión</p></ion-label>
+        <ion-label > <p class="login">Iniciar sesión</p></ion-label>
       </ion-item>
   
 
@@ -49,7 +49,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label class="monospace" *ngIf="!loginService.authSubject.value"><p class="registrar">Has olvidado tu contraseña?</p></ion-label>
+      <ion-label  *ngIf="!loginService.authSubject.value"><p class="registrar">Has olvidado tu contraseña?</p></ion-label>
     </ion-item>
   </ion-card>
   

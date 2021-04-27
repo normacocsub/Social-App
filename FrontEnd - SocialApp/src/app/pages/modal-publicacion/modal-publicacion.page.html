@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="monospace">Crear Publicacion</ion-title>
+    <ion-title >Crear Publicacion</ion-title>
     <ion-buttons slot="end" class="close">
       <ion-icon (click)="cancelarModal()" name="close-outline"></ion-icon>
     </ion-buttons>
@@ -9,16 +9,19 @@
 
 <ion-content>
   <ion-item >
-    <ion-label position="floating" > <p class="monospace">¿Que deseas publicar?</p></ion-label>
+    <ion-label position="floating" > <p >¿Que deseas publicar?</p></ion-label>
     <ion-textarea (ionChange)="getText($event)" style="border: 5px;"></ion-textarea>
     
     <div>
-      <div style="margin-left: 45px;">
+      <ion-button (click)="publicarModal()" expand="block" >
+        Publicar
+      </ion-button>
+      <div style="margin-left: 30px;">
         <ion-buttons slot="start">
-          <ion-button (click)="Gallery()" color="primary" class="monospace">
+          <ion-button (click)="Gallery()" color="primary" >
             Seleccionar Foto /
           </ion-button>
-          <ion-button (click)="SeleccionarFoto()" color="success" class="monospace" >
+          <ion-button (click)="SeleccionarFoto()" color="success"  >
             / Tomar foto
           </ion-button> 
         </ion-buttons>
@@ -30,10 +33,6 @@
       <div *ngIf="imagen != ''">
         <img [src]="imagen">
       </div>
-
-      <ion-button (click)="publicarModal()" expand="block" class="monospace">
-        Publicar
-      </ion-button>
     </div>
 
 

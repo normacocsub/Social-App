@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-      <ion-title class="monospace">Info de la aplicación</ion-title>
+      <ion-title >Info de la aplicación</ion-title>
     <ion-buttons slot="end" class="close">
       <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
     </ion-buttons>
@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <img src="../../../assets/b.jpg" style="position: fixed;" alt="socialapp">
+  <img src="../../../assets/b.jpg" style="position: fixed; justify-content: center !important;" alt="socialapp">
   <ion-label class="nameapp">{{nombre}}</ion-label>
   <ion-label class="versionapp">Versión {{version}}</ion-label>
   <div class="divapp">
