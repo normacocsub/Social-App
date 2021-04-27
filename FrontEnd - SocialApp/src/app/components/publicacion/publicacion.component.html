@@ -3,19 +3,20 @@
   <ion-card class="card">
     <br>
     <ion-card-title>
-        <div style="margin-left: 10px;">
-          <ion-chip color="primary" outline="true" style="height: auto;">
+        <div style="margin-left: 10px; display: flex;">
+          
             <div  *ngIf="publicacion.usuario.imagePerfil;else imagen">
               <ion-avatar>
                 <img [src]="publicacion.usuario.imagePerfil"/>
               </ion-avatar>
             </div>
-    
-            <ng-template #imagen>
-              <ion-icon name="person-circle-outline"></ion-icon>
-            </ng-template>
-            <ion-label style="margin-left: 20px; font-size: 20px;"> {{ publicacion.nombre }}</ion-label>
-          </ion-chip>
+            <div>
+              <ng-template #imagen>
+                <ion-icon name="person-circle-outline"></ion-icon>
+              </ng-template>
+              <ion-label style="margin-left: 20px; font-size: 20px;"> {{ publicacion.nombre }}</ion-label>
+            </div>
+          
   
           <div class="social-more">
             <ion-button (click)="lanzarMenu($event)" fill="clear">
