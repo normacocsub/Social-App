@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -6,56 +8,89 @@
     <ion-title><p >Registro de usuario</p></ion-title>
   </ion-toolbar>
 </ion-header>
-<br><br><br><br><br> 
+<br><br><br>
 <ion-content>
-  <ion-card style="border-radius: 20px;">
-    <div style="margin-right: 10px; margin-left: 10px;">
-      <br>
-      <img src="../../../assets/icon/register.svg" style="width: 70px; margin-left: 150px;" alt="">
-      <ion-list>
-        <ion-item>
-          <ion-label> <p >Correo</p> </ion-label>
-          <ion-input [(ngModel)]="usuario.correo" type="email"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label><p >Password</p></ion-label>
-          <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label><p >Nombres</p></ion-label>
-          <ion-input [(ngModel)]="usuario.nombres" type="text"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label><p >Apellidos</p></ion-label>
-          <ion-input [(ngModel)]="usuario.apellidos" type="text"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label><p >Sexo</p></ion-label>
+  <form [formGroup]="formGroup">
+    <ion-card style="border-radius: 20px;">
+      <div style="margin-right: 10px; margin-left: 10px;">
+        <br>
+        <img src="../../../assets/icon/register.svg" style="width: 70px; margin-left: 150px;" alt="">
+        <ion-list>
           
-            <ion-select [(ngModel)]="usuario.sexo" value="Seleccionar" okText="Ok" cancelText="Cancelar">
-              <ion-select-option value="Seleccionar" > <p >Seleccionar</p></ion-select-option>
-              <ion-select-option value="Femenino" > <p >Femenino</p> </ion-select-option>
-              <ion-select-option value="Masculino" > <p >Masculino</p> </ion-select-option>
-            </ion-select>
-        </ion-item>
-        <ion-item (click)="agregarFotoPerfil()">
-          <div *ngIf="avisarSeleccionImg">
-            <ion-icon name="checkmark-circle-outline" style="margin-right: 10px; color: green;"></ion-icon>
+          <ion-item>
+            <ion-label position="floating"> <p> Correo <ion-text color="danger">*</ion-text></p> </ion-label>
+            <ion-input required
+            [ngClass]="{'is-invalid': control.correo.errors && control.correo.touched}"
+            type="email" formControlName="correo" ></ion-input>
+          </ion-item>
+          <div *ngIf="control.correo.errors" class="invalid-feedback">
+            <div *ngIf="control.correo.errors.maxlength"><ion-text color="danger"> Caracteres Superados maximo 70</ion-text> </div>
+            <div *ngIf="control.correo.errors.pattern"><p> <ion-text color="danger">
+              Correo invalido
+            </ion-text> </p></div>
           </div>
-          <ion-label color="primary"><p style="text-align: center; font-size: 15px;">Seleccione una foto</p></ion-label>
-        </ion-item>
-    
-      </ion-list>
-    
-    </div>
-    <ion-button (click)="registrar()" expand="block"  >
-      <p >Registrar</p>
-    </ion-button>
-    <br>
-  </ion-card>
+      
+          <ion-item>
+            <ion-label position="floating"><p >Password <ion-text color="danger">*</ion-text></p></ion-label>
+            <ion-input required
+            [ngClass]="{'is-invalid': control.password.errors && control.correo.touched}"
+            type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <div *ngIf="control.password.errors" class="invalid-feedback">
+            <div *ngIf="control.password.errors.maxlength"><ion-text color="danger"> Caracteres Superados, maximo 16</ion-text> </div>
+            <div *ngIf="control.password.errors.minlength"><p> <ion-text color="danger">
+              Caracteres minimos 6
+            </ion-text> </p></div>
+          </div>
+      
+          <ion-item>
+            <ion-label position="floating"><p >Nombres <ion-text color="danger">*</ion-text></p></ion-label>
+            <ion-input required
+            [ngClass]="{'is-invalid': control.nombres.errors && control.nombres.touched}"
+            type="text" formControlName="nombres"></ion-input>
+          </ion-item>
+          <div *ngIf="control.nombres.errors" class="invalid-feedback">
+            <div *ngIf="control.nombres.errors.maxlength"><ion-text color="danger"> Caracteres Superados, maximo 60</ion-text> </div>
+          </div>
+      
+          <ion-item>
+            <ion-label position="floating"><p >Apellidos <ion-text color="danger">*</ion-text> </p></ion-label>
+            <ion-input required
+            [ngClass]="{'is-invalid': control.apellidos.errors && control.apellidos.touched}"
+            type="text" formControlName="apellidos"></ion-input>
+          </ion-item>
+          <div *ngIf="control.apellidos.errors" class="invalid-feedback">
+            <div *ngIf="control.apellidos.errors.maxlength"><ion-text color="danger"> Caracteres Superados, maximo 60</ion-text> </div>
+          </div>
+      
+          <ion-item>
+            <ion-label><p >Sexo <ion-text color="danger">*</ion-text></p></ion-label>
+            
+              <ion-select required
+              [ngClass]="{'is-invalid': control.sexo.errors && control.sexo.touched}"
+              formControlName="sexo" value="Seleccionar" okText="Ok" cancelText="Cancelar">
+                <ion-select-option value="Seleccionar" > <p >Seleccionar</p></ion-select-option>
+                <ion-select-option value="Femenino" > <p >Femenino</p> </ion-select-option>
+                <ion-select-option value="Masculino" > <p >Masculino</p> </ion-select-option>
+              </ion-select>
+          </ion-item>
+          
+
+          <ion-item (click)="agregarFotoPerfil()">
+            <div *ngIf="avisarSeleccionImg">
+              <ion-icon name="checkmark-circle-outline" style="margin-right: 10px; color: green;"></ion-icon>
+            </div>
+            <ion-label color="primary"><p style="text-align: center; font-size: 15px;">Seleccione una foto</p></ion-label>
+          </ion-item>
+      
+        </ion-list>
+      
+      </div>
+      <ion-button (click)="onSubmit()" [disabled]="formGroup.invalid" expand="block"  >
+        <p >Registrar</p>
+      </ion-button>
+      <br>
+    </ion-card>
+  </form>
 
 </ion-content>

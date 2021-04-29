@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { LoginService } from 'src/app/services/login.service';
 import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,15 +12,14 @@ import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  estadoLogin: boolean = false;
   usuario: Usuario = new Usuario();
-  opcion2: boolean;
-  prueba: any;
+  formGroup: FormGroup;
   constructor(
     private router: Router,
     public loginService: LoginService,
     public alertController: AlertController,
     private spinnerDialog: SpinnerDialog,
+    private formBuilder: FormBuilder,
   ) {
     this.loginService.isLoggedIn().subscribe((result) => {
       if (result) {
@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {this.buildForm();}
 
   // async mensage(){
   //   this.toast.show(`Bienvenido`, '3000', 'center').subscribe(
@@ -58,6 +58,29 @@ export class LoginPage implements OnInit {
     await alert.present();
     let result = await alert.onDidDismiss();
     
+  }
+
+  private buildForm(){
+    this.usuario = new Usuario();
+    this.usuario.correo = '';
+    this.usuario.password = '';
+
+
+    this.formGroup = this.formBuilder.group({
+      correo: [this.usuario.correo,[Validators.required, Validators.maxLength(70), Validators.pattern("[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}")]],
+      password: [this.usuario.password,[Validators.required, Validators.maxLength(16), Validators.minLength(6)]]
+    });
+  }
+
+
+  get control() {
+    return this.formGroup.controls;
+  }
+  onSubmit() {
+    if (this.formGroup.invalid) {
+      return;
+    }
+    this.login();
   }
 
   login() {

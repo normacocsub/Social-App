@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HgIpUr8SSF6xRGI1wXj5nI4Veo3kzZ5Jo+7S9I69MB2MhqQbSwPph7fl05wnqzda+3hh1hDt2qkwEewEehUbVg==",
+  "dgSpecHash": "GG2fj3ZBN3LyZlyb0ANrk7/6AIyhUmXqo3rAP1KEikpcRj6F4PIApLOH6BcMVKC6BKsrL6rVZWSPzgJYOVNlRg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj",
+  "projectFilePath": "c:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\SocialAppApi\\SocialAppApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\norma\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\norma\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\5.0.5\\microsoft.aspnetcore.connections.abstractions.5.0.5.nupkg.sha512",

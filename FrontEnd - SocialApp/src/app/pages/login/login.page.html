@@ -7,42 +7,54 @@
   <ion-card style="border-radius: 10px;">
 
   </ion-card>
-  <ion-card style="border-radius: 20px;">
+  <form [formGroup]="formGroup">
+    <ion-card style="border-radius: 20px;">
     
-    <ion-card-content>
       <ion-card-content>
-        <p class="login"><b>Inicio de sesión</b></p>
-        <br>
-        <img src="../../../assets/icon/login.svg" style="width: 70px; margin-left: 120px;" alt="">
+        <ion-card-content>
+          <p class="login"><b>Inicio de sesión</b></p>
+          <br>
+          <img src="../../../assets/icon/login.svg" style="width: 70px; margin-left: 120px;" alt="">
+        </ion-card-content>
+        <ion-item>
+          <ion-label position="floating" > <p >E-mail</p></ion-label>
+          <ion-input required formControlName="correo"
+          [ngClass]="{'is-invalid': control.correo.errors && control.correo.touched}"
+          type="email"></ion-input>
+        </ion-item>
+        <div *ngIf="control.correo.errors" class="invalid-feedback">
+          <div *ngIf="control.correo.errors.maxlength"><ion-text color="danger"> Caracteres Superados maximo 70</ion-text> </div>
+          <div *ngIf="control.correo.errors.pattern"><p> <ion-text color="danger">
+            Correo invalido
+          </ion-text> </p></div>
+        </div>
+      
+        <ion-item>
+          <ion-label position="floating" > <p >Contraseña</p></ion-label>
+          <ion-input required formControlName="password"
+          [ngClass]="{'is-invalid': control.password.errors && control.password.touched}"
+          type="password"></ion-input>
+        </ion-item>
+        <div *ngIf="control.password.errors" class="invalid-feedback">
+          <div *ngIf="control.password.errors.maxlength"><ion-text color="danger"> Caracteres Superados, maximo 16</ion-text> </div>
+          <div *ngIf="control.password.errors.minlength"><p> <ion-text color="danger">
+            Caracteres minimos 6
+          </ion-text> </p></div>
+        </div>
+  
+        <ion-item button color="primary" (click)="onSubmit()" [disabled]="formGroup.invalid">
+          <ion-label > <p class="login">Iniciar sesión</p></ion-label>
+        </ion-item>
+    
+  
+  
       </ion-card-content>
-      <ion-item>
-        <ion-label position="floating" > <p >E-mail</p></ion-label>
-        <ion-input [(ngModel)]="usuario.correo"  type="email"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label position="floating" > <p >Contraseña</p></ion-label>
-        <ion-input [(ngModel)]="usuario.password" type="password"></ion-input>
-      </ion-item>
-
-      <ion-item button color="primary" (click)="login()">
-        <ion-label > <p class="login">Iniciar sesión</p></ion-label>
-      </ion-item>
-  
-
-
-    </ion-card-content>
-
-    
-    
-  </ion-card>
+    </ion-card>
+  </form>
   <br>
   
   <br>
 
-  <ion-item>
-    <ion-label>{{prueba}}</ion-label>
-  </ion-item>
   <ion-card style="border-radius: 20px;">
     <ion-item button [routerLink]="['/registro-usuario']">
       <ion-label> <p class="registrar">Registrarse</p></ion-label>

@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { ModalController } from '@ionic/angular';
 import { ModalRegistroInfoPage } from '../modal-registro-info/modal-registro-info.page';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -19,36 +20,60 @@ export class RegistroUsuarioPage implements OnInit {
   imagen: string = '';
   avisarSeleccionImg: boolean = false;
   tardarEnvio: boolean = false;
+  formGroup: FormGroup;
   constructor(
     private usuarioService: LoginService,
     private modalController: ModalController,
     private router: Router,
     private spinner: SpinnerDialog,
-    private loginService: LoginService,
     private camera: Camera,
-  ) {
-    this.loginService.getUser().then((value) => {
-      value.subscribe((result:Usuario) => {
-        this.loginService.buscarUsuario(result.correo).subscribe(resultado =>{
-          if(resultado != null){
-            this.usuario = resultado;
-            if(result.imagePerfil = ''){
-              this.imagen = 'assets/descarga.jpg';
-            }
-            else{
-              this.imagen = result.imagePerfil;
-            }
-          }
-        })
-        
-        
-      })
-    })
-  }
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.usuario = new Usuario();
+    this.buildForm();
   }
+
+  private buildForm(){
+    this.usuario = new Usuario();
+    this.usuario.nombres = '';
+    this.usuario.apellidos = '';
+    this.usuario.correo = '';
+    this.usuario.imagePerfil = '';
+    this.usuario.password = '';
+    this.usuario.sexo = '';
+
+    this.formGroup = this.formBuilder.group({
+      nombres: [this.usuario.nombres, [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
+      apellidos: [this.usuario.apellidos, [Validators.required, Validators.minLength(1), Validators.maxLength(60)]],
+      correo: [this.usuario.correo, [Validators.required, Validators.maxLength(70), Validators.pattern("[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}")]],
+      imagePerfil: [this.usuario.imagePerfil],
+      password: [this.usuario.password, [Validators.required, Validators.maxLength(16), Validators.minLength(6)]],
+      sexo: [this.usuario.sexo, [Validators.required, this.validarSexo]],
+    });
+  }
+
+
+  private validarSexo(control: AbstractControl){
+    const sexo = control.value;
+    if (sexo.toLocaleUpperCase() !== 'MASCULINO' && sexo.toLocaleUpperCase() !== 'FEMENINO') {
+      return { validSexo: true, messageSexo: 'Sexo No Valido' };
+    }
+    return null;
+  }
+
+  get control() {
+    return this.formGroup.controls;
+  }
+  onSubmit() {
+    if (this.formGroup.invalid) {
+      return;
+    }
+    this.registrar();
+  }
+
+
   agregarFotoPerfil(){
     this.Gallery();
     if(this.tardarEnvio == true){
@@ -78,17 +103,14 @@ export class RegistroUsuarioPage implements OnInit {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.usuario.imagePerfil = base64Image;
       this.avisarSeleccionImg = true;
-      this.loginService.editarImagen(this.usuario).subscribe(result => {
-        this.usuario = result;
-        this.spinner.hide();
-      });
-
      }, (err) => {
       // Handle error
      });
   }
 
   registrar() {
+    this.usuario = this.formGroup.value;
+    console.log(this.usuario);
     this.spinner.show(null, "Cargando", true);
     this.usuarioService.post(this.usuario).subscribe(async (result) => {
       if (result != null) {

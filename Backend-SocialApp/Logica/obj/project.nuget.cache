@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nFqLWp7jcuelQLyZ9Qec6diuHS/rHkYC/HabC0XLF1HF0+k76S4C8jbomA5lWPShYCHXDlwD92+yPUFFxKdlqA==",
+  "dgSpecHash": "3GL9Wz7cD9/vlIfvzcRWL66Nwx1usSMXswzpoS1XY1FuxBgO0eM7/lCizCunfVJ8C0X23FPnrpl200X2QSo0ew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj",
+  "projectFilePath": "c:\\Users\\norma\\Documents\\GitHub\\Social-App\\Backend-SocialApp\\Logica\\Logica.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\norma\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\norma\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
