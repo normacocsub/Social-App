@@ -27,5 +27,25 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <app-publicaciones  [publicaciones]="publicaciones"></app-publicaciones>
+  <div *ngIf="publicaciones.length===0">
+    <ion-item>
+      <ion-card>
+        <ion-card-header>
+          <ion-item>
+            <ion-skeleton-text animated style="width: 60px; height: 50px" slot="start"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%" slot="end"></ion-skeleton-text>
+          </ion-item>
+           
+          
+        </ion-card-header>
+        <ion-card-content>
+          <ion-skeleton-text animated style="width: 280px; height: 320px" ></ion-skeleton-text>
+        </ion-card-content>
+      </ion-card>
+      
+    </ion-item>
+  </div>
+  
+  <app-publicaciones [publicaciones]="publicaciones"></app-publicaciones>
+  
 </ion-content>
