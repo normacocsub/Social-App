@@ -17,9 +17,10 @@ import { Network } from '@ionic-native/network/ngx';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SpinnerDialog } from '@ionic-native/spinner-dialog/ngx';
+import { PipeReaccionesPipe } from './pipes/pipe-reacciones.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PipeReaccionesPipe],
   entryComponents: [],
   imports: [
     BrowserModule,

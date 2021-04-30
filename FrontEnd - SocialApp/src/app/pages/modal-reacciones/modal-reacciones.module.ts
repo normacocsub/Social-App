@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PipeModuleModule } from 'src/app/pipes/pipe-module.module';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -8,12 +9,14 @@ import { ModalReaccionesPageRoutingModule } from './modal-reacciones-routing.mod
 
 import { ModalReaccionesPage } from './modal-reacciones.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalReaccionesPageRoutingModule
+    ModalReaccionesPageRoutingModule,
+    PipeModuleModule,
   ],
   declarations: [ModalReaccionesPage]
 })

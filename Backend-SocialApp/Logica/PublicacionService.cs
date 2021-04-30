@@ -254,6 +254,15 @@ namespace Logica
                     response.agregarReaccion(reaccion);
                     _context.Publicacions.Update(response);
                     _context.SaveChanges();
+                    foreach (var item in response.Comentarios)
+                    {
+                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
+                    }
+                    foreach (var item in response.Reacciones)
+                    {
+                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
+                    }
+                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
                     return new EditarReaccionResponse(response);
                 }
                 else

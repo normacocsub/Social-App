@@ -1,6 +1,6 @@
 import { PublicacionesService } from 'src/app/services/publicaciones.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonInput, ModalController } from '@ionic/angular';
+import { IonInput, IonSegment, ModalController } from '@ionic/angular';
 import { Publicacion } from 'src/app/models/publicacion';
 @Component({
   selector: 'app-modal-reacciones',
@@ -16,14 +16,27 @@ export class ModalReaccionesPage implements OnInit {
   personasReaccion: any = [];
   i: number;
   j: number;
+  categoriaText = "Todos";
+  categorias = ["Todos","Like","Me Encanta"];
+  @ViewChild(IonSegment) segment: IonSegment;
   constructor(private publicacionService: PublicacionesService, public modalController: ModalController) { }
 
   async ngOnInit() {
     //this.consultarReaccion();
   }
 
+  ngAfterViewInit(){
+    this.segment.value = this.categorias[0]; 
+  }
+
+
   closeModal(){
     this.modalController.dismiss();
+  }
+
+  cambioCategoria(event){
+    this.categoriaText = event.detail.value;
+    //this.cargarNoticias(event.detail.value);
   }
 
   /* consultarReaccion(){

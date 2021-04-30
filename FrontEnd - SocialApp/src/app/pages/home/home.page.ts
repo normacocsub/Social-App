@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacion: Publicacion;
   conectionStatus: boolean = true;
+  estadoPublicaciones: boolean = true;
   constructor(private modalController: ModalController,
               public publicacionService: PublicacionesService,
               private service: LoginService,
@@ -44,6 +45,9 @@ export class HomePage implements OnInit {
   getPublicaciones(){
     this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
       this.publicaciones = resulta;
+      if(this.publicaciones.length === 0 ){
+        this.estadoPublicaciones = false;
+      }
       
     });
   }

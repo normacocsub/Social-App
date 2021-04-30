@@ -27,7 +27,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="publicaciones.length===0">
+  <div *ngIf="publicaciones.length===0 && estadoPublicaciones == true">
     <ion-item>
       <ion-card>
         <ion-card-header>

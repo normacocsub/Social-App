@@ -5,13 +5,39 @@
       <ion-icon (click)="closeModal()" name="close-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
+
+  <ion-segment scrollable
+                mode="md"
+                 color="primary"
+                 (ionChange)="cambioCategoria( $event)">
+    <ion-segment-button mode="md"
+                        *ngFor="let categoria of categorias"
+                        [value]="categoria">
+      <ion-label text-capitalize>{{categoria}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
 </ion-header>
 
 <ion-content>
 
 <ion-list>
-  <ion-item *ngFor="let item of publicacion.reacciones">
-    {{item.usuario.nombres}}
+  <ion-item *ngFor="let item of publicacion.reacciones | pipeReacciones: categoriaText">
+    
+    
+    <div *ngIf="item.like; else reaccion">
+      <ion-item>
+        {{item.usuario.nombres}}
+        <ion-icon class="positionlike" name="thumbs-up-outline"></ion-icon>
+      </ion-item>
+    </div>
+
+    <div>
+      <ng-template #reaccion>
+        {{item.usuario.nombres}}
+        <ion-icon slot="end" name="heart-outline"></ion-icon>
+      </ng-template>
+    </div>
   </ion-item>
 </ion-list>
 

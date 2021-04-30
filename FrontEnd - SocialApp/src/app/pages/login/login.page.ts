@@ -84,6 +84,7 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    this.usuario = this.formGroup.value;
     this.spinnerDialog.show(null, "Cargando");
     this.loginService
       .loguearse(this.usuario.correo, this.usuario.password)
