@@ -77,7 +77,7 @@ export class RegistroUsuarioPage implements OnInit {
   agregarFotoPerfil(){
     this.Gallery();
     if(this.tardarEnvio == true){
-      this.imagen = this.usuario.imagePerfil;
+      //this.imagen = this.usuario.imagePerfil;
     }
   }
   Gallery(){
@@ -101,7 +101,7 @@ export class RegistroUsuarioPage implements OnInit {
       //let win: any = window;
       //const img = win.Ionic.WebView.convertFileSrc( imageData );
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.usuario.imagePerfil = base64Image;
+      this.imagen = base64Image;
       this.avisarSeleccionImg = true;
      }, (err) => {
       // Handle error
@@ -110,6 +110,7 @@ export class RegistroUsuarioPage implements OnInit {
 
   registrar() {
     this.usuario = this.formGroup.value;
+    this.usuario.imagePerfil = this.imagen;
     console.log(this.usuario);
     this.spinner.show(null, "Cargando", true);
     this.usuarioService.post(this.usuario).subscribe(async (result) => {

@@ -31,7 +31,7 @@ export class AppComponent {
   huellaVerifi() {
     this.faio
       .registerBiometricSecret({
-        description: 'Some biometric description', // optional | Default: null
+        description: 'Verificacion de huella, Mater Social', // optional | Default: null
         secret: 'my-super-secret', // mandatory
         invalidateOnEnrollment: true, // optional | Default: false
         disableBackup: true, // (Android Only) | optional | always `true` on Android
