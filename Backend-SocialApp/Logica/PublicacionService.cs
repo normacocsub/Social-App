@@ -1,19 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Datos;
 using Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Logica
 {
     public class PublicacionService
     {
         private SocialAppContext _context;
-
-        public PublicacionService(SocialAppContext context)
+        private IWebHostEnvironment Environment;
+        
+        public PublicacionService(SocialAppContext context, IWebHostEnvironment _environment)
         {
             _context = context;
+            Environment = _environment;
         }
 
         public GuardarPublicacionResponse GuardarPublicacion(Publicacion publicacion)
@@ -21,8 +28,16 @@ namespace Logica
             try
             {
                 publicacion.IdPublicacion = Seguridad.RandomString(16);
+                string fileName = @"/ArchivosMultimedia/" + "ImagenBase64_" + Guid.NewGuid() + ".txt";
+                FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+
+                StreamWriter writer = new StreamWriter(fileStream);
+                writer.WriteLine(publicacion.Imagen);
+                publicacion.Imagen = fileName;
                 _context.Publicacions.Add(publicacion);
                 _context.SaveChanges();
+                writer.Close();
+                fileStream.Close();
                 return new GuardarPublicacionResponse(publicacion);
             }
             catch(Exception e)
@@ -31,7 +46,7 @@ namespace Logica
             }
         }
 
-        public ConsultarPublicacionesResponse ConsultarPublicaciones()
+        public async Task<ConsultarPublicacionesResponse> ConsultarPublicaciones()
         {
             try
             {
@@ -49,6 +64,15 @@ namespace Logica
                     {
                         item3.Usuario = _context.Usuarios.Find(item3.IdUsuario);
                     }
+
+                    string fileName = item.Imagen;
+                    FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                    StreamReader reader = new StreamReader(fileStream);
+                    item.Imagen = reader.ReadLine();
+                    
+                    reader.Close();
+                    fileStream.Close();
+                    
                 }
                 return new ConsultarPublicacionesResponse(_context.Publicacions.Include(p => p.Comentarios
                 .OrderByDescending(c => c.Fecha)).ToList());
@@ -147,7 +171,7 @@ namespace Logica
             }
         }
 
-        public EditarComentarioResponse EditarComentario(Comentario comentario)
+        public async Task<EditarComentarioResponse> EditarComentario(Comentario comentario)
         {
             try
             {
@@ -168,7 +192,7 @@ namespace Logica
                         _context.SaveChanges();
                         
 
-                        var publicaciones = ConsultarPublicaciones();
+                        var publicaciones = await ConsultarPublicaciones();
 
                         if(publicaciones.Error)
                         {
@@ -191,11 +215,11 @@ namespace Logica
             }
         }
 
-        public EliminarComentarioResponse EliminarComentario(string codigo, string publicacion)
+        public async Task<EliminarComentarioResponse> EliminarComentario(string codigo, string publicacion)
         {
             try
             {
-                var publicaciones = ConsultarPublicaciones();
+                var publicaciones = await ConsultarPublicaciones();
                 if(publicaciones.Error == false)
                 {
                     var respuesta = publicaciones.Publicaciones.Find(p => p.IdPublicacion == publicacion);
@@ -276,11 +300,11 @@ namespace Logica
             }
         }
 
-        public EliminarReaccionResponse EliminarReaccion(string codigo, string IdPublicacion)
+        public async Task<EliminarReaccionResponse> EliminarReaccion(string codigo, string IdPublicacion)
         {
             try
             {
-                var response = ConsultarPublicaciones();
+                var response = await ConsultarPublicaciones();
                 var reaccion = _context.Reacciones.Find(codigo);
                 if(reaccion != null)
                 {

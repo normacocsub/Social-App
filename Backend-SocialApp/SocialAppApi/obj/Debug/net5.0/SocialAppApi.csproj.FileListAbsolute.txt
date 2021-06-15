@@ -133,7 +133,6 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\De
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Entity.pdb
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Logica.pdb
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Datos.pdb
-C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.csprojAssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.AssemblyInfoInputs.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.AssemblyInfo.cs
@@ -323,3 +322,12 @@ C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\SocialAppApi\obj\Debug\
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\ref\SocialAppApi.dll
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.pdb
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.genruntimeconfig.cache
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\web.config
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\appsettings.Development.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\appsettings.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\libman.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\SocialAppApi.deps.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\publish\SocialAppApi.runtimeconfig.json
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.csproj.AssemblyReference.cache
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll

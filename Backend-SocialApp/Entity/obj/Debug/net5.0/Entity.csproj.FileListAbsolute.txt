@@ -14,7 +14,6 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Debug\ne
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Debug\net5.0\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Debug\net5.0\ref\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Debug\net5.0\Entity.pdb
-C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.csprojAssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.AssemblyInfoInputs.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.AssemblyInfo.cs
@@ -34,3 +33,4 @@ C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\Entity\obj\Debug\net5.0
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.dll
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\Entity\obj\Debug\net5.0\ref\Entity.dll
 C:\Users\norma\Desktop\Social-App-main\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.pdb
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Debug\net5.0\Entity.csproj.AssemblyReference.cache

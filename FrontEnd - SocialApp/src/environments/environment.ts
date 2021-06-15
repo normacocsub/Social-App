@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ruta: 'https://matersocial.azurewebsites.net/',
+  ruta: 'https://localhost:5001/',
 };
 
 /*

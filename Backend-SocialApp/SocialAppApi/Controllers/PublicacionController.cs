@@ -7,7 +7,7 @@ using Logica;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-
+using Microsoft.AspNetCore.Hosting;
 using SocialAppApi.Hubs;
 using SocialAppApi.Models;
 
@@ -20,9 +20,9 @@ namespace SocialAppApi.Controllers
         private readonly PublicacionService _service;
 
         private readonly IHubContext<SignalHub> _hubContext;
-        public PublicacionController(SocialAppContext context, IHubContext<SignalHub> hubContext)
+        public PublicacionController(SocialAppContext context, IHubContext<SignalHub> hubContext, IWebHostEnvironment _environment)
         {
-            _service = new PublicacionService(context);
+            _service = new PublicacionService(context,  _environment);
             _hubContext = hubContext;
         }
 
@@ -47,9 +47,9 @@ namespace SocialAppApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<PublicacionViewModel> ConsultarPublicacion()
+        public async Task<ActionResult<PublicacionViewModel>> ConsultarPublicacion()
         {
-            var response = _service.ConsultarPublicaciones();
+            var response = await _service.ConsultarPublicaciones();
             if(response.Error)
             {
                 ModelState.AddModelError("Error al Consultar las publicaciones ", response.Mensaje);
@@ -142,7 +142,7 @@ namespace SocialAppApi.Controllers
         public async Task<ActionResult<ComentarioViewModel>> EditarComentario(ComentarioInputModel comentarioInput)
         {
             Comentario comentario = MapearComentario(comentarioInput);
-            var response = _service.EditarComentario(comentario);
+            var response = await _service.EditarComentario(comentario);
             if(response.Error)
             {
                 ModelState.AddModelError("Error al Editar el comentario ", response.Mensaje);
@@ -201,7 +201,7 @@ namespace SocialAppApi.Controllers
         [HttpDelete("Reaccion/{codigo}/{idPublicacion}")]
         public async Task<ActionResult<PublicacionViewModel>> EliminarReaccion(string codigo, string idPublicacion)
         {
-            var response = _service.EliminarReaccion(codigo, idPublicacion);
+            var response = await  _service.EliminarReaccion(codigo, idPublicacion);
             if(response.Error)
             {
                 ModelState.AddModelError("Error al Eliminar la reaccion ", response.Mensaje);
@@ -227,7 +227,7 @@ namespace SocialAppApi.Controllers
         [HttpDelete("Comentario/{codigo}/{publicacion}")]
         public async Task<ActionResult<PublicacionViewModel>> EliminarComentario(string codigo, string publicacion)
         {
-            var response = _service.EliminarComentario(codigo, publicacion);
+            var response = await _service.EliminarComentario(codigo, publicacion);
             if(response.Error)
             {
                 ModelState.AddModelError("Error al Eliminar el comentario ", response.Mensaje);
