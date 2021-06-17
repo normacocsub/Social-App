@@ -1,9 +1,14 @@
 using Datos;
 using Entity;
 using Logica;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using SocialAppApi.Config;
 using SocialAppApi.Models;
+using SocialAppApi.Servicios;
 
 namespace SocialAppApi.Controllers
 {
@@ -12,10 +17,11 @@ namespace SocialAppApi.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly UsuarioService _service;
-
-        public UsuarioController(SocialAppContext context)
+        private ServiciosJwt _servicioJwt;
+        public UsuarioController(SocialAppContext context, IOptions<AppSetting> appSettings, IWebHostEnvironment _environment)
         {
-            _service = new UsuarioService(context);
+            _servicioJwt = new ServiciosJwt(appSettings);
+            _service = new UsuarioService(context, _environment);
         }
 
         [HttpPost]
@@ -31,43 +37,31 @@ namespace SocialAppApi.Controllers
                 detalleProblemas.Status = StatusCodes.Status500InternalServerError;
                 return BadRequest(detalleProblemas);
             }
-            response.Usuario.Password = "";
-            response.Usuario.KeyPasswordDesEncriptar = "";
-            return Ok(response.Usuario);
+            UsuarioViewModel usuarioViewModel = new UsuarioViewModel(response.Objeto);
+            return Ok(usuarioViewModel);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult<UsuarioViewModel> Login(UsuarioInputModel usuarioInput)
         {
             Usuario usuario = MapearUsuario(usuarioInput);
-            var response = _service.ValidarUsuario(usuario);
+            var user = _service.ValidarUsuario(usuario);
 
-            if (response.Error)
+            if (user.Objeto == null)
             {
-                ModelState.AddModelError("Error al iniciar Sesion", response.Mensaje);
-                var detallesproblemas = new ValidationProblemDetails(ModelState);
-
-                if (response.Estado == "Invalid")
+                ModelState.AddModelError("Acceso Denegado", "Usuario y/o contraseña incorrectos");
+                var problemDetails = new ValidationProblemDetails(ModelState)
                 {
-                    detallesproblemas.Status = StatusCodes.Status403Forbidden;
-                }
-
-                if (response.Estado == "No Existe")
-                {
-                    detallesproblemas.Status = StatusCodes.Status404NotFound;
-                }
-
-                if (response.Estado == "Aplication")
-                {
-                    detallesproblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detallesproblemas);
+                    Status = StatusCodes.Status401Unauthorized,
+                };
+                return Unauthorized(problemDetails);
             }
-            response.Usuario.Password = "";
-            response.Usuario.KeyPasswordDesEncriptar = "";
-            return Ok(response.Usuario);
+            var response = _servicioJwt.GenerarToken(user.Objeto);
+            return Ok(response);
         }
 
+        [Authorize]
         [HttpPut("Imagen")]
         public ActionResult<UsuarioViewModel> EditarImagenUsuario(UsuarioInputModel usuarioInputModel)
         {
@@ -78,45 +72,23 @@ namespace SocialAppApi.Controllers
             var response = _service.EditarImagenUsuario(usuario);
             if (response.Error)
             {
-                ModelState.AddModelError("Error al editar el usuario", response.Mensaje);
-                var detallesproblemas = new ValidationProblemDetails(ModelState);
-                if (response.Estado == "Aplication")
-                {
-                    detallesproblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                if (response.Estado == "NoExiste")
-                {
-                    detallesproblemas.Status = StatusCodes.Status404NotFound;
-                }
-                return BadRequest(detallesproblemas);
+                return BadRequest();
             }
-            response.Usuario.Password = "";
-            response.Usuario.KeyPasswordDesEncriptar = "";
-            return Ok(response.Usuario);
+            UsuarioViewModel usuarioViewModel = new UsuarioViewModel(response.Objeto);
+            return Ok(usuarioViewModel);
         }
 
+        [Authorize]
         [HttpGet("usuario/{correo}")]
         public ActionResult<UsuarioViewModel> BuscarUsuario(string correo)
         {
             var response = _service.BuscarUsuario(correo);
              if (response.Error)
             {
-                ModelState.AddModelError("Error al editar el usuario", response.Mensaje);
-                var detallesproblemas = new ValidationProblemDetails(ModelState);
-                if (response.Estado == "Aplication")
-                {
-                    detallesproblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                if (response.Estado == "NoExiste")
-                {
-                    detallesproblemas.Status = StatusCodes.Status404NotFound;
-                }
-                return BadRequest(detallesproblemas);
+                return BadRequest();
             }
-            response.Usuario.Password = "";
-            response.Usuario.KeyPasswordDesEncriptar = "";
-            return Ok(response.Usuario);
-
+            UsuarioViewModel usuarioViewModel = new UsuarioViewModel(response.Objeto);
+            return Ok(usuarioViewModel);
         }
 
         private Usuario MapearUsuario(UsuarioInputModel usuarioInput)

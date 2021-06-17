@@ -43,13 +43,12 @@ export class HomePage implements OnInit {
   }
 
   getPublicaciones(){
-    this.publicacionService.ConsultaPublicaciones().subscribe(resulta =>{
-      this.publicaciones = resulta;
+    this.publicacionService.ConsultaPublicaciones().then(value => value.subscribe(result => {
+      this.publicaciones = result;
       if(this.publicaciones.length === 0 ){
         this.estadoPublicaciones = false;
       }
-      
-    });
+    }));
   }
 
   doRefresh(event){
@@ -104,9 +103,9 @@ export class HomePage implements OnInit {
     this.publicacion = data;
     
 
-    this.publicacionService.crearPublicacion(this.publicacion).subscribe(result => {
-     
-    });
+    this.publicacionService.crearPublicacion(this.publicacion).then(value => value.subscribe(result => {
+
+    }));
     
     this.getPublicaciones();
     /*

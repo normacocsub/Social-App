@@ -26,7 +26,7 @@ export class PerfilPage implements OnInit {
     
     this.loginService.getUser().then((value) => {
       value.subscribe((result:Usuario) => {
-        this.loginService.buscarUsuario(result.correo).subscribe(resultado =>{
+        this.loginService.buscarUsuario(result.correo).then(value => value.subscribe(resultado => {
           if(resultado != null){
             this.usuario = resultado;
             if(result.imagePerfil = ''){
@@ -36,11 +36,11 @@ export class PerfilPage implements OnInit {
               this.imagen = result.imagePerfil;
             }
           }
-        })
+        }));
         
         
       })
-    })
+    });
   }
 
   ngOnInit() {}
@@ -93,10 +93,10 @@ export class PerfilPage implements OnInit {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.usuario.imagePerfil = base64Image;
       this.spinner.show(null, "Actualizando Imagen", false);
-      this.loginService.editarImagen(this.usuario).subscribe(result => {
+      this.loginService.editarImagen(this.usuario).then(value => value.subscribe(result => {
         this.usuario = result;
         this.spinner.hide();
-      });
+      }));
 
      }, (err) => {
       // Handle error

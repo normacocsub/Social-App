@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Datos;
 using Entity;
 using Logica;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,6 +14,7 @@ using SocialAppApi.Models;
 
 namespace SocialAppApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PublicacionController : ControllerBase
@@ -41,7 +43,7 @@ namespace SocialAppApi.Controllers
                 detalleProblemas.Status = StatusCodes.Status500InternalServerError;
                 return BadRequest(detalleProblemas);
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
@@ -57,7 +59,7 @@ namespace SocialAppApi.Controllers
                 detalleProblemas.Status = StatusCodes.Status500InternalServerError;
                 return BadRequest(detalleProblemas);
             }
-            return Ok(response.Publicaciones.Select(a => new PublicacionViewModel(a)).OrderByDescending(p => p.Fecha));
+            return Ok(response.Lista.Select(a => new PublicacionViewModel(a)).OrderByDescending(p => p.Fecha));
         }
 
     
@@ -71,19 +73,9 @@ namespace SocialAppApi.Controllers
             var response = _service.EditarPublicaciones(publicacion);
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Actualizar la publicacion ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-                if(response.Estado == "No existe")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
@@ -94,19 +86,9 @@ namespace SocialAppApi.Controllers
             var response = _service.EliminarPublicacion(publicacion);
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Eliminar la publicacion ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-                if(response.Estado == "No existe")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
@@ -120,24 +102,13 @@ namespace SocialAppApi.Controllers
             
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Actualizar la publicacion ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-                if(response.Estado == "No existe")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
-
-
+        
         [HttpPut("EditarComentario")]
         public async Task<ActionResult<ComentarioViewModel>> EditarComentario(ComentarioInputModel comentarioInput)
         {
@@ -145,23 +116,9 @@ namespace SocialAppApi.Controllers
             var response = await _service.EditarComentario(comentario);
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Editar el comentario ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-                if(response.Estado == "!Editar")
-                {
-                    detalleProblemas.Status = StatusCodes.Status401Unauthorized;
-                }
-                if(response.Estado == "No Existe")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
@@ -174,26 +131,9 @@ namespace SocialAppApi.Controllers
 
             if(resultado.Error)
             {
-                ModelState.AddModelError("Error al Editar la reaccion ", resultado.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-
-                if(resultado.Estado == "TwoReacciones")
-                {
-                    detalleProblemas.Status = StatusCodes.Status304NotModified;
-                }
-
-                if(resultado.Estado == "NoExiste")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-
-                if(resultado.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(resultado.Publicacion);
+            var publicacionview = new PublicacionViewModel(resultado.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);    
         }
@@ -204,22 +144,9 @@ namespace SocialAppApi.Controllers
             var response = await  _service.EliminarReaccion(codigo, idPublicacion);
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Eliminar la reaccion ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-
-                if(response.Estado == "NoExiste")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
         }
@@ -230,26 +157,12 @@ namespace SocialAppApi.Controllers
             var response = await _service.EliminarComentario(codigo, publicacion);
             if(response.Error)
             {
-                ModelState.AddModelError("Error al Eliminar el comentario ", response.Mensaje);
-                var detalleProblemas = new ValidationProblemDetails(ModelState);
-
-                if(response.Estado == "NoExiste")
-                {
-                    detalleProblemas.Status = StatusCodes.Status404NotFound;
-                }
-                if(response.Estado == "Aplication")
-                {
-                    detalleProblemas.Status = StatusCodes.Status500InternalServerError;
-                }
-
-                return BadRequest(detalleProblemas);
+                return BadRequest();
             }
-            var publicacionview = new PublicacionViewModel(response.Publicacion);
+            var publicacionview = new PublicacionViewModel(response.Objeto);
             await _hubContext.Clients.All.SendAsync("publicacion", publicacionview);
             return Ok(publicacionview);
-
         }
-
         private Reaccion MapearReaccion(ReaccionInputModel reaccionInput)
         {
             var reaccion = new Reaccion

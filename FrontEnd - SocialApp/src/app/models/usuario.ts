@@ -5,6 +5,7 @@ export class Usuario {
     apellidos: string;
     sexo: string;
     imagePerfil: string;
+    token: string;
 
     constructor(){
         this.correo = '';
@@ -13,5 +14,6 @@ export class Usuario {
         this.apellidos = '';
         this.sexo = '';
         this.imagePerfil = '';
+        this.token = '';
     }
 }

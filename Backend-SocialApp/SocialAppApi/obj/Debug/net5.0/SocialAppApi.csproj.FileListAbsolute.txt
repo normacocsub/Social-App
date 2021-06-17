@@ -331,3 +331,4 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\De
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Debug\net5.0\SocialAppApi.csproj.AssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

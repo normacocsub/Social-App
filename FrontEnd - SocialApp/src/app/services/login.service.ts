@@ -73,16 +73,25 @@ export class LoginService {
     )
   }
 
-  buscarUsuario(correo: string){
-    return this.http.get<Usuario>(this.ruta+"api/Usuario/usuario/"+correo);
+  async buscarUsuario(correo: string) {
+    const headers = await this.headersToken();
+    return this.http.get<Usuario>(this.ruta+"api/Usuario/usuario/"+correo, {"headers": headers});
   }
 
-  editarImagen(usuario: Usuario){
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-    
-    return this.http.put<Usuario>(this.ruta + "api/Usuario/Imagen",usuario, httpOptions)
+  async headersToken() {
+    var token = '';
+    await this.getUser().then((value) => {
+      value.subscribe((result:Usuario) => {
+        token = result.token || '';
+      });
+    });
+    const headers = { 'content-type': 'application/json', "authorization": `Bearer ${token}`}  
+    return headers;
+  }
+
+  async editarImagen(usuario: Usuario){
+    const headers = await this.headersToken();
+    return this.http.put<Usuario>(this.ruta + "api/Usuario/Imagen",usuario, {"headers": headers})
     .pipe(
       tap(
         async(result: Usuario) => {

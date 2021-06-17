@@ -23,14 +23,13 @@ namespace Logica
             Environment = _environment;
         }
 
-        public GuardarPublicacionResponse GuardarPublicacion(Publicacion publicacion)
+        public ClaseRespuesta<Publicacion> GuardarPublicacion(Publicacion publicacion)
         {
             try
             {
                 publicacion.IdPublicacion = Seguridad.RandomString(16);
                 string fileName = @"/ArchivosMultimedia/" + "ImagenBase64_" + Guid.NewGuid() + ".txt";
                 FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Create, FileAccess.Write, FileShare.None);
-
                 StreamWriter writer = new StreamWriter(fileStream);
                 writer.WriteLine(publicacion.Imagen);
                 publicacion.Imagen = fileName;
@@ -38,15 +37,31 @@ namespace Logica
                 _context.SaveChanges();
                 writer.Close();
                 fileStream.Close();
-                return new GuardarPublicacionResponse(publicacion);
+                return new ClaseRespuesta<Publicacion>(publicacion);
             }
             catch(Exception e)
             {
-                return new GuardarPublicacionResponse($"Error aplicacion: {e.Message}");
+                return new ClaseRespuesta<Publicacion>($"Error aplicacion: {e.Message}");
             }
         }
 
-        public async Task<ConsultarPublicacionesResponse> ConsultarPublicaciones()
+        private Usuario BuscarImagenPerfilUsuario(Usuario usuario)
+        {
+            string fileName = usuario.ImagePerfil;
+            if (fileName != "")
+            {
+                FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                StreamReader reader = new StreamReader(fileStream);
+                usuario.ImagePerfil = reader.ReadLine();
+                    
+                reader.Close();
+                fileStream.Close();
+            }
+
+            return usuario;
+        }
+
+        public async Task<ClaseRespuesta<Publicacion>> ConsultarPublicaciones()
         {
             try
             {
@@ -56,14 +71,19 @@ namespace Logica
                 foreach (var item in publicaciones)
                 {
                     item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                    foreach (var item2 in item.Comentarios)
+                    item.Usuario = BuscarImagenPerfilUsuario(item.Usuario);
+                    
+                    item.Comentarios.ForEach(comentario =>
                     {
-                        item2.Usuario = _context.Usuarios.Find(item2.IdUsuario);
-                    }
-                    foreach (var item3 in item.Reacciones)
+                        comentario.Usuario = _context.Usuarios.Find(comentario.IdUsuario);
+                        comentario.Usuario = BuscarImagenPerfilUsuario(comentario.Usuario);
+                    });
+                   
+                    item.Reacciones.ForEach(reaccion =>
                     {
-                        item3.Usuario = _context.Usuarios.Find(item3.IdUsuario);
-                    }
+                        reaccion.Usuario = _context.Usuarios.Find(reaccion.IdUsuario);
+                        reaccion.Usuario.ImagePerfil = "";
+                    });
 
                     string fileName = item.Imagen;
                     FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
@@ -74,436 +94,236 @@ namespace Logica
                     fileStream.Close();
                     
                 }
-                return new ConsultarPublicacionesResponse(_context.Publicacions.Include(p => p.Comentarios
+                return new ClaseRespuesta<Publicacion>(_context.Publicacions.Include(p => p.Comentarios
                 .OrderByDescending(c => c.Fecha)).ToList());
             }
             catch(Exception e)
             {
-                return new ConsultarPublicacionesResponse($"Error Aplication: {e.Message}");
+                return new ClaseRespuesta<Publicacion>($"Error Aplication: {e.Message}");
             }
         }
 
-        public EditarPublicacionesReponse EditarPublicaciones(Publicacion publicacion)
+        public ClaseRespuesta<Publicacion> EditarPublicaciones(Publicacion publicacion)
         {
             try
             {
                 var publicaciones = _context.Publicacions.Include(c => c.Comentarios).ToList();
                 var response = publicaciones.Find( p => p.IdPublicacion == publicacion.IdPublicacion);
-                if(response != null)
+                if (response == null)
                 {
-                    response.ContenidoPublicacion = publicacion.ContenidoPublicacion;
-                    _context.Publicacions.Update(response);
-                    _context.SaveChanges();
-                    return new EditarPublicacionesReponse(response);
+                    return new ClaseRespuesta<Publicacion>("No existe la publicacion ");
                 }
-                else
-                {
-                    return new EditarPublicacionesReponse("No existe la publicacion ", "No existe");
-                }
+                response.ContenidoPublicacion = publicacion.ContenidoPublicacion;
+                _context.Publicacions.Update(response);
+                _context.SaveChanges();
+                return new ClaseRespuesta<Publicacion>(response);
+
             }
             catch(Exception e)
             {
-                return new EditarPublicacionesReponse($"Error en la aplicacion: {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion: {e.Message}");
             }
         }
 
 
 
 
-        public EditarPublicacionesReponse AgregarComentarios(Comentario comentario)
+        public ClaseRespuesta<Publicacion> AgregarComentarios(Comentario comentario)
         {
             try
             {
                 var publicaciones = _context.Publicacions.Include(c => c.Comentarios)
                 .ToList();
                 var response = publicaciones.Find( p => p.IdPublicacion == comentario.IdPublicacion);
-                if(response != null)
+                if (response == null)
                 {
-                    response.Comentarios.Add(comentario);
-                   
-                    foreach (var item in response.Comentarios)
-                    {
-
-                        if(item.IdComentario == "")
-                        {
-                            item.IdComentario = Seguridad.RandomString(16);
-                            
-                        }
-                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                    }
-                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                    _context.Publicacions.Update(response);
-                    _context.SaveChanges();
-                    response.Comentarios = response.Comentarios.OrderByDescending(c => c.Fecha).ToList();
-                    return new EditarPublicacionesReponse(response);
+                    return new ClaseRespuesta<Publicacion>("No existe la publicacion ");
                 }
-                else
+                response.Comentarios.Add(comentario);
+                response.Comentarios.ForEach(comentario =>
                 {
-                    return new EditarPublicacionesReponse("No existe la publicacion ", "No existe");
-                }
+                    comentario.IdComentario = comentario.IdComentario == "" ? Seguridad.RandomString(16) : comentario.IdComentario;
+                    comentario.Usuario = _context.Usuarios.Find(comentario.IdUsuario);
+                    comentario.Usuario = BuscarImagenPerfilUsuario(comentario.Usuario);
+                });
+                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                _context.Publicacions.Update(response);
+                _context.SaveChanges();
+                response.Comentarios = response.Comentarios.OrderByDescending(c => c.Fecha).ToList();
+                return new ClaseRespuesta<Publicacion>(response);
             }
             catch(Exception e)
             {
-                return new EditarPublicacionesReponse($"Error en la aplicacion: {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion: {e.Message}");
             }
         }
 
 
-        public EliminarPublicacionesResponse EliminarPublicacion(string publicacion)
+        public ClaseRespuesta<Publicacion> EliminarPublicacion(string publicacion)
         {
             try
             {
                 var response = _context.Publicacions.Find(publicacion);
-                if(response != null)
+                if (response == null)
                 {
-                    _context.Publicacions.Remove(response);
-                    _context.SaveChanges();
-                    return new EliminarPublicacionesResponse(response);
+                    return new ClaseRespuesta<Publicacion>("Error: No existe la publicacion");
                 }
-                else
-                {
-                    return new EliminarPublicacionesResponse("Error: No existe la publicacion", "No existe");
-                }
+                _context.Publicacions.Remove(response);
+                _context.SaveChanges();
+                return new ClaseRespuesta<Publicacion>(response);
             }
             catch(Exception e)
             {
-                return new EliminarPublicacionesResponse($"Error en la aplicacion {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {e.Message}");
             }
         }
 
-        public async Task<EditarComentarioResponse> EditarComentario(Comentario comentario)
+        public async Task<ClaseRespuesta<Publicacion>> EditarComentario(Comentario comentario)
         {
             try
             {
                 var comentarios = _context.Comentarios.ToList();
                 var response = comentarios.Find(c => c.IdComentario == comentario.IdComentario);
-                if(response != null)
+                if (response == null)
                 {
-                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                    response.ContenidoComentario = comentario.ContenidoComentario;
-
-                    if(response.Usuario.Correo != comentario.Usuario.Correo)
-                    {
-                        return new EditarComentarioResponse("El usuario no puede editar este comentario", "!Editar");
-                    }
-                    else
-                    {
-                        _context.Comentarios.Update(response);
-                        _context.SaveChanges();
-                        
-
-                        var publicaciones = await ConsultarPublicaciones();
-
-                        if(publicaciones.Error)
-                        {
-                            return new EditarComentarioResponse($"Error en la aplicacion {publicaciones.Mensaje}", "Aplication");
-                        }
-
-                        var responsePublicacion = publicaciones.Publicaciones.Find(c => c.IdPublicacion == comentario.IdPublicacion);
-                        responsePublicacion.Comentarios = responsePublicacion.Comentarios.OrderByDescending(c => c.Fecha).ToList();
-                        return new EditarComentarioResponse(responsePublicacion);
-                    }
+                    return new ClaseRespuesta<Publicacion>("No se encuentra el comentario");
                 }
-                else
+                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                response.ContenidoComentario = comentario.ContenidoComentario;
+                if(response.Usuario.Correo != comentario.Usuario.Correo)
                 {
-                    return new EditarComentarioResponse("No se encuentra el comentario", "No Existe");
+                    return new ClaseRespuesta<Publicacion>("El usuario no puede editar este comentario");
                 }
+                _context.Comentarios.Update(response);
+                _context.SaveChanges();
+                
+                var publicaciones = await ConsultarPublicaciones();
+                if(publicaciones.Error)
+                {
+                    return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {publicaciones.Mensaje}");
+                }
+                var responsePublicacion = publicaciones.Lista.Find(c => c.IdPublicacion == comentario.IdPublicacion);
+                responsePublicacion.Comentarios = responsePublicacion.Comentarios.OrderByDescending(c => c.Fecha).ToList();
+                return new ClaseRespuesta<Publicacion>(responsePublicacion);
             }
             catch(Exception e)
             {
-                return new EditarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {e.Message}");
             }
         }
 
-        public async Task<EliminarComentarioResponse> EliminarComentario(string codigo, string publicacion)
+        public async Task<ClaseRespuesta<Publicacion>> EliminarComentario(string codigo, string publicacion)
         {
             try
             {
                 var publicaciones = await ConsultarPublicaciones();
-                if(publicaciones.Error == false)
+                if (publicaciones.Error)
                 {
-                    var respuesta = publicaciones.Publicaciones.Find(p => p.IdPublicacion == publicacion);
-                    if(respuesta != null)
-                    {
-                        var respuestaComentario = respuesta.Comentarios.Find(c => c.IdComentario == codigo);
-                        if(respuestaComentario != null)
-                        {
-                            respuesta.Comentarios.Remove(respuestaComentario);
-                            _context.Publicacions.Update(respuesta);
-                            _context.SaveChanges();
-                            return new EliminarComentarioResponse(respuesta);
-                        }
-                        else
-                        {
-                            return new EliminarComentarioResponse("No existe el comentario", "NoExiste");
-                        }
-                    }
-                    else
-                    {
-                        return new EliminarComentarioResponse("No existe la publicacion", "NoExiste");
-                    }
+                    return new ClaseRespuesta<Publicacion>("Error al consultar las publicaciones");
                 }
-                else
+                Publicacion publicacionResponse = publicaciones.Lista.Find(p => p.IdPublicacion == publicacion);
+                if (publicacionResponse == null)
                 {
-                    return new EliminarComentarioResponse("Error al consultar las publicaciones", "Aplication");
+                    return new ClaseRespuesta<Publicacion>("No existe la publicacion");
                 }
+                Comentario respuestaComentario = publicacionResponse.Comentarios.Find(c => c.IdComentario == codigo);
+                if (respuestaComentario == null)
+                {
+                    return new ClaseRespuesta<Publicacion>("No existe el comentario");
+                }
+                publicacionResponse.Comentarios.Remove(respuestaComentario);
+                _context.Publicacions.Update(publicacionResponse);
+                _context.SaveChanges();
+                return new ClaseRespuesta<Publicacion>(publicacionResponse);
             }
             catch(Exception e)
             {
-                return new EliminarComentarioResponse($"Error en la aplicacion {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {e.Message}");
             }
         }
 
        
 
-        public EditarReaccionResponse EditarReaccion(Reaccion reaccion)
+        public ClaseRespuesta<Publicacion> EditarReaccion(Reaccion reaccion)
         {
             try
             {
                 var publicaciones = _context.Publicacions.Include(p => p.Comentarios)
                 .Include(p => p.Reacciones)
                 .ToList();
-                var response = publicaciones.Find(p => p.IdPublicacion == reaccion.IdPublicacion);
-                if(response != null)
+                Publicacion response = publicaciones.Find(p => p.IdPublicacion == reaccion.IdPublicacion);
+                if (response == null)
                 {
-                    if(reaccion.Like && reaccion.Love)
-                    {
-                        return new EditarReaccionResponse("No se puede usar las dos reacciones a la vez", "TwoReacciones");
-                    }
-                    if(reaccion.Like == false && reaccion.Love == false)
-                    {
-                        return new EditarReaccionResponse("No se encuentra ninguna reaccion", "TwoReacciones");
-                    }
-
-                    response.agregarReaccion(reaccion);
-                    _context.Publicacions.Update(response);
-                    _context.SaveChanges();
-                    foreach (var item in response.Comentarios)
-                    {
-                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                    }
-                    foreach (var item in response.Reacciones)
-                    {
-                        item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                    }
-                    response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                    return new EditarReaccionResponse(response);
+                    return new ClaseRespuesta<Publicacion>("No se encontro la publicacion");
                 }
-                else
+                if(reaccion.Like && reaccion.Love)
                 {
-                    return new EditarReaccionResponse("No se encontro la publicacion", "NoExiste");
+                    return new ClaseRespuesta<Publicacion>("No se puede usar las dos reacciones a la vez");
                 }
+                if(!reaccion.Like && !reaccion.Love)
+                {
+                    return new ClaseRespuesta<Publicacion>("No se encuentra ninguna reaccion");
+                }
+                response.agregarReaccion(reaccion);
+                _context.Publicacions.Update(response);
+                _context.SaveChanges();
+                response.Comentarios.ForEach(comentario =>
+                {
+                    comentario.Usuario = _context.Usuarios.Find(comentario.IdUsuario);
+                    comentario.Usuario.ImagePerfil = "";
+                });
+                
+                response.Reacciones.ForEach(reaccion =>
+                {
+                    reaccion.Usuario = _context.Usuarios.Find(reaccion.IdUsuario);
+                    reaccion.Usuario.ImagePerfil = "";
+                });
+                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                return new ClaseRespuesta<Publicacion>(response);
             }
             catch(Exception e)
             {
-                return new EditarReaccionResponse($"Error en la aplicacion {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {e.Message}");
             }
         }
 
-        public async Task<EliminarReaccionResponse> EliminarReaccion(string codigo, string IdPublicacion)
+        public async Task<ClaseRespuesta<Publicacion>> EliminarReaccion(string codigo, string IdPublicacion)
         {
             try
             {
                 var response = await ConsultarPublicaciones();
                 var reaccion = _context.Reacciones.Find(codigo);
-                if(reaccion != null)
+                if (reaccion == null)
                 {
-                    if(response.Error == false)
-                    {
-                        var respuesta = response.Publicaciones.Find(p => p.IdPublicacion == IdPublicacion);
-                        if(respuesta != null)
-                        {
-                            var respuestaReaccion = respuesta.Reacciones.Find(r => r.Codigo == reaccion.Codigo);
-                            if(respuestaReaccion != null)
-                            {
-                                respuesta.Reacciones.Remove(respuestaReaccion);
-                                _context.Publicacions.Update(respuesta);
-                                _context.SaveChanges();
-                                return new EliminarReaccionResponse(respuesta);
-                            }
-                            else
-                            {
-                                return new EliminarReaccionResponse("La reaccion no existe", "NoExiste");
-                            }
-                        }
-                        else
-                        {
-                            return new EliminarReaccionResponse("No existe la publicacion", "NoExiste");
-                        }
-                    }
-                    else
-                    {
-                        return new EliminarReaccionResponse($"Error en la aplicacion {response.Mensaje}", "Aplication");
-                    }
+                    return new ClaseRespuesta<Publicacion>("No existe la reaccion");
                 }
-                else
+
+                if (response.Error)
                 {
-                    return new EliminarReaccionResponse("No existe la reaccion", "NoExiste");
+                    return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {response.Mensaje}");
                 }
+                Publicacion respuesta = response.Lista.Find(p => p.IdPublicacion == IdPublicacion);
+                if (respuesta == null)
+                {
+                    return new ClaseRespuesta<Publicacion>("No existe la publicacion");
+                }
+                Reaccion respuestaReaccion = respuesta.Reacciones.Find(r => r.Codigo == reaccion.Codigo);
+                if (respuestaReaccion == null)
+                {
+                    return new ClaseRespuesta<Publicacion>("La reaccion no existe");
+                }
+                respuesta.Reacciones.Remove(respuestaReaccion);
+                _context.Publicacions.Update(respuesta);
+                _context.SaveChanges();
+                return new ClaseRespuesta<Publicacion>(respuesta);
             }
             catch(Exception e)
             {
-                return new EliminarReaccionResponse($"Error en la aplicacion {e.Message}", "Aplication");
+                return new ClaseRespuesta<Publicacion>($"Error en la aplicacion {e.Message}");
             }
-        }
-
-        public class EliminarComentarioResponse
-        {
-            public EliminarComentarioResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public EliminarComentarioResponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-            public bool Error { get; set; }
-            public string Estado { get; set; }
-            public string Mensaje { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-
-        public class EliminarReaccionResponse
-        {
-            public EliminarReaccionResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public EliminarReaccionResponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-            public bool Error { get; set; }
-            public string Estado { get; set; }
-            public string Mensaje { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-
-
-        public class EditarReaccionResponse
-        {
-            public EditarReaccionResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public EditarReaccionResponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-            public bool Error { get; set; }
-            public string Mensaje { get; set; }
-            public string Estado { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-
-        public class EditarComentarioResponse
-        {
-            public EditarComentarioResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public EditarComentarioResponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-
-            public bool Error { get; set; }
-            public string Estado { get; set; }
-            public string Mensaje { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-        public class EliminarPublicacionesResponse
-        {
-            public EliminarPublicacionesResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public EliminarPublicacionesResponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-            public bool Error { get; set; }
-            public string Mensaje { get; set; }
-            public string Estado { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-
-
-        public class EditarPublicacionesReponse
-        {
-            public EditarPublicacionesReponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-
-            }
-
-            public EditarPublicacionesReponse(string mensaje, string estado)
-            {
-                Error = true;
-                Mensaje = mensaje;
-                Estado = estado;
-            }
-            public string Estado { get; set; }
-            public bool Error { get; set; }
-            public string Mensaje { get; set; }
-            public Publicacion Publicacion { get; set; }
-        }
-
-        public class ConsultarPublicacionesResponse
-        {
-            public ConsultarPublicacionesResponse(List<Publicacion> publicacions)
-            {
-                Error = false;
-                Publicaciones = publicacions;
-            }
-
-            public ConsultarPublicacionesResponse(string mensaje)
-            {
-                Error = true;
-                Mensaje = mensaje;
-            }
-            public bool Error { get; set; }
-            public string Mensaje { get; set; }
-            public List<Publicacion> Publicaciones { get; set; }
-        }
-
-        public class GuardarPublicacionResponse
-        {
-            public GuardarPublicacionResponse(Publicacion publicacion)
-            {
-                Error = false;
-                Publicacion = publicacion;
-            }
-
-            public GuardarPublicacionResponse(string mensaje)
-            {
-                Error = true;
-                Mensaje = mensaje;
-            }
-            public bool Error { get; set; }
-            public string Mensaje { get; set; }
-            public Publicacion Publicacion { get; set; }
         }
     }
     

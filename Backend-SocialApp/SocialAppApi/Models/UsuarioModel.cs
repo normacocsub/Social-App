@@ -19,11 +19,12 @@ namespace SocialAppApi.Models
         public UsuarioViewModel(Usuario usuario)
         {
             Correo = usuario.Correo;
-            Password = usuario.Password;
             Nombres = usuario.Nombres;
             Apellidos = usuario.Apellidos;
             Sexo = usuario.Sexo;
             ImagePerfil = usuario.ImagePerfil;
         }
+
+        public string Token { get; set; }
     }
 }

@@ -108,9 +108,9 @@ export class PublicacionComponent implements OnInit {
       var codigo = this.publicacion.reacciones.find(r => r.idUsuario == this.usuario.correo);
       if(codigo != null){
         this.PublicacionService.eliminarReaccion(codigo.codigo,this.publicacion.idPublicacion)
-        .subscribe(result =>{
+        .then(value => value.subscribe(result => {
           this.publicacion = result;
-        })
+        }));
       }
     }else{
       this.mapearReaccion();
@@ -127,10 +127,9 @@ export class PublicacionComponent implements OnInit {
     reaccion.love = this.heart;
     reaccion.usuario = this.usuario;
 
-    this.PublicacionService.editarReaccion(reaccion).subscribe(result => {
+    this.PublicacionService.editarReaccion(reaccion).then(value => value.subscribe(result => {
       this.publicacion = result;
-      
-    })
+    }));
   }
 
   laik(){
@@ -141,9 +140,9 @@ export class PublicacionComponent implements OnInit {
       var codigo = this.publicacion.reacciones.find(r => r.idUsuario == this.usuario.correo);
       if(codigo != null){
         this.PublicacionService.eliminarReaccion(codigo.codigo,this.publicacion.idPublicacion)
-        .subscribe(result =>{
+        .then(value => value.subscribe(result => {
           this.publicacion = result;
-        })
+        }));
       }
     }else{
       this.mapearReaccion();
@@ -179,13 +178,13 @@ export class PublicacionComponent implements OnInit {
     };
     //this.publicacion.comentarios.unshift(comentario);
 
-    this.PublicacionService.agregarComentario(comentario).subscribe(
+    this.PublicacionService.agregarComentario(comentario).then(value => value.subscribe(result => {
       (result) => {
         this.input.value = '';
         
         this.publicacion = result;
       }
-    );
+    }));
   }
 
   getTextComentario(event) {
@@ -209,14 +208,14 @@ export class PublicacionComponent implements OnInit {
   }
 
   consultarPublicacion(data: any){
-    this.PublicacionService.ConsultaPublicaciones().subscribe(result => {
+    this.PublicacionService.ConsultaPublicaciones().then(value => value.subscribe(result => {
       this.publicacion = result.find(p => p.idPublicacion == data.publicacion);
       if(this.publicacion.comentarios.length > 0){
         this.input.value =   this.publicacion.comentarios[0].contenidoComentario;
         this.usuarioString = this.publicacion.comentarios[0].usuario?.nombres
         + " " + this.publicacion.comentarios[0].usuario?.apellidos+":";
       }
-    });
+    }));
   }
 
   async editarPublicacion() {
@@ -232,13 +231,13 @@ export class PublicacionComponent implements OnInit {
 
     this.publicacionEditar = data;
 
-    this.PublicacionService.editarPublicacion(this.publicacionEditar).subscribe(
+    this.PublicacionService.editarPublicacion(this.publicacionEditar).then(value => value.subscribe(result => {
       (result) => {
         if (result != null) {
           
         }
       }
-    );
+    }));
   }
 
   async presentAlertConfirm() {
@@ -261,9 +260,7 @@ export class PublicacionComponent implements OnInit {
             //
             this.PublicacionService.eliminarPublicacion(
               this.publicacion
-            ).subscribe((result) => {
-              
-            });
+            ).then(value => value.subscribe(result => {}));
           },
         },
       ],
@@ -347,18 +344,16 @@ export class PublicacionComponent implements OnInit {
 
     this.comentarioEditar = data;
 
-    this.PublicacionService.editarComentario(data).subscribe((result) => {
+    this.PublicacionService.editarComentario(data).then(value => value.subscribe(result => {
       this.publicacion = result;
-      
-
-    });
+    }));
   }
 
   eliminarComentario(comentario: Comentario) {
     this.PublicacionService.eliminarComentario(comentario.idComentario, this.publicacion.idPublicacion)
-    .subscribe(result => {
+    .then(value => value.subscribe(result => {
       this.publicacion = result;
-    });
+    }));
   }
   
 }

@@ -10,6 +10,7 @@ import * as signalR from '@aspnet/signalr';
 import { Comentario } from '../models/comentario';
 import { environment } from 'src/environments/environment';
 import { Reaccion } from '../models/reaccion';
+import { LoginService } from './login.service';
 
 const ruta = environment.ruta;
 
@@ -29,14 +30,10 @@ export class PublicacionesService {
     private platform: Platform,
     private storage: Storage,
     private sqlite: SQLite,
-    private http: HttpClient
+    private http: HttpClient,
+    private serviceLogin: LoginService
   ) {
     this.ruta = ruta;
-    /*
-    this.openDataBase();
-    this.buildConnection();
-    this.startConnection();
-    */
   }
 
   private buildConnection = () => {
@@ -74,83 +71,90 @@ export class PublicacionesService {
 
   //Publicacion por api
 
-  crearPublicacion(publicacion: Publicacion) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
+  async crearPublicacion(publicacion: Publicacion) {
+    
+    const headers = await this.headersToken();
     publicacion.comentarios = [];
     publicacion.reacciones = [];
     return this.http.post(
       this.ruta + 'api/Publicacion',
       publicacion,
-      httpOptions
+      {"headers" : headers}
     );
   }
 
-  ConsultaPublicaciones() {
-    return this.http.get<Publicacion[]>(this.ruta + 'api/Publicacion');
+  async ConsultaPublicaciones() {
+    const headers = await this.headersToken();
+    return this.http.get<Publicacion[]>(this.ruta + 'api/Publicacion', {"headers" : headers});
   }
 
-  editarPublicacion(publicacion: Publicacion) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
+  async editarPublicacion(publicacion: Publicacion) {
+    const headers = await this.headersToken();
     return this.http.put(
       this.ruta + 'api/Publicacion',
       publicacion,
-      httpOptions
+      {"headers" : headers}
     );
   }
 
-  agregarComentario(comentario: Comentario) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
+  async agregarComentario(comentario: Comentario) {
+    const headers = await this.headersToken();
     return this.http.put<Publicacion>(
       this.ruta + 'api/Publicacion/Comentarios',
       comentario,
-      httpOptions
+      {"headers" : headers}
     );
   }
 
-  eliminarPublicacion(publicacion: Publicacion) {
+  async eliminarPublicacion(publicacion: Publicacion) {
+    const headers = await this.headersToken();
     return this.http.delete(
-      this.ruta + 'api/Publicacion/' + publicacion.idPublicacion
+      this.ruta + 'api/Publicacion/' + publicacion.idPublicacion, {"headers" : headers}
     );
   }
 
-  editarComentario(comentario: Comentario) {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
+  async editarComentario(comentario: Comentario) {
+    const headers = await this.headersToken();
     
     return this.http.put<Publicacion>(
       this.ruta + 'api/publicacion/EditarComentario',
       comentario,
-      httpOptions
+      {"headers" : headers}
     );
   }
 
-  editarReaccion(reaccion: Reaccion){
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
-
-    return this.http.put<Publicacion>(this.ruta + 'api/publicacion/Reaccion', reaccion, httpOptions)
+  async editarReaccion(reaccion: Reaccion){
+    const headers = await this.headersToken();
+    return this.http.put<Publicacion>(this.ruta + 'api/publicacion/Reaccion', reaccion, {"headers" : headers})
   }
 
-  consultarReacciones(){
-    return this.http.get<Reaccion[]>(this.ruta + 'api/publicacion/');
+  async consultarReacciones(){
+    const headers = await this.headersToken();
+    return this.http.get<Reaccion[]>(this.ruta + 'api/publicacion/', {"headers" : headers});
   }
 
-  eliminarReaccion(reaccion: string, idPublicacion: string){
+  async eliminarReaccion(reaccion: string, idPublicacion: string){
+    const headers = await this.headersToken();
     return this.http.delete<Publicacion>(this.ruta +"api/publicacion/Reaccion/"+reaccion
-    +"/"+idPublicacion);
+    +"/"+idPublicacion, {"headers" : headers});
   }
 
-  eliminarComentario(comentario: string, publicacion: string){
+  async eliminarComentario(comentario: string, publicacion: string){
+    const headers = await this.headersToken();
     return this.http.delete<Publicacion>(this.ruta+"api/publicacion/Comentario/"+comentario
-    +"/"+publicacion);
+    +"/"+publicacion, {"headers" : headers});
+  }
+
+
+  async headersToken() {
+    var token = '';
+    await this.serviceLogin.getUser().then((value) => {
+      value.subscribe((result:Usuario) => {
+        token = result.token || '';
+      });
+    });
+    const headers = { 'content-type': 'application/json', "authorization": `Bearer ${token}`}  
+    return headers;
   }
 
   //Publicacion Local
@@ -163,114 +167,4 @@ export class PublicacionesService {
     return;
   }
 
-  /*
-  getPublicaciones(sql: SQLiteObject) {
-    this.publicaciones = [];
-    sql.executeSql('SELECT * FROM Publicaciones', []).then((r) => {
-      console.log(r.rows.length);
-      if (r.rows.length > 0) {
-        for (var i = 0; i < r.rows.length; i++) {
-          var comment;
-          if (r.rows.item(i).comentarios != '') {
-            comment = JSON.parse(r.rows.item(i).comentarios);
-          } else {
-            comment = [];
-          }
-          var publicacion = {
-            idPublicacion: r.rows.item(i).idPublicacion,
-            nombre: r.rows.item(i).nombre,
-            contenidoPublicacion: r.rows.item(i).publicacion,
-            imagen: r.rows.item(i).urlImg,
-            comentarios: comment,
-            usuario: new Usuario(),
-            reacciones:   []
-          };
-          this.publicaciones.unshift(publicacion);
-        }
-      }
-    });
-  }
-  
-
-  //conect to sql Lite
-
-  insertPublicaciones(publicacion: Publicacion) {
-    publicacion.idPublicacion = (this.publicaciones.length + 1).toString();
-    publicacion.comentarios = [];
-    let data = [
-      publicacion.idPublicacion,
-      publicacion.nombre,
-      publicacion.contenidoPublicacion,
-      publicacion.imagen,
-      JSON.stringify(publicacion.comentarios),
-    ];
-    this.storag.transaction((tx) => {
-      tx.executeSql(
-        'INSERT INTO Publicaciones(idPublicacion,nombre,publicacion,urlImg, comentarios) VALUES(?,?,?,?,?)',
-        data
-      );
-    });
-
-    this.getPublicaciones(this.storag);
-    return of(publicacion);
-  }
-
-  updatePublicacion(publicacion: Publicacion) {
-    let data = [publicacion.contenidoPublicacion];
-
-    this.storag.transaction((tx) => {
-      tx.executeSql(
-        `UPDATE Publicaciones SET publicacion=? WHERE idPublicacion=${publicacion.idPublicacion}`,
-        data
-      );
-    });
-
-    this.getPublicaciones(this.storag);
-    return of(publicacion);
-  }
-
-  publicarComentario(publicacion: Publicacion) {
-    let data = [JSON.stringify(publicacion.comentarios)];
-    this.storag.transaction((tx) => {
-      tx.executeSql(
-        `UPDATE Publicaciones SET comentarios=? WHERE idPublicacion=${publicacion.idPublicacion}`,
-        data
-      );
-    });
-    this.getPublicaciones(this.storag);
-    return of(publicacion);
-  }
-
-  deletePublicacion(publicacion: Publicacion) {
-    this.storag.transaction((tx) => {
-      tx.executeSql('DELETE FROM Publicaciones WHERE idPublicacion = ?', [
-        publicacion.idPublicacion,
-      ]);
-    });
-    this.getPublicaciones(this.storag);
-    return of(publicacion);
-  }
-
-  openDataBase() {
-    this.platform.ready().then(() => {
-      this.sqlite
-        .create({
-          name: 'data.db',
-          location: 'default',
-        })
-        .then((db: SQLiteObject) => {
-          db.executeSql(
-            'CREATE TABLE if not exists Publicaciones (idPublicacion varchar(5) primary key,nombre varchar(30), publicacion varchar(500), urlImg varchar(100), comentarios varchar(500))',
-            []
-          )
-            .then(() => console.log('Executed SQL'))
-            .catch((e) => console.log(e));
-
-          this.storag = db;
-          this.getPublicaciones(db);
-        })
-        .catch((e) => console.log(e));
-    });
-  }
-  */
 }
