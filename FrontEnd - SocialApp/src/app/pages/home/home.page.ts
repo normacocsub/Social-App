@@ -104,10 +104,15 @@ export class HomePage implements OnInit {
     
 
     this.publicacionService.crearPublicacion(this.publicacion).then(value => value.subscribe(result => {
-
+      this.publicacionService.ConsultaPublicaciones().then(value => value.subscribe(result => {
+        this.publicaciones = result;
+        if(this.publicaciones.length === 0 ){
+          this.estadoPublicaciones = false;
+        }
+      }));
     }));
     
-    this.getPublicaciones();
+    
     /*
     this.publicacionService.insertPublicaciones(data).subscribe(result =>{
       

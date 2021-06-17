@@ -45,20 +45,27 @@ namespace Logica
             }
         }
 
-        private Usuario BuscarImagenPerfilUsuario(Usuario usuario)
+        private Usuario BuscarImagenPerfilUsuario(string idUsuario)
         {
-            string fileName = usuario.ImagePerfil;
+            Usuario usuario = _context.Usuarios.Find(idUsuario);
+            Usuario returnUsuario = new Usuario();
+            returnUsuario.Apellidos = usuario.Apellidos;
+            returnUsuario.Correo = usuario.Correo;
+            returnUsuario.Nombres = usuario.Nombres;
+            returnUsuario.Sexo = usuario.Sexo;
+            returnUsuario.ImagePerfil = usuario.ImagePerfil;
+            string fileName = returnUsuario.ImagePerfil;
             if (fileName != "")
             {
                 FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
                 StreamReader reader = new StreamReader(fileStream);
-                usuario.ImagePerfil = reader.ReadLine();
+                returnUsuario.ImagePerfil = reader.ReadLine();
                     
                 reader.Close();
                 fileStream.Close();
             }
 
-            return usuario;
+            return returnUsuario;
         }
 
         public async Task<ClaseRespuesta<Publicacion>> ConsultarPublicaciones()
@@ -70,13 +77,12 @@ namespace Logica
                 .ToList().OrderByDescending(p => p.Fecha);
                 foreach (var item in publicaciones)
                 {
-                    item.Usuario = _context.Usuarios.Find(item.IdUsuario);
-                    item.Usuario = BuscarImagenPerfilUsuario(item.Usuario);
-                    
+                    int usuarioResponse = publicaciones.ToList().Where(d => d.IdUsuario == item.IdUsuario).ToList().Count;
+                    item.Usuario = BuscarImagenPerfilUsuario(item.IdUsuario);
+
                     item.Comentarios.ForEach(comentario =>
                     {
-                        comentario.Usuario = _context.Usuarios.Find(comentario.IdUsuario);
-                        comentario.Usuario = BuscarImagenPerfilUsuario(comentario.Usuario);
+                        comentario.Usuario = BuscarImagenPerfilUsuario(comentario.IdUsuario);
                     });
                    
                     item.Reacciones.ForEach(reaccion =>
@@ -85,14 +91,16 @@ namespace Logica
                         reaccion.Usuario.ImagePerfil = "";
                     });
 
-                    string fileName = item.Imagen;
-                    FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
-                    StreamReader reader = new StreamReader(fileStream);
-                    item.Imagen = reader.ReadLine();
+                    if (item.Imagen != "")
+                    {
+                        string fileName = item.Imagen;
+                        FileStream fileStream = new FileStream( Environment.WebRootPath + fileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                        StreamReader reader = new StreamReader(fileStream);
+                        item.Imagen = reader.ReadLine();
                     
-                    reader.Close();
-                    fileStream.Close();
-                    
+                        reader.Close();
+                        fileStream.Close();
+                    }
                 }
                 return new ClaseRespuesta<Publicacion>(_context.Publicacions.Include(p => p.Comentarios
                 .OrderByDescending(c => c.Fecha)).ToList());
@@ -143,11 +151,9 @@ namespace Logica
                 response.Comentarios.ForEach(comentario =>
                 {
                     comentario.IdComentario = comentario.IdComentario == "" ? Seguridad.RandomString(16) : comentario.IdComentario;
-                    comentario.Usuario = _context.Usuarios.Find(comentario.IdUsuario);
-                    comentario.Usuario = BuscarImagenPerfilUsuario(comentario.Usuario);
+                    comentario.Usuario = BuscarImagenPerfilUsuario(comentario.IdUsuario);
                 });
-                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.IdUsuario);
                 _context.Publicacions.Update(response);
                 _context.SaveChanges();
                 response.Comentarios = response.Comentarios.OrderByDescending(c => c.Fecha).ToList();
@@ -189,8 +195,7 @@ namespace Logica
                 {
                     return new ClaseRespuesta<Publicacion>("No se encuentra el comentario");
                 }
-                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.IdUsuario);
                 response.ContenidoComentario = comentario.ContenidoComentario;
                 if(response.Usuario.Correo != comentario.Usuario.Correo)
                 {
@@ -280,8 +285,7 @@ namespace Logica
                     reaccion.Usuario = _context.Usuarios.Find(reaccion.IdUsuario);
                     reaccion.Usuario.ImagePerfil = "";
                 });
-                response.Usuario = _context.Usuarios.Find(response.IdUsuario);
-                response.Usuario = BuscarImagenPerfilUsuario(response.Usuario);
+                response.Usuario = BuscarImagenPerfilUsuario(response.IdUsuario);
                 return new ClaseRespuesta<Publicacion>(response);
             }
             catch(Exception e)
