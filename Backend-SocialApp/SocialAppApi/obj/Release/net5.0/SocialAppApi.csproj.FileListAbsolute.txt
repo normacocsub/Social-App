@@ -134,7 +134,6 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Re
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Entity.pdb
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Logica.pdb
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Datos.pdb
-C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Release\net5.0\SocialAppApi.csprojAssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Release\net5.0\SocialAppApi.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Release\net5.0\SocialAppApi.AssemblyInfoInputs.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Release\net5.0\SocialAppApi.AssemblyInfo.cs
@@ -165,3 +164,7 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Re
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.AspNetCore.SignalR.Common.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\bin\Release\net5.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\obj\Release\net5.0\SocialAppApi.csproj.AssemblyReference.cache

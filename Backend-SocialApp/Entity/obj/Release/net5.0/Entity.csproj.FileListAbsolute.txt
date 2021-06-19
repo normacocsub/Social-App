@@ -14,7 +14,6 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Release\
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Release\net5.0\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Release\net5.0\ref\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\bin\Release\net5.0\Entity.pdb
-C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.csprojAssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.AssemblyInfoInputs.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.AssemblyInfo.cs
@@ -22,3 +21,4 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\ref\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.pdb
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Entity\obj\Release\net5.0\Entity.csproj.AssemblyReference.cache

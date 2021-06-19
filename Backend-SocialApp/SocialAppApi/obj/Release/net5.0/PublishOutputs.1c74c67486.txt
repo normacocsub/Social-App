@@ -1,4 +1,12 @@
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\SocialAppApi.exe
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\ImagenBase64_26d42d6c-e84b-4c2d-a7aa-54877b1383ed.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\ImagenBase64_50a0521f-e4c7-4134-96e6-a488ae29479e.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\ImagenBase64_779c54d9-ca9a-470b-b89f-079fce69a6ff.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\ImagenBase64_d11e26a9-79ea-47ed-88b6-dffc5a7cb1a1.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\ImagenBase64_d23c43d5-e41b-4326-be02-f19181245f71.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\Perfil\ImagenBase64_196d25c2-6da1-4fef-81bc-1d155447223a.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\Perfil\ImagenBase64_75cbb3f3-b145-439f-af45-270fb0750590.txt
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\ArchivosMultimedia\Perfil\ImagenBase64_f84a5c40-6fa8-4e1f-a381-9bff52124da5.txt
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\js\signalr\dist\browser\signalr.js
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\wwwroot\js\signalr\dist\browser\signalr.min.js
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\appsettings.Development.json
@@ -7,6 +15,7 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publis
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\SocialAppApi.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\SocialAppApi.runtimeconfig.json
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\SocialAppApi.pdb
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.AspNetCore.Connections.Abstractions.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.AspNetCore.Http.Connections.Client.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.AspNetCore.Http.Connections.Common.dll
@@ -20,11 +29,13 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publis
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Azure.SignalR.AspNet.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Azure.SignalR.Protocols.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Data.SqlClient.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.EntityFrameworkCore.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Extensions.DependencyModel.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Extensions.Primitives.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.Identity.Client.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\SocialAppApi\publish\Microsoft.IdentityModel.Clients.ActiveDirectory.dll

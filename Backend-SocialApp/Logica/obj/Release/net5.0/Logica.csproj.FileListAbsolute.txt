@@ -23,7 +23,6 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\bin\Release\
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\bin\Release\net5.0\Entity.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\bin\Release\net5.0\Entity.pdb
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\bin\Release\net5.0\Datos.pdb
-C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.csprojAssemblyReference.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.AssemblyInfoInputs.cache
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.AssemblyInfo.cs
@@ -32,3 +31,4 @@ C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\ref\Logica.dll
 C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.pdb
+C:\Users\norma\Documents\GitHub\Social-App\Backend-SocialApp\Logica\obj\Release\net5.0\Logica.csproj.AssemblyReference.cache
